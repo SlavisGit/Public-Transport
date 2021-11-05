@@ -9,7 +9,8 @@ module tuvarna.sit.busservices {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
-
+    requires log4j;
+    requires org.hibernate.orm.core;
 
     exports tuvarna.sit.busservices.application;
     opens tuvarna.sit.busservices.application to javafx.fxml;
