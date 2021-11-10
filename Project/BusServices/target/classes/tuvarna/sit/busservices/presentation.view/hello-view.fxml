@@ -8,6 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 
+<?import javafx.scene.control.ListView?>
 <AnchorPane fx:id="ID_DLG_LOG_IN" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: linear-gradient(to left, #fcc200, #81c483);
 " styleClass="LinearGradient" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
@@ -28,4 +29,6 @@
     <effect>
         <Glow level="0.22"/>
     </effect>
+
+    <ListView fx:id="ListView" maxWidth="100" maxHeight="100"/>
 </AnchorPane>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+        <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+        <property name="hibernate.connection.url"> jdbc:sqlserver://localhost\MSSQLSERVER:1433;database=TravelServices </property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <mapping class="tuvarna.sit.busservices.data.entities.Administrator" />
+        <mapping class="tuvarna.sit.busservices.data.entities.UserType" />
+        <mapping class="tuvarna.sit.busservices.data.entities.Station" />
+        <mapping class="tuvarna.sit.busservices.data.entities.Status" />
+        <mapping class="tuvarna.sit.busservices.data.entities.Cashier" />
+        <mapping class="tuvarna.sit.busservices.data.entities.Travel" />
+        <mapping class="tuvarna.sit.busservices.data.entities.Company" />
+        <mapping class="tuvarna.sit.busservices.data.entities.Transport" />
+        <mapping class="tuvarna.sit.busservices.data.entities.Destination" />
+        <mapping class="tuvarna.sit.busservices.data.entities.TravelType" />
+        <mapping class="tuvarna.sit.busservices.data.entities.Ticket" />
+        <mapping class="tuvarna.sit.busservices.data.entities.User" />
+    </session-factory>
+</hibernate-configuration>

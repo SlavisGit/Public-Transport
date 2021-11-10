@@ -11,6 +11,8 @@ module tuvarna.sit.busservices {
     requires eu.hansolo.tilesfx;
     requires log4j;
     requires org.hibernate.orm.core;
+    requires java.persistence;
+    requires java.naming;
 
     exports tuvarna.sit.busservices.application;
     opens tuvarna.sit.busservices.application to javafx.fxml;

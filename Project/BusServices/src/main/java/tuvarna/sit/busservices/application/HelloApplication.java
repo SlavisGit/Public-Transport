@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import tuvarna.sit.busservices.data.repository.UserTypeRepository;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,6 +24,8 @@ public class HelloApplication extends Application {
         PropertyConfigurator.configure(HelloApplication.class.getResource("/tuvarna/sit/busservices/configuration/log4j.properties"));
         URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/hello-view.fxml");
         if(path != null) {
+
+
             Parent root = FXMLLoader.load(path);
             Scene scene  = new Scene(root);
             scene.setFill(Color.TRANSPARENT);
@@ -33,7 +36,6 @@ public class HelloApplication extends Application {
             stage.setMaxHeight(600);
             stage.setHeight(400);
             stage.setWidth(270);
-
             stage.show();
         } else {
             logger.error("Sorry cant load fxml main");
