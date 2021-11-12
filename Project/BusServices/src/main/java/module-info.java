@@ -13,6 +13,14 @@ module tuvarna.sit.busservices {
     requires org.hibernate.orm.core;
     requires java.persistence;
     requires java.naming;
+    requires java.sql;
+
+
+    opens tuvarna.sit.busservices.data.entities to org.hibernate.orm.core;
+    exports tuvarna.sit.busservices.data.entities;
+
+    opens tuvarna.sit.busservices.data.access to org.hibernate.orm.core;
+    exports tuvarna.sit.busservices.data.access;
 
     exports tuvarna.sit.busservices.application;
     opens tuvarna.sit.busservices.application to javafx.fxml;

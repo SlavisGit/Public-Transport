@@ -4,6 +4,7 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import tuvarna.sit.busservices.data.entities.UserType;
+import tuvarna.sit.busservices.data.repository.DAORepository;
 import tuvarna.sit.busservices.data.repository.UserTypeRepository;
 import tuvarna.sit.busservices.presentation.models.UserTypeListView;
 

@@ -2,9 +2,8 @@ package tuvarna.sit.busservices.data.repository;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import tuvarna.sit.busservices.data.Connection;
+import tuvarna.sit.busservices.data.access.Connection;
 import tuvarna.sit.busservices.data.entities.UserType;
 
 import java.util.ArrayList;
@@ -22,8 +21,6 @@ public class UserTypeRepository implements DAORepository<UserType>{
 
     private static class UserTypeRepositoryHolder {
         public static final UserTypeRepository INSTANCE = new UserTypeRepository();
-
-
     }
 
     @Override
@@ -63,7 +60,7 @@ public class UserTypeRepository implements DAORepository<UserType>{
         Transaction transaction = session.beginTransaction();
         List<UserType> userTypes = new ArrayList<>();
         try{
-            String jpql = "SELECT t FROM USER_TYPE t";
+            String jpql = "SELECT t FROM UserType t";
             userTypes.addAll(session.createQuery(jpql, UserType.class).getResultList());
 
         } catch (Exception e) {

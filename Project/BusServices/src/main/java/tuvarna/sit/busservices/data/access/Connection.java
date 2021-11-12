@@ -1,4 +1,4 @@
-package tuvarna.sit.busservices.data;
+package tuvarna.sit.busservices.data.access;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -9,6 +9,7 @@ import org.hibernate.cfg.Configuration;
 public class Connection {
     private static final Logger logger = Logger.getLogger(Connection.class);
     private static SessionFactory sessionFactory;
+
     static {
         try {
             sessionFactory = new Configuration().configure().buildSessionFactory();

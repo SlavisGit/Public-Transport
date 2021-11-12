@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import tuvarna.sit.busservices.data.repository.UserTypeRepository;
+import tuvarna.sit.busservices.presentation.controllers.HelloController;
 
 import java.io.IOException;
 import java.net.URL;

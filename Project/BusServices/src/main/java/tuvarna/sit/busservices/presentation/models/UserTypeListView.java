@@ -10,6 +10,6 @@ public class UserTypeListView {
 
     @Override
     public String toString() {
-        return String.format("%s | %s | %s", type);
+        return String.format("%s", type);
     }
 }
