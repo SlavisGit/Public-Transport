@@ -1,12 +1,15 @@
 package tuvarna.sit.busservices.data.entities;
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 
 @Table(name = "USER_TYPE")
 @Entity
 public class UserType implements Serializable{
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -17,8 +20,8 @@ public class UserType implements Serializable{
     @Column(name = "userType", nullable = false)
     private String userType;
 
-    @OneToMany(mappedBy = "userType")
-    private Set<User> userSet;
+    @OneToMany(mappedBy = "userType", fetch = FetchType.EAGER)
+    private Set<User> userSet = new HashSet<>();
 
     public Long getID() {
         return ID;
@@ -37,7 +40,7 @@ public class UserType implements Serializable{
     }
 
     public Set<User> getUserSet() {
-        return userSet;
+        return userSet = new HashSet<>();
     }
 
     public void setUserSet(Set<User> userSet) {

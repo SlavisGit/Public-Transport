@@ -8,21 +8,26 @@
 <?import javafx.scene.text.Font?>
 
 
-<?import javafx.scene.control.ListView?>
 <AnchorPane fx:id="ID_DLG_LOG_IN" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: linear-gradient(to left, #fcc200, #81c483);
+            prefHeight="350.0" prefWidth="255.0" style="-fx-background-color: linear-gradient(to left, #fcc200, #81c483);
 " styleClass="LinearGradient" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1"
     fx:controller="tuvarna.sit.busservices.presentation.controllers.HelloController">
+
    <children>
         <GridPane alignment="center" hgap="10" vgap="10">
         </GridPane>
-       <Button fx:id="ID_BTN_ADMIN" layoutX="55.0" layoutY="169.0" mnemonicParsing="false" prefHeight="26.0"
+       <Button fx:id="admin" layoutX="55.0" layoutY="169.0" mnemonicParsing="false" prefHeight="26.0"
                prefWidth="142.0" text="Administrator"/>
 
-       <ListView fx:id="listView" maxWidth="100" maxHeight="100"/>
+       <Button fx:id="company" layoutX="55.0" layoutY="209.0" mnemonicParsing="false" prefHeight="26.0"
+               prefWidth="142.0" text="Company"/>
 
-        <Button fx:id="ID_BTN_CLIENT" layoutX="55.0" layoutY="214.0" mnemonicParsing="false" prefHeight="26.0"
-                prefWidth="142.0" text="Client"/>
+        <Button fx:id="station" layoutX="55.0" layoutY="244.0" mnemonicParsing="false" prefHeight="26.0"
+                prefWidth="142.0" text="Station"/>
+
+       <Button fx:id="cashier" layoutX="55.0" layoutY="279.0" mnemonicParsing="false" prefHeight="26.0"
+               prefWidth="142.0" text="Cashier"/>
+
         <Label layoutX="77.0" layoutY="79.0" text="Please, Log In">
             <font>
                 <Font name="Calibri" size="18.0"/>

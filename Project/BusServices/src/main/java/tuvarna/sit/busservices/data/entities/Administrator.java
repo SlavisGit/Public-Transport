@@ -1,13 +1,18 @@
 package tuvarna.sit.busservices.data.entities;
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 
 @Table(name = "ADMINISTRATOR")
 @Entity
 public class Administrator implements Serializable{
+
+    @Serial
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -19,22 +24,23 @@ public class Administrator implements Serializable{
     @Column(name = "lastName", nullable = false)
     private String lastName;
 
-    @OneToMany(mappedBy = "admin")
-    private Set<User> usersSet;
+    @OneToOne(mappedBy = "administrator")
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     @OneToMany(mappedBy = "administrator")
-    private Set<Company> companySet;
+    private Set<Company> companySet = new HashSet<>();
 
     @OneToMany(mappedBy = "admin")
-    private Set<Station> stationSet;
+    private Set<Station> stationSet = new HashSet<>();
 
-    public Set<User> getUsersSet() {
-        return usersSet;
-    }
-
-    public void setUsersSet(Set<User> usersSet) {
-        this.usersSet = usersSet;
-    }
 
     public Set<Company> getCompanySet() {
         return companySet;
@@ -82,9 +88,6 @@ public class Administrator implements Serializable{
                 "ID=" + ID +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", userAdminSet=" + usersSet +
-                ", companySet=" + companySet +
-                ", stationSet=" + stationSet +
                 '}';
     }
 }

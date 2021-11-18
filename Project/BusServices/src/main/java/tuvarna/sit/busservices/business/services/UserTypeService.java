@@ -1,15 +1,13 @@
 package tuvarna.sit.busservices.business.services;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import tuvarna.sit.busservices.data.entities.UserType;
-import tuvarna.sit.busservices.data.repository.DAORepository;
 import tuvarna.sit.busservices.data.repository.UserTypeRepository;
 import tuvarna.sit.busservices.presentation.models.UserTypeListView;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class UserTypeService {
@@ -28,10 +26,10 @@ public class UserTypeService {
 
     public ObservableList<UserTypeListView> getAllUsers() {
         List<UserType> users = userType.getAll();
-
         return FXCollections.observableList(
                 users.stream()
                         .map(m -> new UserTypeListView(m.getUserType()))
                         .collect(Collectors.toList()));
+
     }
 }

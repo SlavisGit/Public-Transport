@@ -33,14 +33,6 @@ public class Cashier implements Serializable {
         this.ID = ID;
     }
 
-    public Set<User> getUserSetl() {
-        return userSetl;
-    }
-
-    public void setUserSetl(Set<User> userSetl) {
-        this.userSetl = userSetl;
-    }
-
     @ManyToOne
     @JoinColumn(name = "stationId", nullable = false)
     private Station station;
@@ -48,8 +40,16 @@ public class Cashier implements Serializable {
     @OneToMany(mappedBy = "cashier")
     private Set<Ticket> ticketSet;
 
-    @OneToMany(mappedBy = "cashier")
-    private Set<User> userSetl;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @OneToOne(mappedBy = "cashier")
+    private User user;
 
     public Set<Ticket> getTicketSet() {
         return ticketSet;
@@ -110,7 +110,7 @@ public class Cashier implements Serializable {
                 ", honorarium=" + honorarium +
                 ", station=" + station +
                 ", ticketSet=" + ticketSet +
-                ", userSetl=" + userSetl +
+                ", userSetl=" + user +
                 '}';
     }
 }

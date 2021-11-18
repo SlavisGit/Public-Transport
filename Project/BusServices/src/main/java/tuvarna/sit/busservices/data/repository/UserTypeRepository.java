@@ -24,34 +24,75 @@ public class UserTypeRepository implements DAORepository<UserType>{
     }
 
     @Override
-    public void save(UserType object) {
+    public void save(UserType userType) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
 
         try {
-            session.save(object);
-            log.info("User has been saved");
-        } catch (Exception e) {
-            log.info("User type save error: " + e.getMessage());
-        } finally {
+            session.save(userType);
+            log.info("User Type has been saved.");
             transaction.commit();
+
+        } catch (Exception exception) {
+            log.info("Failed to save the user Type: " + exception);
+            transaction.rollback();
+        } finally {
+            session.close();
         }
 
     }
 
     @Override
-    public void update(UserType object) {
+    public void update(UserType userType) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
 
+        try {
+            session.update(userType);
+            log.info("User Type has been updated.");
+            transaction.commit();
+        } catch (Exception e) {
+            log.info("User Type update failed: " + e.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
     }
 
     @Override
-    public void delete(UserType object) {
+    public void delete(UserType userType) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
 
+        try {
+            session.delete(userType);
+            log.info("User Type has been deleted.");
+            transaction.commit();
+        }  catch (Exception e) {
+            log.info("Failed to delete user Type: " + e.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
     }
 
     @Override
-    public Optional<UserType> getByIg(Long id) {
-        return Optional.empty();
+    public Optional<UserType> getById(Long id) {
+
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        UserType userType = null;
+        try {
+            userType = session.get(UserType.class, id);
+            log.info("Select user Type with id: " + id);
+            transaction.commit();
+        } catch (Exception e) {
+            log.info("Failed to select row: " + e.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
+        return Optional.ofNullable(userType);
     }
 
     @Override
@@ -59,15 +100,18 @@ public class UserTypeRepository implements DAORepository<UserType>{
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         List<UserType> userTypes = new ArrayList<>();
-        try{
+
+        try {
             String jpql = "SELECT t FROM UserType t";
             userTypes.addAll(session.createQuery(jpql, UserType.class).getResultList());
-
-        } catch (Exception e) {
-            log.info("User type getting all error: " + e.getMessage());
-        } finally {
             transaction.commit();
+        } catch (Exception exception) {
+            log.info("Failed to select all userTypes: " + exception.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
         }
+
         return userTypes;
     }
 

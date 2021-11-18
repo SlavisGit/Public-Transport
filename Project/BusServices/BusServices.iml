@@ -4,7 +4,7 @@
     <facet type="hibernate" name="Hibernate">
       <configuration>
         <datasource-map>
-          <unit-entry name="hibernate.cfg.xml" value="3181699b-fd2a-4790-b078-a291d71a8fef" />
+          <unit-entry name="hibernate.cfg.xml" value="5756a69e-3ba9-4328-ae8c-88b5b1875c2b" />
         </datasource-map>
         <naming-strategy-map />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/main/resources/hibernate.cfg.xml" />
@@ -15,7 +15,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="BusServices" />
+          <factory-entry name="BusServices" value="5756a69e-3ba9-4328-ae8c-88b5b1875c2b" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>

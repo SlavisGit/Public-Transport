@@ -6,7 +6,6 @@ import tuvarna.sit.busservices.data.entities.TravelType;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import tuvarna.sit.busservices.data.access.Connection;
-import tuvarna.sit.busservices.data.entities.UserType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,28 +25,93 @@ public class TravelTypeRepository implements DAORepository<TravelType>{
     }
 
     @Override
-    public void save(TravelType object) {
+    public void save(TravelType travelType) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
 
+        try {
+            session.save(travelType);
+            log.info("Travel Type has been saved.");
+            transaction.commit();
+
+        } catch (Exception exception) {
+            log.info("Failed to save the travel Type : " + exception);
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
     }
 
     @Override
-    public void update(TravelType object) {
+    public void update(TravelType travelType) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
 
+        try {
+            session.update(travelType);
+            log.info("Travel Type has been updated.");
+            transaction.commit();
+        } catch (Exception e) {
+            log.info("Travel Type update failed: " + e.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
     }
 
     @Override
-    public void delete(TravelType object) {
+    public void delete(TravelType travelType) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
 
+        try {
+            session.delete(travelType);
+            log.info("Travel Type has been deleted.");
+            transaction.commit();
+        }  catch (Exception e) {
+            log.info("Failed to delete travel type: " + e.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
     }
 
     @Override
-    public Optional<TravelType> getByIg(Long id) {
-        return Optional.empty();
+    public Optional<TravelType> getById(Long id) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        TravelType travelType = null;
+        try {
+            travelType = session.get(TravelType.class, id);
+            log.info("Select travel Type with id: " + id);
+            transaction.commit();
+        } catch (Exception e) {
+            log.info("Failed to select row: " + e.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
+        return Optional.ofNullable(travelType);
     }
 
     @Override
     public List<TravelType> getAll() {
-        return null;
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<TravelType> travelTypes = new ArrayList<>();
+
+        try {
+            String jpql = "SELECT t FROM TravelType t";
+            travelTypes.addAll(session.createQuery(jpql, TravelType.class).getResultList());
+            transaction.commit();
+        } catch (Exception exception) {
+            log.info("Failed to select all travelTypes: " + exception.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return travelTypes;
     }
 
 

@@ -2,11 +2,14 @@ package tuvarna.sit.busservices.data.entities;
 
 import javax.persistence.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 
-@Table(name = "USER_ADMINISTRATOR")
+@Table(name = "[USER]")
 @Entity
 public class User implements Serializable {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -15,31 +18,38 @@ public class User implements Serializable {
     private Long ID;
 
     @Column(name = "username", nullable = false)
-    private String firstName;
+    private String username;
 
     @Column(name = "[password]", nullable = false)
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "admintId", nullable = false)
-    private Administrator admin;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "admintId", nullable = true, referencedColumnName = "id")
+    private Administrator administrator;
 
-    @ManyToOne
-    @JoinColumn(name = "cashierId", nullable = false)
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "cashierId", nullable = true, referencedColumnName = "id")
     private Cashier cashier;
 
-    @ManyToOne
-    @JoinColumn(name = "stationId", nullable = false)
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "stationId", nullable = true, referencedColumnName = "id")
     private Station station;
 
-    @ManyToOne
-    @JoinColumn(name = "companyId", nullable = false)
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "companyId", nullable = true, referencedColumnName = "id")
     private Company company;
 
-    @ManyToOne
-    @JoinColumn(name = "userTypeId", nullable = false)
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "userTypeId", nullable = false, referencedColumnName = "id")
     private UserType userType;
 
+    public Administrator getAdministrator() {
+        return administrator;
+    }
+
+    public void setAdministrator(Administrator administrator) {
+        this.administrator = administrator;
+    }
 
     public Long getID() {
         return ID;
@@ -49,12 +59,12 @@ public class User implements Serializable {
         this.ID = ID;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -66,11 +76,11 @@ public class User implements Serializable {
     }
 
     public Administrator getAdmin() {
-        return admin;
+        return administrator;
     }
 
     public void setAdmin(Administrator admin) {
-        this.admin = admin;
+        this.administrator = admin;
     }
 
     public Cashier getCashier() {
@@ -109,9 +119,9 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
                 "ID=" + ID +
-                ", firstName='" + firstName + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", admin=" + admin +
+                ", administrator=" + administrator +
                 ", cashier=" + cashier +
                 ", station=" + station +
                 ", company=" + company +

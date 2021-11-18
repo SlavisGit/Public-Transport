@@ -27,8 +27,8 @@ public class Company implements Serializable {
     @OneToMany(mappedBy = "company")
     private Set<Travel> travelSet;
 
-    @OneToMany(mappedBy = "company")
-    private Set<User> userSetl;
+    @OneToOne(mappedBy = "company")
+    private User user;
 
     public Long getID() {
         return ID;
@@ -36,14 +36,6 @@ public class Company implements Serializable {
 
     public void setID(Long ID) {
         this.ID = ID;
-    }
-
-    public Set<User> getUserSetl() {
-        return userSetl;
-    }
-
-    public void setUserSetl(Set<User> userSetl) {
-        this.userSetl = userSetl;
     }
 
     public Set<Travel> getTravelSet() {
@@ -78,6 +70,14 @@ public class Company implements Serializable {
         this.administrator = administrator;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Company{" +
@@ -86,7 +86,7 @@ public class Company implements Serializable {
                 ", address='" + address + '\'' +
                 ", administrator=" + administrator +
                 ", travelSet=" + travelSet +
-                ", userSetl=" + userSetl +
+                ", userSetl=" + user +
                 '}';
     }
 }

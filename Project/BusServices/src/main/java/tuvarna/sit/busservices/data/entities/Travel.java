@@ -2,6 +2,7 @@ package tuvarna.sit.busservices.data.entities;
 
 import javax.persistence.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -9,6 +10,7 @@ import java.util.Set;
 @Table(name = "TRAVEL")
 @Entity
 public class Travel implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id

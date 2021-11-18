@@ -2,8 +2,10 @@ package tuvarna.sit.busservices.application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
@@ -13,6 +15,7 @@ import tuvarna.sit.busservices.presentation.controllers.HelloController;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ResourceBundle;
 
 public class HelloApplication extends Application {
     private static Logger logger = Logger.getLogger(HelloApplication.class);
@@ -47,4 +50,6 @@ public class HelloApplication extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+
 }

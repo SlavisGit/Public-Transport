@@ -1,17 +1,23 @@
 package tuvarna.sit.busservices.presentation.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.input.MouseEvent;
 import javafx.event.EventHandler;
+import javafx.stage.Stage;
+import org.apache.log4j.Logger;
+import tuvarna.sit.busservices.application.HelloApplication;
+import tuvarna.sit.busservices.application.NewWindowApplication;
 import tuvarna.sit.busservices.business.services.UserTypeService;
-import tuvarna.sit.busservices.presentation.models.UserTypeListView;
 
 public class HelloController implements EventHandler<MouseEvent> {
 
@@ -23,28 +29,53 @@ public class HelloController implements EventHandler<MouseEvent> {
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
 
-    @FXML // fx:id="ID_DLG_LOG_IN"
+    @FXML
     private AnchorPane ID_DLG_LOG_IN; // Value injected by FXMLLoader
 
-    @FXML // fx:id="ID_BTN_ADMIN"
-    private Button ID_BTN_ADMIN; // Value injected by FXMLLoader
-
-    @FXML // fx:id="ID_BTN_CLIENT"
-    private Button ID_BTN_CLIENT; // Value injected by FXMLLoader
+    @FXML
+    private Button admin; // Value injected by FXMLLoader
 
     @FXML
-    private ListView<UserTypeListView> listView;
+    private Button company; // Value injected by FXMLLoader
+
+    @FXML
+    private Button station; // Value injected by FXMLLoader
+
+    @FXML
+    private Button cashier; // Value injected by FXMLLoader
 
     @FXML
     private void initialize() {
-        ID_BTN_ADMIN.setOnMouseClicked(this::handle);
+        admin.setOnMouseClicked(this::handle);
+        company.setOnMouseClicked(this::companyLogIn);
+        station.setOnMouseClicked(this::stationLogIn);
+        cashier.setOnMouseClicked(this::cashierLogIn);
+    }
+
+    private void cashierLogIn(MouseEvent mouseEvent) {
+        NewWindowApplication logInApplication = new NewWindowApplication();
+        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/userLogIn-view.fxml");
+        logInApplication.logInUser(resources, mouseEvent, path, "Cashier login");
+    }
+
+    private void stationLogIn(MouseEvent mouseEvent) {
+        NewWindowApplication logInApplication = new NewWindowApplication();
+        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/userLogIn-view.fxml");
+        logInApplication.logInUser(resources, mouseEvent, path, "Station login");
+    }
+
+    private void companyLogIn(MouseEvent mouseEvent) {
+        NewWindowApplication logInApplication = new NewWindowApplication();
+        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/userLogIn-view.fxml");
+        logInApplication.logInUser(resources, mouseEvent, path, "Company login");
     }
 
 
     @Override
     public void handle(MouseEvent mouseEvent) {
-        ObservableList<UserTypeListView> userTypes =  service.getAllUsers();
-        listView.setItems(userTypes);
+        NewWindowApplication logInApplication = new NewWindowApplication();
+        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/userLogIn-view.fxml");
+        logInApplication.logInUser(resources, mouseEvent, path, "Admin login");
     }
 
 }

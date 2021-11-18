@@ -31,8 +31,8 @@ public class Station implements Serializable {
     @JoinColumn(name = "adminId", nullable = false)
     private Administrator admin;
 
-    @OneToMany(mappedBy = "station")
-    private Set<User> userSetl;
+    @OneToOne(mappedBy = "station")
+    private User user;
 
     @OneToMany(mappedBy = "station")
     private Set<Travel> travelSet;
@@ -43,14 +43,6 @@ public class Station implements Serializable {
 
     public void setID(Long ID) {
         this.ID = ID;
-    }
-
-    public Set<User> getUserSetl() {
-        return userSetl;
-    }
-
-    public void setUserSetl(Set<User> userSetl) {
-        this.userSetl = userSetl;
     }
 
     public Set<Travel> getTravelSet() {
@@ -112,6 +104,14 @@ public class Station implements Serializable {
         this.admin = admin;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Station{" +
@@ -121,7 +121,7 @@ public class Station implements Serializable {
                 ", workTimeStart=" + workTimeStart +
                 ", workTimeEnd=" + workTimeEnd +
                 ", admin=" + admin +
-                ", userSetl=" + userSetl +
+                ", userSetl=" + user +
                 ", travelSet=" + travelSet +
                 ", cashierSet=" + cashierSet +
                 '}';
