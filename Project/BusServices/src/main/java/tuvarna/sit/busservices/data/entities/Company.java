@@ -1,12 +1,15 @@
 package tuvarna.sit.busservices.data.entities;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Table(name = "COMPANY")
 @Entity
 public class Company implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -24,10 +27,10 @@ public class Company implements Serializable {
     @JoinColumn(name = "adminId", nullable = false)
     private Administrator administrator;
 
-    @OneToMany(mappedBy = "company")
-    private Set<Travel> travelSet;
+    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
+    private Set<Travel> travelSet = new HashSet<>();
 
-    @OneToOne(mappedBy = "company")
+    @OneToOne(mappedBy = "company", fetch = FetchType.EAGER)
     private User user;
 
     public Long getID() {
@@ -84,9 +87,6 @@ public class Company implements Serializable {
                 "ID=" + ID +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
-                ", administrator=" + administrator +
-                ", travelSet=" + travelSet +
-                ", userSetl=" + user +
                 '}';
     }
 }

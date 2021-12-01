@@ -18,6 +18,10 @@ public class TravelType implements Serializable {
     @Column(name = "travelType", nullable = false)
     private String travelType;
 
+    public TravelType(String travelType) {
+        this.travelType = travelType;
+    }
+
     @OneToMany(mappedBy = "travelType")
     private Set<Travel> travelSet;
 
@@ -39,9 +43,6 @@ public class TravelType implements Serializable {
 
     @Override
     public String toString() {
-        return "TravelType{" +
-                "ID=" + ID +
-                ", travelType='" + travelType + '\'' +
-                '}';
+        return travelType;
     }
 }

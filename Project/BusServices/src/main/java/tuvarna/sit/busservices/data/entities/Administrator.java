@@ -24,7 +24,7 @@ public class Administrator implements Serializable{
     @Column(name = "lastName", nullable = false)
     private String lastName;
 
-    @OneToOne(mappedBy = "administrator")
+    @OneToOne(mappedBy = "administrator", fetch = FetchType.EAGER)
     private User user;
 
     public User getUser() {
@@ -35,10 +35,10 @@ public class Administrator implements Serializable{
         this.user = user;
     }
 
-    @OneToMany(mappedBy = "administrator")
+    @OneToMany(mappedBy = "administrator", fetch = FetchType.EAGER)
     private Set<Company> companySet = new HashSet<>();
 
-    @OneToMany(mappedBy = "admin")
+    @OneToMany(mappedBy = "admin",  fetch = FetchType.EAGER)
     private Set<Station> stationSet = new HashSet<>();
 
 

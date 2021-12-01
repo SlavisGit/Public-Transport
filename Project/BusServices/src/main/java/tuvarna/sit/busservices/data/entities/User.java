@@ -39,7 +39,7 @@ public class User implements Serializable {
     @JoinColumn(name = "companyId", nullable = true, referencedColumnName = "id")
     private Company company;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "userTypeId", nullable = false, referencedColumnName = "id")
     private UserType userType;
 
@@ -121,11 +121,6 @@ public class User implements Serializable {
                 "ID=" + ID +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", administrator=" + administrator +
-                ", cashier=" + cashier +
-                ", station=" + station +
-                ", company=" + company +
-                ", userType=" + userType +
                 '}';
     }
 }

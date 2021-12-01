@@ -111,23 +111,26 @@ public class UserRepository implements DAORepository<User>{
 
         return users;
     }
-    public User getByUsernameAndPassword(String username, String password) {
+    public User getByUsernameAndPassword(String username, String password, String type) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         User user = null;
 
         try {
-            String jpql = " from User where username= :username and password= :password";
+            String jpql = "select user from User as user join user.userType type  where user.username= :username and user.password= :password and type.userType= :userType";
             Query query = session.createQuery(jpql);
             query.setParameter("username", username);
             query.setParameter("password", password);
+            query.setParameter("userType", type);
             List list = query.list();
-
+            if(list.isEmpty()){
+                return null;
+            }
             user = (User) list.get(0);
 
                 transaction.commit();
             } catch (Exception exception) {
-            log.info("Failed to select all users: 25654654 " + exception.getMessage());
+            log.info("Failed to select user: " + exception.getMessage());
             transaction.rollback();
         } finally {
             session.close();

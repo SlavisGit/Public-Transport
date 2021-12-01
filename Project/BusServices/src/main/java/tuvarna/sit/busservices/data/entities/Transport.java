@@ -46,10 +46,6 @@ public class Transport implements Serializable {
 
     @Override
     public String toString() {
-        return "Transport{" +
-                "ID=" + ID +
-                ", transportType='" + transportType + '\'' +
-                ", travelSet=" + travelSet +
-                '}';
+        return transportType ;
     }
 }

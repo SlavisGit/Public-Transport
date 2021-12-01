@@ -53,7 +53,6 @@ public class UserType implements Serializable{
         return "UserType{" +
                 "ID=" + ID +
                 ", userType='" + userType + '\'' +
-                ", userSet=" + userSet +
                 '}';
     }
 }

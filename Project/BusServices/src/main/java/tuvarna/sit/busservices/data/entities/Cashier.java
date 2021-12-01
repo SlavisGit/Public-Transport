@@ -1,11 +1,13 @@
 package tuvarna.sit.busservices.data.entities;
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 
 @Table(name = "CASHIER")
 @Entity
 public class Cashier implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -37,7 +39,7 @@ public class Cashier implements Serializable {
     @JoinColumn(name = "stationId", nullable = false)
     private Station station;
 
-    @OneToMany(mappedBy = "cashier")
+    @OneToMany(mappedBy = "cashier", fetch = FetchType.EAGER)
     private Set<Ticket> ticketSet;
 
     public User getUser() {

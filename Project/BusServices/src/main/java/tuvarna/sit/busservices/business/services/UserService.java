@@ -15,10 +15,9 @@ public class UserService {
     private static class UserServiceHolder {
         public static final UserService INSTANCE = new UserService();
     }
-    public User getUserLogin(PasswordField password, TextField username) {
+    public User getUserLogin(PasswordField password, TextField username, String type) {
         String password1 = password.getText();
         String userName = username.getText();
-        User byUsernameAndPassword = user.getByUsernameAndPassword(userName, password1);
-        return byUsernameAndPassword;
+        return user.getByUsernameAndPassword(userName, password1, type);
     }
 }

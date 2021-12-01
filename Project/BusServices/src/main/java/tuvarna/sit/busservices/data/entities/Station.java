@@ -1,13 +1,20 @@
 package tuvarna.sit.busservices.data.entities;
 import javax.persistence.*;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Table(name = "STATION")
 @Entity
 public class Station implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -22,20 +29,20 @@ public class Station implements Serializable {
     private String address;
 
     @Column(name = "workTimeStart", nullable = false)
-    private LocalDate workTimeStart;
+    private Time workTimeStart;
 
     @Column(name = "workTimeEnd", nullable = false)
-    private LocalDate workTimeEnd;
+    private Time workTimeEnd;
 
     @ManyToOne
     @JoinColumn(name = "adminId", nullable = false)
     private Administrator admin;
 
-    @OneToOne(mappedBy = "station")
+    @OneToOne(mappedBy = "station", fetch = FetchType.EAGER)
     private User user;
 
     @OneToMany(mappedBy = "station")
-    private Set<Travel> travelSet;
+    private Set<Travel> travelSet = new HashSet<>();
 
     public Long getID() {
         return ID;
@@ -80,19 +87,19 @@ public class Station implements Serializable {
         this.address = address;
     }
 
-    public LocalDate getWorkTimeStart() {
+    public Time getWorkTimeStart() {
         return workTimeStart;
     }
 
-    public void setWorkTimeStart(LocalDate workTimeStart) {
+    public void setWorkTimeStart(Time workTimeStart) {
         this.workTimeStart = workTimeStart;
     }
 
-    public LocalDate getWorkTimeEnd() {
+    public Time getWorkTimeEnd() {
         return workTimeEnd;
     }
 
-    public void setWorkTimeEnd(LocalDate workTimeEnd) {
+    public void setWorkTimeEnd(Time workTimeEnd) {
         this.workTimeEnd = workTimeEnd;
     }
 
@@ -114,16 +121,6 @@ public class Station implements Serializable {
 
     @Override
     public String toString() {
-        return "Station{" +
-                "ID=" + ID +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", workTimeStart=" + workTimeStart +
-                ", workTimeEnd=" + workTimeEnd +
-                ", admin=" + admin +
-                ", userSetl=" + user +
-                ", travelSet=" + travelSet +
-                ", cashierSet=" + cashierSet +
-                '}';
+        return name;
     }
 }

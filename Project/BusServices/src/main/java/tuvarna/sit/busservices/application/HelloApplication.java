@@ -2,23 +2,27 @@ package tuvarna.sit.busservices.application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import tuvarna.sit.busservices.data.repository.UserTypeRepository;
-import tuvarna.sit.busservices.presentation.controllers.HelloController;
-
+import tuvarna.sit.busservices.data.entities.User;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
 
 public class HelloApplication extends Application {
     private static Logger logger = Logger.getLogger(HelloApplication.class);
+    private static User user = null;
+
+    public static User getUser() {
+        return user;
+    }
+
+    public static void setUser(User user) {
+        HelloApplication.user = user;
+    }
 
     @Override
     public void start(Stage stage) throws IOException {

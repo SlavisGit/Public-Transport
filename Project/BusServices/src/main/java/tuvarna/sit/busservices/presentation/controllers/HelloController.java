@@ -1,21 +1,13 @@
 package tuvarna.sit.busservices.presentation.controllers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.input.MouseEvent;
 import javafx.event.EventHandler;
-import javafx.stage.Stage;
-import org.apache.log4j.Logger;
-import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
 import tuvarna.sit.busservices.business.services.UserTypeService;
 
@@ -44,27 +36,40 @@ public class HelloController implements EventHandler<MouseEvent> {
     @FXML
     private Button cashier; // Value injected by FXMLLoader
 
+    private static String typeUser;
+
+    public static String getTypeUser() {
+        return typeUser;
+    }
+
+    public static void setTypeUser(String typeUser) {
+        HelloController.typeUser = typeUser;
+    }
+
     @FXML
     private void initialize() {
-        admin.setOnMouseClicked(this::handle);
+        admin.setOnMouseClicked(this::handle) ;
         company.setOnMouseClicked(this::companyLogIn);
         station.setOnMouseClicked(this::stationLogIn);
         cashier.setOnMouseClicked(this::cashierLogIn);
     }
 
     private void cashierLogIn(MouseEvent mouseEvent) {
+        typeUser = "Cashier";
         NewWindowApplication logInApplication = new NewWindowApplication();
         URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/userLogIn-view.fxml");
         logInApplication.logInUser(resources, mouseEvent, path, "Cashier login");
     }
 
     private void stationLogIn(MouseEvent mouseEvent) {
+        typeUser = "Station";
         NewWindowApplication logInApplication = new NewWindowApplication();
         URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/userLogIn-view.fxml");
         logInApplication.logInUser(resources, mouseEvent, path, "Station login");
     }
 
     private void companyLogIn(MouseEvent mouseEvent) {
+        typeUser = "Company";
         NewWindowApplication logInApplication = new NewWindowApplication();
         URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/userLogIn-view.fxml");
         logInApplication.logInUser(resources, mouseEvent, path, "Company login");
@@ -73,6 +78,7 @@ public class HelloController implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent mouseEvent) {
+        typeUser = "Admin";
         NewWindowApplication logInApplication = new NewWindowApplication();
         URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/userLogIn-view.fxml");
         logInApplication.logInUser(resources, mouseEvent, path, "Admin login");

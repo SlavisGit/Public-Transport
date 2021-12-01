@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
 import tuvarna.sit.busservices.business.services.UserService;
 import tuvarna.sit.busservices.data.entities.User;
@@ -56,7 +57,7 @@ public class UserLogInController implements EventHandler<MouseEvent> {
 
     public void logIn(MouseEvent mouseEvent){
         UserService service = UserService.getInstance();
-        User userLogin = service.getUserLogin(password, username);
+        User userLogin = service.getUserLogin(password, username, HelloController.getTypeUser());
         if(userLogin == null) {
             Alert alert = new Alert(Alert.AlertType.
                     ERROR);
@@ -65,6 +66,9 @@ public class UserLogInController implements EventHandler<MouseEvent> {
             alert.showAndWait();
             return;
         }
+
+        HelloApplication.setUser(userLogin);
+
         switch(userLogin.getUserType().getUserType()){
             case "Admin": {
                 NewWindowApplication logInApplication = new NewWindowApplication();
@@ -72,15 +76,25 @@ public class UserLogInController implements EventHandler<MouseEvent> {
                 logInApplication.logInUser(resources, mouseEvent, path, "Administrator");
                 break;
             }
-            case "Company":
+            case "Company": {
                 NewWindowApplication logInApplication = new NewWindowApplication();
                 URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/companyOptions.fxml");
                 logInApplication.logInUser(resources, mouseEvent, path, "Company");
                 break;
-            case "Station":
+            }
+            case "Station": {
+                NewWindowApplication logInApplication = new NewWindowApplication();
+                URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/stationOptions.fxml");
+                logInApplication.logInUser(resources, mouseEvent, path, "Station");
                 break;
-            case "Cashier":
+            }
+            case "Cashier": {
+                NewWindowApplication logInApplication = new NewWindowApplication();
+                URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/cashierOptions.fxml");
+                logInApplication.logInUser(resources, mouseEvent, path, "Cashier");
+                // TODO:
                 break;
+            }
         }
 
 
