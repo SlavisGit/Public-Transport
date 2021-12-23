@@ -41,6 +41,13 @@ public class Administrator implements Serializable{
     @OneToMany(mappedBy = "admin",  fetch = FetchType.EAGER)
     private Set<Station> stationSet = new HashSet<>();
 
+    public Administrator(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Administrator() {
+    }
 
     public Set<Company> getCompanySet() {
         return companySet;

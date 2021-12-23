@@ -5,8 +5,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import tuvarna.sit.busservices.data.access.Connection;
 import tuvarna.sit.busservices.data.entities.Administrator;
-import tuvarna.sit.busservices.data.entities.Company;
-import tuvarna.sit.busservices.data.entities.Station;
 
 import java.util.ArrayList;
 import java.util.List;

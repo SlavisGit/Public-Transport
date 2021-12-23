@@ -1,10 +1,14 @@
 package tuvarna.sit.busservices.data.entities;
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
-@Table(name = "DESTINATION")
+@Table(name = "TICKET")
 @Entity
 public class Ticket implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -17,7 +21,7 @@ public class Ticket implements Serializable {
     private Travel travel;
 
     @ManyToOne
-    @JoinColumn(name = "cashierId", nullable = false)
+    @JoinColumn(name = "cashierId", nullable = true)
     private Cashier cashier;
 
     @Column(name = "price", nullable = false)
@@ -26,6 +30,26 @@ public class Ticket implements Serializable {
     @ManyToOne
     @JoinColumn(name = "statusTypeId", nullable = false)
     private Status status;
+
+    @OneToOne(mappedBy = "ticket")
+    private ClientWithTickets clientWithTickets;
+
+    public ClientWithTickets getClientWithTickets() {
+        return clientWithTickets;
+    }
+
+    public void setClientWithTickets(ClientWithTickets clientWithTickets) {
+        this.clientWithTickets = clientWithTickets;
+    }
+
+    public Ticket(Travel travel, Double price, Status status) {
+        this.travel = travel;
+        this.price = price;
+        this.status = status;
+    }
+
+    public Ticket() {
+    }
 
     public Long getID() {
         return ID;
@@ -69,12 +93,7 @@ public class Ticket implements Serializable {
 
     @Override
     public String toString() {
-        return "Ticket{" +
-                "ID=" + ID +
-                ", travel=" + travel +
-                ", cashier=" + cashier +
-                ", price=" + price +
-                ", status=" + status +
-                '}';
+        return "ID=" + ID +
+                ", price=" + price ;
     }
 }

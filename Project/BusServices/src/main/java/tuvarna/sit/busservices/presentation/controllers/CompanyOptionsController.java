@@ -17,6 +17,9 @@ public class CompanyOptionsController implements EventHandler<MouseEvent> {
     private ResourceBundle resources;
 
     @FXML
+    private Button viewStation;
+
+    @FXML
     private URL location;
 
     @FXML
@@ -31,6 +34,8 @@ public class CompanyOptionsController implements EventHandler<MouseEvent> {
     @FXML
     private Button logOutCompany;
 
+    @FXML
+    private Button addTickets;
 
     @FXML
     void initialize() {
@@ -40,6 +45,27 @@ public class CompanyOptionsController implements EventHandler<MouseEvent> {
         assert viewTravels != null : "fx:id=\"viewTravels\" was not injected: check your FXML file 'companyOptions.fxml'.";
         addTravel.setOnMouseClicked(this::insertTravel);
         logOutCompany.setOnMouseClicked(this::handle);
+        viewTravels.setOnMouseClicked(this::viewTravels);
+        viewStation.setOnMouseClicked(this::viewStations);
+        addTickets.setOnMouseClicked(this::addTickets);
+    }
+
+    private void addTickets(MouseEvent mouseEvent) {
+        NewWindowApplication logInApplication = new NewWindowApplication();
+        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/addTickets.fxml");
+        logInApplication.logInUser(resources, mouseEvent, path, "Tickets");
+    }
+
+    private void viewStations(MouseEvent mouseEvent) {
+        NewWindowApplication logInApplication = new NewWindowApplication();
+        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/stationList.fxml");
+        logInApplication.logInUser(resources, mouseEvent, path, "Stations");
+    }
+
+    private void viewTravels(MouseEvent mouseEvent) {
+        NewWindowApplication logInApplication = new NewWindowApplication();
+        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/travelList.fxml");
+        logInApplication.logInUser(resources, mouseEvent, path, "Travel");
     }
 
     private void insertTravel(MouseEvent mouseEvent) {
@@ -52,7 +78,7 @@ public class CompanyOptionsController implements EventHandler<MouseEvent> {
     public void handle(MouseEvent event) {
         NewWindowApplication logInApplication = new NewWindowApplication();
         URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/hello-view.fxml");
-        logInApplication.logInUser(resources, event, path, "Company");
+        logInApplication.logInUser(resources, event, path, "Travel Service");
     }
 }
 

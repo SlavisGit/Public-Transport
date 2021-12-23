@@ -30,6 +30,9 @@ public class AdministratorOptionsController implements EventHandler<MouseEvent> 
 
     @FXML
     private Button logOut;
+    
+    @FXML
+    private Button createAdmin;
 
     @FXML
     void initialize() {
@@ -42,6 +45,13 @@ public class AdministratorOptionsController implements EventHandler<MouseEvent> 
         createCompany.setOnMouseClicked(this::handle);
         logOut.setOnMouseClicked(this::logOut);
         createStation.setOnMouseClicked(this::createStationBut);
+        createAdmin.setOnMouseClicked(this::createAdmin);
+    }
+
+    private void createAdmin(MouseEvent mouseEvent) {
+        NewWindowApplication logInApplication = new NewWindowApplication();
+        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/createAdmin.fxml");
+        logInApplication.logInUser(resources, mouseEvent, path, "Admin creation");
     }
 
     @Override

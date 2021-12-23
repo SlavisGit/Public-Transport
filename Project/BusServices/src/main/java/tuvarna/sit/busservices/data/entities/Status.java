@@ -3,12 +3,14 @@ package tuvarna.sit.busservices.data.entities;
 
 import javax.persistence.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 
 @Table(name = "STATUS")
 @Entity
 public class Status implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -48,10 +50,6 @@ public class Status implements Serializable {
 
     @Override
     public String toString() {
-        return "Status{" +
-                "ID=" + ID +
-                ", status='" + status + '\'' +
-                ", ticketSet=" + ticketSet +
-                '}';
+        return status;
     }
 }

@@ -3,9 +3,13 @@ package tuvarna.sit.busservices.data.repository;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.data.access.Connection;
+import tuvarna.sit.busservices.data.entities.Cashier;
+import tuvarna.sit.busservices.data.entities.Company;
 import tuvarna.sit.busservices.data.entities.Travel;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +19,68 @@ public class TravelRepository implements DAORepository<Travel>{
 
     public static TravelRepository getInstance() {
         return TravelRepository.TravelHolder.INSTANCE;
+    }
+
+    public List<Travel> getAllForCompany() {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Travel> travels = new ArrayList<>();
+
+        try {
+            String jpql = "SELECT t FROM Travel as t join t.company company WHERE company.id= :idCompany";
+            Company company = HelloApplication.getUser().getCompany();
+
+            travels.addAll(session.createQuery(jpql, Travel.class).setParameter("idCompany", company.getID()).getResultList());
+            transaction.commit();
+        } catch (Exception exception) {
+            log.info("Failed to select all travels: " + exception.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return travels;
+    }
+
+    public List<Travel> getAllForCashier() {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Travel> travels = new ArrayList<>();
+
+        try {
+            String jpql = "SELECT t FROM Travel as t join t.station st WHERE st.id= :idSt";
+            Cashier cashier = HelloApplication.getUser().getCashier();
+
+            travels.addAll(session.createQuery(jpql, Travel.class).setParameter("idSt", cashier.getStation().getID()).getResultList());
+            transaction.commit();
+        } catch (Exception exception) {
+            log.info("Failed to select all travels: " + exception.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return travels;
+    }
+
+    public List<Travel> getAllForStation() {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Travel> travels = new ArrayList<>();
+
+        try {
+            String jpql = "SELECT t FROM Travel t WHERE t.dataTo > :data";
+            LocalDate now = LocalDate.now();
+            travels.addAll(session.createQuery(jpql, Travel.class).setParameter("data", LocalDate.now()).getResultList());
+            transaction.commit();
+        } catch (Exception exception) {
+            log.info("Failed to select all travels: " + exception.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return travels;
     }
 
     private static class TravelHolder {

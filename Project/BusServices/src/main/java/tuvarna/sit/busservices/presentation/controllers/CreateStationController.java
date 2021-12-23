@@ -57,6 +57,7 @@ public class CreateStationController implements EventHandler<MouseEvent> {
         assert goBackFromStation != null : "fx:id=\"goBackFromStation\" was not injected: check your FXML file 'createStation.fxml'.";
 
         createStationButton.setOnMouseClicked(this::handle);
+        goBackFromStation.setOnMouseClicked(this::back);
     }
 
     @Override

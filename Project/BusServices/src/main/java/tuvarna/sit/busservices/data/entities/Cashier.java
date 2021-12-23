@@ -27,6 +27,17 @@ public class Cashier implements Serializable {
     @Column(name = "honorarium", nullable = false)
     private Double honorarium;
 
+    @Column(name = "countTicket", nullable = true)
+    private Double countTicket;
+
+    public Double getCountTicket() {
+        return countTicket;
+    }
+
+    public void setCountTicket(Double countTicket) {
+        this.countTicket = countTicket;
+    }
+
     public Long getID() {
         return ID;
     }
@@ -101,18 +112,20 @@ public class Cashier implements Serializable {
         this.station = station;
     }
 
+    public Cashier(String firstName, String lastName, String ucn, Double honorarium, Station station) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.ucn = ucn;
+        this.honorarium = honorarium;
+        this.station = station;
+    }
+
+    public Cashier() {
+    }
 
     @Override
     public String toString() {
-        return "Cashier{" +
-                "ID=" + ID +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", ucn='" + ucn + '\'' +
-                ", honorarium=" + honorarium +
-                ", station=" + station +
-                ", ticketSet=" + ticketSet +
-                ", userSetl=" + user +
-                '}';
+        return  firstName + '\'' +
+                 lastName + '\'';
     }
 }

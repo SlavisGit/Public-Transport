@@ -1,12 +1,14 @@
 package tuvarna.sit.busservices.data.entities;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 
 @Table(name = "TRANSPORT")
 @Entity
 public class Transport implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -19,6 +21,13 @@ public class Transport implements Serializable {
 
     @OneToMany(mappedBy = "transportType")
     private Set<Travel> travelSet;
+
+    public Transport(String transportType) {
+        this.transportType = transportType;
+    }
+
+    public Transport() {
+    }
 
     public Long getID() {
         return ID;

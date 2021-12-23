@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -31,10 +32,10 @@ public class Travel implements Serializable {
     private Transport transportType;
 
     @Column(name = "dataTo", nullable = false)
-    private Date dataTo;
+    private LocalDate dataTo;
 
     @Column(name = "dataFrom", nullable = false)
-    private Date dataFrom;
+    private LocalDate dataFrom;
 
     @Column(name = "countPlaces", nullable = false)
     private int countPlaces;
@@ -85,19 +86,19 @@ public class Travel implements Serializable {
         this.transportType = transportType;
     }
 
-    public Date getDataTo() {
+    public LocalDate getDataTo() {
         return dataTo;
     }
 
-    public void setDataTo(Date dataTo) {
+    public void setDataTo(LocalDate dataTo) {
         this.dataTo = dataTo;
     }
 
-    public Date getDataFrom() {
+    public LocalDate getDataFrom() {
         return dataFrom;
     }
 
-    public void setDataFrom(Date dataFrom) {
+    public void setDataFrom(LocalDate dataFrom) {
         this.dataFrom = dataFrom;
     }
 
@@ -133,19 +134,26 @@ public class Travel implements Serializable {
         this.station = station;
     }
 
+    public Travel(TravelType travelType, Destination destination, Transport transportType,
+                  LocalDate dataTo, LocalDate dataFrom, int countPlaces, int limitation, Company company,
+                  Station station) {
+        this.travelType = travelType;
+        this.destination = destination;
+        this.transportType = transportType;
+        this.dataTo = dataTo;
+        this.dataFrom = dataFrom;
+        this.countPlaces = countPlaces;
+        this.limitation = limitation;
+        this.company = company;
+        this.station = station;
+    }
+
+    public Travel() {
+    }
+
     @Override
     public String toString() {
-        return "Travel{" +
-                "ID=" + ID +
-                ", travelType=" + travelType +
-                ", destination=" + destination +
-                ", transportType=" + transportType +
-                ", dataTo=" + dataTo +
-                ", dataFrom=" + dataFrom +
-                ", countPlaces=" + countPlaces +
-                ", limitation=" + limitation +
-                ", company=" + company +
-                ", station=" + station +
-                '}';
+        return
+                " Travel from: " + destination ;
     }
 }

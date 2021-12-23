@@ -117,7 +117,7 @@ public class UserRepository implements DAORepository<User>{
         User user = null;
 
         try {
-            String jpql = "select user from User as user join user.userType type  where user.username= :username and user.password= :password and type.userType= :userType";
+            String jpql = "select user from User as user join user.userType type where user.username= :username and user.password= :password and type.userType= :userType";
             Query query = session.createQuery(jpql);
             query.setParameter("username", username);
             query.setParameter("password", password);

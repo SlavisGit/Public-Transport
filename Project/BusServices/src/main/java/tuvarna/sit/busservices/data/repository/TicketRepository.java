@@ -4,7 +4,10 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import tuvarna.sit.busservices.data.access.Connection;
+import tuvarna.sit.busservices.data.entities.Destination;
 import tuvarna.sit.busservices.data.entities.Ticket;
+import tuvarna.sit.busservices.data.entities.Travel;
+import tuvarna.sit.busservices.presentation.models.TravelListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +94,43 @@ public class TicketRepository implements DAORepository<Ticket>{
             session.close();
         }
         return Optional.ofNullable(ticket);
+    }
+
+    public List<Ticket> getWhereDestination(Destination destination) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Ticket> tickets = new ArrayList<>();
+
+        try {
+            String jpql = "SELECT t FROM Ticket t WHERE t.travel.destination= :id and t.status.id= 1";
+            tickets.addAll(session.createQuery(jpql, Ticket.class).setParameter("id", destination).getResultList());
+            transaction.commit();
+        } catch (Exception exception) {
+            log.info("Failed to select all tickets: " + exception.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return tickets;
+    }
+    public List<Ticket> getWhereTravel(Long travelID) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Ticket> tickets = new ArrayList<>();
+
+        try {
+            String jpql = "SELECT t FROM Ticket t WHERE t.travel.id= :id and t.status.id= 2";
+            tickets.addAll(session.createQuery(jpql, Ticket.class).setParameter("id", travelID).getResultList());
+            transaction.commit();
+        } catch (Exception exception) {
+            log.info("Failed to select all tickets: " + exception.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return tickets;
     }
 
     @Override

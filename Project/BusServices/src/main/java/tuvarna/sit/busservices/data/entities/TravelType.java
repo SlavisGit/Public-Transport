@@ -1,5 +1,6 @@
 package tuvarna.sit.busservices.data.entities;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 @Table(name = "TRAVEL_TYPE")
 @Entity
 public class TravelType implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -18,8 +20,19 @@ public class TravelType implements Serializable {
     @Column(name = "travelType", nullable = false)
     private String travelType;
 
+    public TravelType() {
+    }
+
     public TravelType(String travelType) {
         this.travelType = travelType;
+    }
+
+    public void setTravelSet(Set<Travel> travelSet) {
+        this.travelSet = travelSet;
+    }
+
+    public Set<Travel> getTravelSet() {
+        return travelSet;
     }
 
     @OneToMany(mappedBy = "travelType")

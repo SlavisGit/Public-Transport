@@ -19,7 +19,7 @@ public class TravelTypeRepository implements DAORepository<TravelType>{
         return TravelTypeRepository.TravelTypeRepositoryHolder.INSTANCE;
     }
 
-    public static class TravelTypeRepositoryHolder {
+    private static class TravelTypeRepositoryHolder {
 
         public static final TravelTypeRepository INSTANCE = new TravelTypeRepository();
     }

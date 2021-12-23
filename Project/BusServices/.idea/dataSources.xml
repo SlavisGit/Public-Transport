@@ -8,7 +8,7 @@
       <jdbc-url>jdbc:jtds:sqlserver://SLAVI:1433/TravelService;database=TravelService;instance=MSSQLSERVER</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="hibernate.cfg.xml/Hibernate" uuid="5756a69e-3ba9-4328-ae8c-88b5b1875c2b">
+    <data-source source="LOCAL" name="hibernate.cfg.xml/Hibernate" uuid="58b1627e-723e-4b1e-90e5-a6e6461895f1">
       <driver-ref>sqlserver.ms</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>

@@ -39,9 +39,18 @@ public class User implements Serializable {
     @JoinColumn(name = "companyId", nullable = true, referencedColumnName = "id")
     private Company company;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "userTypeId", nullable = false, referencedColumnName = "id")
     private UserType userType;
+
+    public User(String username, String password, UserType userType) {
+        this.username = username;
+        this.password = password;
+        this.userType = userType;
+    }
+
+    public User() {
+    }
 
     public Administrator getAdministrator() {
         return administrator;
