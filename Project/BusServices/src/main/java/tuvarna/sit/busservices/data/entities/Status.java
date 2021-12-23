@@ -24,6 +24,17 @@ public class Status implements Serializable {
     @OneToMany(mappedBy = "status")
     private Set<Ticket> ticketSet;
 
+    @OneToMany(mappedBy = "status")
+    private Set<OrderTickets> orderTickets;
+
+    public Set<OrderTickets> getOrderTickets() {
+        return orderTickets;
+    }
+
+    public void setOrderTickets(Set<OrderTickets> orderTickets) {
+        this.orderTickets = orderTickets;
+    }
+
     public Set<Ticket> getTicketSet() {
         return ticketSet;
     }

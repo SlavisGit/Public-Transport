@@ -28,5 +28,7 @@
         <mapping class="tuvarna.sit.busservices.data.entities.User" />
         <mapping class="tuvarna.sit.busservices.data.entities.Client" />
         <mapping class="tuvarna.sit.busservices.data.entities.ClientWithTickets" />
+        <mapping class="tuvarna.sit.busservices.data.entities.OrderTickets" />
+        <mapping class="tuvarna.sit.busservices.data.entities.Notification" />
     </session-factory>
 </hibernate-configuration>

@@ -7,12 +7,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import tuvarna.sit.busservices.application.HelloApplication;
+import tuvarna.sit.busservices.business.services.OrderTicketsService;
 import tuvarna.sit.busservices.business.services.StatusService;
 import tuvarna.sit.busservices.business.services.TicketService;
-import tuvarna.sit.busservices.data.entities.Station;
-import tuvarna.sit.busservices.data.entities.Status;
-import tuvarna.sit.busservices.data.entities.Ticket;
-import tuvarna.sit.busservices.data.entities.Travel;
+import tuvarna.sit.busservices.data.entities.*;
 import tuvarna.sit.busservices.data.repository.StationRepository;
 import tuvarna.sit.busservices.data.repository.StatusRepository;
 import tuvarna.sit.busservices.data.repository.TravelRepository;
@@ -51,10 +50,17 @@ public class AddTicketsController implements Initializable {
     private void create(MouseEvent mouseEvent) {
         TicketService ticketService = TicketService.getInstance();
         StatusService statusService = StatusService.getInstance();
+        OrderTicketsService orderTicketsService = OrderTicketsService.getInstance();
+        StatusRepository statusRepository = StatusRepository.getInstance();
+
+        Status st = statusRepository.getById(5L).get();
         for (int i = 0; i < Integer.parseInt(countTickets.getText()); i++) {
             Ticket ticket = new Ticket(travelBox.getValue(), Double.parseDouble(price.getText()), statusService.getById(1L));
             ticketService.save(ticket);
+            OrderTickets orderTickets = new OrderTickets(stationBox.getValue(), ticket, HelloApplication.getUser().getCompany(), st);
+            orderTicketsService.save(orderTickets);
         }
+
 
         // TODO: 23.12.2021 г. report to Station (if station agree -> add Cashier(which sale this ticket)
     }

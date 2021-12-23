@@ -31,6 +31,17 @@ public class Ticket implements Serializable {
     @JoinColumn(name = "statusTypeId", nullable = false)
     private Status status;
 
+    @OneToMany(mappedBy = "ticket", fetch = FetchType.EAGER)
+    private Set<OrderTickets> orderTickets = new HashSet<>();
+
+    public Set<OrderTickets> getOrderTickets() {
+        return orderTickets;
+    }
+
+    public void setOrderTickets(Set<OrderTickets> orderTickets) {
+        this.orderTickets = orderTickets;
+    }
+
     @OneToOne(mappedBy = "ticket")
     private ClientWithTickets clientWithTickets;
 

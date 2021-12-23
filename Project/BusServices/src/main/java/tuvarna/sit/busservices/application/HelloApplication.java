@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import tuvarna.sit.busservices.data.entities.User;
+import tuvarna.sit.busservices.notifications.NotificationAlarm;
+
 import java.io.IOException;
 import java.net.URL;
 
@@ -22,6 +24,10 @@ public class HelloApplication extends Application {
 
     public static void setUser(User user) {
         HelloApplication.user = user;
+        if(user != null) {
+            NotificationAlarm notification = new NotificationAlarm();
+            notification.createNotification("hello");
+        }
     }
 
     @Override

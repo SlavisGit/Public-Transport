@@ -30,6 +30,17 @@ public class Company implements Serializable {
     @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
     private Set<Travel> travelSet = new HashSet<>();
 
+    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
+    private Set<OrderTickets> orderTickets = new HashSet<>();
+
+    public Set<OrderTickets> getOrderTickets() {
+        return orderTickets;
+    }
+
+    public void setOrderTickets(Set<OrderTickets> orderTickets) {
+        this.orderTickets = orderTickets;
+    }
+
     @OneToOne(mappedBy = "company", fetch = FetchType.EAGER)
     private User user;
 

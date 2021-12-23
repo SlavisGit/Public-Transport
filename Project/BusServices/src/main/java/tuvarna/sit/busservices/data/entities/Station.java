@@ -44,6 +44,17 @@ public class Station implements Serializable {
     @OneToMany(mappedBy = "station")
     private Set<Travel> travelSet = new HashSet<>();
 
+    @OneToMany(mappedBy = "station")
+    private Set<OrderTickets> orderTickets = new HashSet<>();
+
+    public Set<OrderTickets> getOrderTickets() {
+        return orderTickets;
+    }
+
+    public void setOrderTickets(Set<OrderTickets> orderTickets) {
+        this.orderTickets = orderTickets;
+    }
+
     public Long getID() {
         return ID;
     }

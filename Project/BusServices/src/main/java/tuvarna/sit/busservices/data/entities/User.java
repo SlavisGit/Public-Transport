@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Table(name = "[USER]")
 @Entity
@@ -43,6 +45,9 @@ public class User implements Serializable {
     @JoinColumn(name = "userTypeId", nullable = false, referencedColumnName = "id")
     private UserType userType;
 
+    @OneToMany(mappedBy = "user",  fetch = FetchType.EAGER)
+    private Set<Notification> notificationsSet = new HashSet<>();
+
     public User(String username, String password, UserType userType) {
         this.username = username;
         this.password = password;
@@ -50,6 +55,14 @@ public class User implements Serializable {
     }
 
     public User() {
+    }
+
+    public Set<Notification> getNotificationsSet() {
+        return notificationsSet;
+    }
+
+    public void setNotificationsSet(Set<Notification> notificationsSet) {
+        this.notificationsSet = notificationsSet;
     }
 
     public Administrator getAdministrator() {

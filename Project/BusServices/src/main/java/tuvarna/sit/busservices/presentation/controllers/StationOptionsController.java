@@ -44,6 +44,13 @@ public class StationOptionsController {
         logOut.setOnMouseClicked(this::logOut);
         viewTravel.setOnMouseClicked(this::viewTravel);
         viewCashier.setOnMouseClicked(this::viewCashier);
+        orderByTickets.setOnMouseClicked(this::order);
+    }
+
+    private void order(MouseEvent mouseEvent) {
+        NewWindowApplication logInApplication = new NewWindowApplication();
+        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/orderTickets.fxml");
+        logInApplication.logInUser(resources, mouseEvent, path, "Order Tickets");
     }
 
     private void viewCashier(MouseEvent mouseEvent) {
