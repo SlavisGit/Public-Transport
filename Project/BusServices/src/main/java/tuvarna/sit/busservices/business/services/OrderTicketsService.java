@@ -9,10 +9,11 @@ import tuvarna.sit.busservices.data.repository.OrderTicketsRepository;
 import tuvarna.sit.busservices.presentation.models.AdministratorListView;
 import tuvarna.sit.busservices.presentation.models.OrderTicketsView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class OrderTicketsService {
+public class OrderTicketsService implements Service<OrderTickets>{
     private final OrderTicketsRepository orderTicketsRepository = OrderTicketsRepository.getInstance();
     public static OrderTicketsService getInstance() {
         return OrderTicketsService.OrderTicketsServiceHolder.INSTANCE;
@@ -30,28 +31,27 @@ public class OrderTicketsService {
         orderTicketsRepository.delete(orderTickets);
     }
 
+    @Override
+    public OrderTickets getById(Long id) {
+        return orderTicketsRepository.getById(id);
+    }
+
     public ObservableList<OrderTickets> getAll() {
         List<OrderTickets> users = orderTicketsRepository.getAll();
         return FXCollections.observableList(
-                users.stream()
-                        .map(m -> new OrderTickets(m.getID(), m.getStation(),m.getTicket(), m.getCompany(), m.getStatus()))
-                        .collect(Collectors.toList()));
+                new ArrayList<>(users));
     }
 
     public ObservableList<OrderTickets> getAllFromStation(Long id) {
         List<OrderTickets> users = orderTicketsRepository.getAllFromStation(id);
         return FXCollections.observableList(
-                users.stream()
-                        .map(m -> new OrderTickets(m.getID(), m.getStation(),m.getTicket(), m.getCompany(), m.getStatus()))
-                        .collect(Collectors.toList()));
+                new ArrayList<>(users));
     }
 
     public ObservableList<OrderTickets> getAllFromCompany(Long id) {
         List<OrderTickets> users = orderTicketsRepository.getAll();
         return FXCollections.observableList(
-                users.stream()
-                        .map(m -> new OrderTickets(m.getID(), m.getStation(),m.getTicket(), m.getCompany(), m.getStatus()))
-                        .collect(Collectors.toList()));
+                new ArrayList<>(users));
     }
 
     public void update(OrderTickets orderTickets) {

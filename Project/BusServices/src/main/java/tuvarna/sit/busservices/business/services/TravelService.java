@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TravelService {
+public class TravelService implements Service<Travel>{
     private final TravelRepository travelRepository = TravelRepository.getInstance();
     public static TravelService getInstance () {return TravelServiceHolder.INSTANCE;}
 
@@ -42,10 +42,27 @@ public class TravelService {
         List<Travel> travels = travelRepository.getAllForStation();
         return FXCollections.observableList(new ArrayList<>(travels));
     }
+
+    @Override
+    public void save(Travel object) {
+        travelRepository.save(object);
+    }
+
+    @Override
+    public void update(Travel object) {
+        travelRepository.update(object);
+    }
+
     public void delete(Travel travel) {
         travelRepository.delete(travel);
     }
     public Travel getById(Long id) {
        return travelRepository.getById(id);
+    }
+
+    @Override
+    public List<Travel> getAll() {
+        List<Travel> travels = travelRepository.getAll();
+        return FXCollections.observableList(new ArrayList<>(travels));
     }
 }

@@ -48,33 +48,29 @@ public class StationOptionsController {
     }
 
     private void order(MouseEvent mouseEvent) {
-        NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/orderTickets.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Order Tickets");
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/orderTickets.fxml", "Order Tickets");
     }
 
     private void viewCashier(MouseEvent mouseEvent) {
-        NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/cashierList.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Cashier");
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/cashierList.fxml", "Cashier");
     }
 
     private void viewTravel(MouseEvent mouseEvent) {
-        NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/travelList.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Travel");
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/travelList.fxml", "Travel");
     }
 
     private void logOut(MouseEvent mouseEvent) {
-        NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/hello-view.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Travel Service");
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/hello-view.fxml", "Travel Service");
     }
 
     private void addCashier(MouseEvent mouseEvent) {
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/createCashier.fxml", "Cashier creation");
+    }
+
+    private void newWindow(MouseEvent mouseEvent, String s, String s2) {
         NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/createCashier.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Cashier creation");
+        URL path = getClass().getResource(s);
+        logInApplication.logInUser(resources, mouseEvent, path, s2);
     }
 
 }

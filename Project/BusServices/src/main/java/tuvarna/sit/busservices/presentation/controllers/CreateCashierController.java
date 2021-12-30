@@ -9,13 +9,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
+import tuvarna.sit.busservices.business.services.CashierService;
+import tuvarna.sit.busservices.business.services.UserService;
+import tuvarna.sit.busservices.business.services.UserTypeService;
 import tuvarna.sit.busservices.data.entities.Cashier;
 import tuvarna.sit.busservices.data.entities.User;
-import tuvarna.sit.busservices.data.repository.CashierRepository;
-import tuvarna.sit.busservices.data.repository.UserRepository;
-import tuvarna.sit.busservices.data.repository.UserTypeRepository;
 
 public class CreateCashierController {
+    CashierService cashierService = CashierService.getInstance();
+    UserService userService = UserService.getInstance();
+    UserTypeService userTypeService = UserTypeService.getInstance();
+
 
     @FXML
     private ResourceBundle resources;
@@ -69,17 +73,15 @@ public class CreateCashierController {
     private void createCashier(MouseEvent mouseEvent) {
         Cashier cashier = new Cashier(firstName.getText(), lastName.getText(), ucn.getText(),
                 Double.parseDouble(honorarium.getText()), HelloApplication.getUser().getStation());
-        CashierRepository cashierRepository = CashierRepository.getInstance();
-        cashierRepository.save(cashier);
 
-        UserRepository userRepository = UserRepository.getInstance();
+        cashierService.save(cashier);
+
         User user = new User();
         user.setUsername(username.getText());
         user.setPassword(password.getText());
-        UserTypeRepository userTypeRepository = UserTypeRepository.getInstance();
-        user.setUserType(userTypeRepository.getById(2L));
+        user.setUserType(userTypeService.getById(2L));
         user.setCashier(cashier);
-        userRepository.save(user);
+        userService.save(user);
 
         back(mouseEvent);
     }

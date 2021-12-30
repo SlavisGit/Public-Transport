@@ -7,14 +7,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import tuvarna.sit.busservices.application.NewWindowApplication;
+import tuvarna.sit.busservices.business.services.AdministratorService;
+import tuvarna.sit.busservices.business.services.UserService;
+import tuvarna.sit.busservices.business.services.UserTypeService;
 import tuvarna.sit.busservices.data.entities.Administrator;
 import tuvarna.sit.busservices.data.entities.User;
-import tuvarna.sit.busservices.data.repository.AdministratorRepository;
-import tuvarna.sit.busservices.data.repository.UserRepository;
-import tuvarna.sit.busservices.data.repository.UserTypeRepository;
 
 public class CreateAdminController {
+    AdministratorService administratorService = AdministratorService.getInstance();
+    UserService userService = UserService.getInstance();
+    UserTypeService userTypeService = UserTypeService.getInstance();
 
     @FXML
     private ResourceBundle resources;
@@ -55,14 +59,10 @@ public class CreateAdminController {
 
     private void create(MouseEvent mouseEvent) {
         Administrator administrator = new Administrator(firstName.getText(), lastName.getText());
-        AdministratorRepository administratorRepository = AdministratorRepository.getInstance();
-        administratorRepository.save(administrator);
-
-        UserRepository userRepository = UserRepository.getInstance();
-        UserTypeRepository userTypeRepository = UserTypeRepository.getInstance();
-        User user = new User(username.getText(), password.getText(), userTypeRepository.getById(1L));
+        administratorService.save(administrator);
+        User user = new User(username.getText(), password.getText(), userTypeService.getById(1L));
         user.setAdmin(administrator);
-        userRepository.save(user);
+        userService.save(user);
         back(mouseEvent);
     }
 

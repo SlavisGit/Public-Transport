@@ -10,26 +10,46 @@ import tuvarna.sit.busservices.data.repository.CompanyRepository;
 import tuvarna.sit.busservices.data.repository.StationRepository;
 import tuvarna.sit.busservices.presentation.models.AdministratorListView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AdministratorService {
+public class AdministratorService implements Service<Administrator>{
     private final AdministratorRepository administrator = AdministratorRepository.getInstance();
 
     public static AdministratorService getInstance() {
         return AdministratorServiceHolder.INSTANCE;
     }
 
+    @Override
+    public void save(Administrator object) {
+        administrator.save(object);
+    }
+
+    @Override
+    public void update(Administrator object) {
+        administrator.update(object);
+    }
+
+    @Override
+    public void delete(Administrator object) {
+        administrator.delete(object);
+    }
+
+    @Override
+    public Administrator getById(Long id) {
+        return administrator.getById(id);
+    }
+
     private static class AdministratorServiceHolder {
         public static final AdministratorService INSTANCE = new AdministratorService();
     }
 
-    public ObservableList<AdministratorListView> getAllUsers() {
+    @Override
+    public ObservableList<Administrator> getAll() {
         List<Administrator> users = administrator.getAll();
-        return FXCollections.observableList(
-                users.stream()
-                        .map(m -> new AdministratorListView(m.getFirstName(), m.getLastName()))
-                        .collect(Collectors.toList()));
+        return (ObservableList<Administrator>) FXCollections.observableList(
+                new ArrayList<>(users));
 
     }
 

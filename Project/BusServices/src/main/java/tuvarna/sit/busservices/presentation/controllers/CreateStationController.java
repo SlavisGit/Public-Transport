@@ -13,13 +13,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
+import tuvarna.sit.busservices.business.services.StationService;
+import tuvarna.sit.busservices.business.services.UserService;
+import tuvarna.sit.busservices.business.services.UserTypeService;
 import tuvarna.sit.busservices.data.entities.Station;
 import tuvarna.sit.busservices.data.entities.User;
-import tuvarna.sit.busservices.data.repository.StationRepository;
-import tuvarna.sit.busservices.data.repository.UserRepository;
-import tuvarna.sit.busservices.data.repository.UserTypeRepository;
 
 public class CreateStationController implements EventHandler<MouseEvent> {
+
+    private static StationService stationService = StationService.getInstance();
+    private static UserService userService = UserService.getInstance();
 
     @FXML
     private ResourceBundle resources;
@@ -62,30 +65,23 @@ public class CreateStationController implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
-        String stationName1 = stationName.getText();
-        String address = stationAddress.getText();
-        Time timeToStart = Time.valueOf(startTime.getText() + ":00");
-        Time timeToEnd = Time.valueOf(endTime.getText()+ ":00");
-
         Station station = new Station();
-        station.setName(stationName1);
-        station.setAddress(address);
-        station.setWorkTimeStart(timeToStart);
-        station.setWorkTimeEnd(timeToEnd);
+        station.setName(stationName.getText());
+        station.setAddress(stationAddress.getText());
+        station.setWorkTimeStart(Time.valueOf(startTime.getText() + ":00"));
+        station.setWorkTimeEnd(Time.valueOf(endTime.getText()+ ":00"));
         station.setAdmin(HelloApplication.getUser().getAdmin());
 
-        StationRepository stationRepository = StationRepository.getInstance();
-        stationRepository.save(station);
+        stationService.save(station);
 
-        UserRepository userRepository = UserRepository.getInstance();
         User user = new User();
         user.setUsername(username.getText());
         user.setPassword(password.getText());
-        UserTypeRepository userTypeRepository = UserTypeRepository.getInstance();
-        user.setUserType(userTypeRepository.getById(4L));
+        UserTypeService userTypeService = UserTypeService.getInstance();
+        user.setUserType(userTypeService.getById(4L));
         user.setStation(station);
 
-        userRepository.save(user);
+        userService.save(user);
 
         back(event);
     }

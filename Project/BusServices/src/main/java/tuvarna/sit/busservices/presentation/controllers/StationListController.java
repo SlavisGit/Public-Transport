@@ -13,12 +13,11 @@ import javafx.scene.input.MouseEvent;
 import tuvarna.sit.busservices.application.NewWindowApplication;
 import tuvarna.sit.busservices.business.services.StationService;
 import tuvarna.sit.busservices.data.entities.Station;
-import tuvarna.sit.busservices.presentation.models.StationListView;
 
 
 public class StationListController {
 
-    StationService stationService = StationService.getInstance();
+    private static StationService stationService = StationService.getInstance();
 
     @FXML
     private ResourceBundle resources;

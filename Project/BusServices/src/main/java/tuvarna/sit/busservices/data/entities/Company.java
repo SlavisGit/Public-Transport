@@ -94,10 +94,6 @@ public class Company implements Serializable {
 
     @Override
     public String toString() {
-        return "Company{" +
-                "ID=" + ID +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+        return name;
     }
 }

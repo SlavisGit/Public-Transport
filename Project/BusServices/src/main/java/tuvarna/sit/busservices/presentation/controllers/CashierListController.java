@@ -11,13 +11,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
 import tuvarna.sit.busservices.business.services.CashierService;
 import tuvarna.sit.busservices.data.entities.Cashier;
-import tuvarna.sit.busservices.presentation.models.CashierListView;
-import tuvarna.sit.busservices.presentation.models.TravelListView;
 
 public class CashierListController {
 

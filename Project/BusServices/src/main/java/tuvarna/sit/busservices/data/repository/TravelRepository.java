@@ -71,7 +71,7 @@ public class TravelRepository implements DAORepository<Travel>{
         LocalDate date = LocalDate.now();
         Station station = HelloApplication.getUser().getStation();
         try {
-            String jpql = "SELECT t FROM Travel t join Ticket tick WHERE t.dataTo <= :date AND tick.station = :station AND t.ticketSet.size = 0";
+            String jpql = "SELECT t FROM Travel t join Ticket tick on t.id = tick.travel.id WHERE t.dataTo <= :date AND tick.station = :station AND t.ticketSet.size = 0";
             Company company = HelloApplication.getUser().getCompany();
 
             travels.addAll(session.createQuery(jpql, Travel.class).setParameter("date", date)
@@ -93,10 +93,11 @@ public class TravelRepository implements DAORepository<Travel>{
         List<Travel> travels = new ArrayList<>();
 
         try {
-            String jpql = "SELECT t FROM Travel t join Ticket st WHERE st.station= :idSt";
+            String jpql = "SELECT t FROM Travel t join Ticket st on t.id = st.travel.id WHERE st.station= :idSt";
             Cashier cashier = HelloApplication.getUser().getCashier();
 
-            travels.addAll(session.createQuery(jpql, Travel.class).setParameter("idSt", cashier.getStation().getID()).getResultList());
+            travels.addAll(session.createQuery(jpql, Travel.class)
+                    .setParameter("idSt", cashier.getStation()).getResultList());
             transaction.commit();
         } catch (Exception exception) {
             log.info("Failed to select all travels: " + exception.getMessage());
@@ -114,7 +115,7 @@ public class TravelRepository implements DAORepository<Travel>{
         List<Travel> travels = new ArrayList<>();
         Station station = HelloApplication.getUser().getStation();
         try {
-            String jpql = "SELECT t FROM Travel t join Ticket tick WHERE t.dataTo > :data AND tick.station = :station";
+            String jpql = "SELECT t FROM Travel t join Ticket tick on t.id = tick.travel.id WHERE t.dataTo > :data AND tick.station = :station";
             LocalDate now = LocalDate.now();
             travels.addAll(session.createQuery(jpql, Travel.class).setParameter("data", LocalDate.now()).setParameter("station", station).getResultList());
             transaction.commit();

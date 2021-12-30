@@ -8,17 +8,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 import tuvarna.sit.busservices.application.HelloApplication;
+import tuvarna.sit.busservices.business.services.TransportService;
 import tuvarna.sit.busservices.data.entities.Transport;
-import tuvarna.sit.busservices.data.entities.TravelType;
-import tuvarna.sit.busservices.data.repository.TransportRepository;
-import tuvarna.sit.busservices.data.repository.TravelTypeRepository;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CreateTransportController {
     private static Logger logger = Logger.getLogger(HelloApplication.class);
-    TransportRepository transportRepository = TransportRepository.getInstance();
+    private static TransportService transportService = TransportService.getInstance();
 
     @FXML
     private ResourceBundle resources;
@@ -39,7 +37,7 @@ public class CreateTransportController {
 
     private void createType(MouseEvent mouseEvent) {
         Transport transport = new Transport(this.transport.getText());
-        transportRepository.save(transport);
+        transportService.save(transport);
 
         Stage stage = (Stage) this.transport.getScene().getWindow();
         stage.close();

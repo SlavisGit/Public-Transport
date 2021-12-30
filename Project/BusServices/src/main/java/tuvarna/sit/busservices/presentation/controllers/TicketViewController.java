@@ -18,6 +18,8 @@ import java.util.ResourceBundle;
 
 public class TicketViewController implements Initializable {
 
+    private static TicketService ticketService = TicketService.getInstance();
+
     @FXML
     private TableColumn<Ticket, String> cashierColumn;
 
@@ -50,8 +52,6 @@ public class TicketViewController implements Initializable {
         statusColumn.setCellValueFactory(p -> new ReadOnlyObjectWrapper(p.getValue().getStatus()));
         table.setItems(all);
     }
-
-    TicketService ticketService = TicketService.getInstance();
 
     public  void findTicket(Travel travel) {
         display(ticketService.getFromTravel(travel.getID()));

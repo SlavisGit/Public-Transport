@@ -1,12 +1,10 @@
 package tuvarna.sit.busservices.presentation.controllers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,10 +17,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
+import tuvarna.sit.busservices.business.services.*;
 import tuvarna.sit.busservices.data.entities.*;
-import tuvarna.sit.busservices.data.repository.*;
 
 public class CreateTravelController {
+    private static TravelService travelService = TravelService.getInstance();
+    private static TravelTypeService travelTypeService = TravelTypeService.getInstance();
+    private static TransportService transportService = TransportService.getInstance();
+    private static DestinationService destinationService = DestinationService.getInstance();
+    private static StationService stationService = StationService.getInstance();
 
     @FXML
     private ResourceBundle resources;
@@ -93,40 +96,24 @@ public class CreateTravelController {
     }
 
     private void addTravelType(MouseEvent mouseEvent) {
-        Parent root;
-        try {
-            URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/createTravelType.fxml");
-            root = FXMLLoader.load(path, resources);
-            Stage stage = new Stage();
-            stage.setTitle("Travel Type");
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        openNewDaughterWindow("/tuvarna/sit/busservices/presentation.view/createTravelType.fxml", "Travel Type");
     }
 
     private void addTransport(MouseEvent mouseEvent) {
-        Parent root;
-        try {
-            URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/createTransport.fxml");
-            root = FXMLLoader.load(path, resources);
-            Stage stage = new Stage();
-            stage.setTitle("Transport");
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        openNewDaughterWindow("/tuvarna/sit/busservices/presentation.view/createTransport.fxml", "Transport");
     }
 
     private void addDestination(MouseEvent mouseEvent) {
+        openNewDaughterWindow("/tuvarna/sit/busservices/presentation.view/createDestination.fxml", "Travel Type");
+    }
+
+    private void openNewDaughterWindow(String s, String s2) {
         Parent root;
         try {
-            URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/createDestination.fxml");
+            URL path = getClass().getResource(s);
             root = FXMLLoader.load(path, resources);
             Stage stage = new Stage();
-            stage.setTitle("Travel Type");
+            stage.setTitle(s2);
             stage.setScene(new Scene(root));
             stage.show();
         } catch (Exception e) {
@@ -138,34 +125,30 @@ public class CreateTravelController {
         Travel travel = new Travel(travelType.getValue(), destination.getValue(), transport.getValue(),
                 dataTo.getValue(), dataFrom.getValue(), Integer.parseInt(countPlaces.getText()), Integer.parseInt(limitation.getText()),
                 HelloApplication.getUser().getCompany());
-        TravelRepository travelRepository = TravelRepository.getInstance();
-        travelRepository.save(travel);
+
+        travelService.save(travel);
 
         back(mouseEvent);
     }
 
     public void fillComboBoxTravelType() {
         travelType.getItems().clear();
-        TravelTypeRepository travelTypeRepository = TravelTypeRepository.getInstance();
-        List<TravelType> all = travelTypeRepository.getAll();
+        List<TravelType> all = travelTypeService.getAll();
         travelType.setItems(FXCollections.observableArrayList(all));
     }
 
     public void fillComboBoxDestination() {
-        DestinationRepository destinationRepository = DestinationRepository.getInstance();
-        List<Destination> all = destinationRepository.getAll();
+        List<Destination> all = destinationService.getAll();
         destination.setItems(FXCollections.observableArrayList(all));
     }
 
     public void fillComboBoxTransport() {
-        TransportRepository transportRepository = TransportRepository.getInstance();
-        List<Transport> all = transportRepository.getAll();
+        List<Transport> all = transportService.getAll();
         transport.setItems(FXCollections.observableArrayList(all));
     }
 
     public void fillComboBoxStation() {
-        StationRepository stationRepository = StationRepository.getInstance();
-        List<Station> all = stationRepository.getAll();
+        List<Station> all = stationService.getAll();
         station.setItems(FXCollections.observableArrayList(all));
     }
 

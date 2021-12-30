@@ -15,11 +15,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
-import tuvarna.sit.busservices.business.services.UserService;
+import tuvarna.sit.busservices.business.services.*;
 import tuvarna.sit.busservices.data.entities.*;
-import tuvarna.sit.busservices.data.repository.*;
 
 public class BuyTicketsController implements Initializable {
+    ClientService clientService = ClientService.getInstance();
+    ClientWithTicketsService clientWithTicketsService = ClientWithTicketsService.getInstance();
+    TicketService ticketService = TicketService.getInstance();
+    StatusService statusService = StatusService.getInstance();
+    UserService userService = UserService.getInstance();
+    NotificationService notificationService = NotificationService.getInstance();
+    CashierService cashierService = CashierService.getInstance();
 
     @FXML
     private ComboBox<Destination> destinationComboBox;
@@ -68,46 +74,37 @@ public class BuyTicketsController implements Initializable {
 
     private void create(MouseEvent mouseEvent) {
         Client client = new Client(firstName.getText(), lastName.getText());
-
-        ClientRepository clientRepository = ClientRepository.getInstance();
-        client = getClient(client, clientRepository);
+        client = getClient(client, clientService);
         if (client.getID() == null) {
-            clientRepository.save(client);
+            clientService.save(client);
         }
-
         ClientWithTickets clientWithTickets = new ClientWithTickets(client, placeComboBox.getValue());
-        ClientWithTicketsRepository clientWithTicketsRepository = ClientWithTicketsRepository.getInstance();
-        clientWithTicketsRepository.save(clientWithTickets);
+        clientWithTicketsService.save(clientWithTickets);
+        Status st = statusService.getById(2L);
+        Ticket ticket = placeComboBox.getValue();
+        ticket.setStatus(st);
+        ticket.setCashier(HelloApplication.getUser().getCashier());
+        ticketService.update(ticket);
+        updateCountTicket();
+        notification(ticket);
+        back(mouseEvent);
+    }
 
-        TicketRepository ticketRepository = TicketRepository.getInstance();
-        StatusRepository statusRepository = StatusRepository.getInstance();
-
-        Status st = statusRepository.getById(2L);
-        Ticket value = placeComboBox.getValue();
-        value.setStatus(st);
-        ticketRepository.update(value);
-
-        extracted();
-
-        UserService userService = UserService.getInstance();
+    private void notification(Ticket value) {
         User byIdStation = userService.getByIdCompany(value.getTravel().getCompany().getID());
         Notification notification = new Notification("Bought ticket!", byIdStation);
-        NotificationRepository notificationRepository = NotificationRepository.getInstance();
-        notificationRepository.save(notification);
+        notificationService.save(notification);
     }
 
-    private void extracted() {
+    private void updateCountTicket() {
         Cashier cashier = HelloApplication.getUser().getCashier();
         cashier.setCountTicket(cashier.getCountTicket() + 1);
-        CashierRepository cashierRepository = CashierRepository.getInstance();
-        cashierRepository.update(cashier);
-
-
+        cashierService.update(cashier);
     }
 
 
-    private Client getClient(Client client, ClientRepository clientRepository) {
-        List<Client> all = clientRepository.getAll();
+    private Client getClient(Client client, ClientService clientService) {
+        List<Client> all = clientService.getAll();
         for (Client cl : all) {
             if(cl.getFirstName().equals(client.getFirstName()) && cl.getLastName().equals(client.getLastName())) {
                client = cl;
@@ -118,14 +115,14 @@ public class BuyTicketsController implements Initializable {
     }
 
     private void fillComboBoxPlaces(Destination destination) {
-        TicketRepository ticketRepository = TicketRepository.getInstance();
-        List<Ticket> all = ticketRepository.getWhereDestination(destination);
+        TicketService ticketService = TicketService.getInstance();
+        List<Ticket> all = ticketService.getWhereDestination(destination);
         placeComboBox.setItems(FXCollections.observableArrayList(all));
     }
 
     public void fillComboBoxDestination() {
-        DestinationRepository destinationRepository = DestinationRepository.getInstance();
-        List<Destination> all = destinationRepository.getAll();
+        DestinationService destinationService = DestinationService.getInstance();
+        List<Destination> all = destinationService.getAll();
         destinationComboBox.setItems(FXCollections.observableArrayList(all));
     }
 

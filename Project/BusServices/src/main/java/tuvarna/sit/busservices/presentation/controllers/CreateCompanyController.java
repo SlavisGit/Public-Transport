@@ -11,13 +11,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
+import tuvarna.sit.busservices.business.services.CompanyService;
+import tuvarna.sit.busservices.business.services.UserService;
+import tuvarna.sit.busservices.business.services.UserTypeService;
 import tuvarna.sit.busservices.data.entities.Company;
 import tuvarna.sit.busservices.data.entities.User;
-import tuvarna.sit.busservices.data.repository.CompanyRepository;
-import tuvarna.sit.busservices.data.repository.UserRepository;
-import tuvarna.sit.busservices.data.repository.UserTypeRepository;
 
 public class CreateCompanyController implements EventHandler<MouseEvent> {
+    CompanyService companyService = CompanyService.getInstance();
+    UserService userService = UserService.getInstance();
+    UserTypeService userTypeService = UserTypeService.getInstance();
+
 
     @FXML
     private ResourceBundle resources;
@@ -61,26 +65,20 @@ public class CreateCompanyController implements EventHandler<MouseEvent> {
 
 
     public void createCompany(MouseEvent mouseEvent) {
-        String companyName = name.getText();
-        String companyAddress = address.getText();
-
-        CompanyRepository companyRepository = CompanyRepository.getInstance();
         Company company = new Company();
-        company.setName(companyName);
-        company.setAddress(companyAddress);
+        company.setName(name.getText());
+        company.setAddress(address.getText());
         company.setAdministrator(HelloApplication.getUser().getAdministrator());
 
-        companyRepository.save(company);
+        companyService.save(company);
 
-        UserRepository userRepository = UserRepository.getInstance();
         User user = new User();
         user.setUsername(username.getText());
         user.setPassword(password.getText());
-        UserTypeRepository userTypeRepository = UserTypeRepository.getInstance();
-        user.setUserType(userTypeRepository.getById(3L));
+        user.setUserType(userTypeService.getById(3L));
         user.setCompany(company);
 
-        userRepository.save(user);
+        userService.save(user);
 
         handle(mouseEvent);
     }

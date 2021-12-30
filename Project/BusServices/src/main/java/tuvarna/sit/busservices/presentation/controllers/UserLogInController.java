@@ -49,9 +49,7 @@ public class UserLogInController implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent mouseEvent){
-        NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/hello-view.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Bus services");
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/hello-view.fxml", "Bus services");
     }
 
 
@@ -59,11 +57,7 @@ public class UserLogInController implements EventHandler<MouseEvent> {
         UserService service = UserService.getInstance();
         User userLogin = service.getUserLogin(password, username, HelloController.getTypeUser());
         if(userLogin == null) {
-            Alert alert = new Alert(Alert.AlertType.
-                    ERROR);
-            alert.setTitle("Incorrect data");
-            alert.setContentText("Invalid username or password. Please, try again.");
-            alert.showAndWait();
+            messageBox();
             return;
         }
 
@@ -71,39 +65,37 @@ public class UserLogInController implements EventHandler<MouseEvent> {
 
         switch(userLogin.getUserType().getUserType()){
             case "Admin": {
-                NewWindowApplication logInApplication = new NewWindowApplication();
-                URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/administratorOptions.fxml");
-                logInApplication.logInUser(resources, mouseEvent, path, "Administrator");
+                newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/administratorOptions.fxml", "Administrator");
                 break;
             }
             case "Company": {
-                NewWindowApplication logInApplication = new NewWindowApplication();
-                URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/companyOptions.fxml");
-                logInApplication.logInUser(resources, mouseEvent, path, "Company");
+                newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/companyOptions.fxml", "Company");
                 break;
             }
             case "Station": {
-                NewWindowApplication logInApplication = new NewWindowApplication();
-                URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/stationOptions.fxml");
-                logInApplication.logInUser(resources, mouseEvent, path, "Station");
+                newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/stationOptions.fxml", "Station");
                 break;
             }
             case "Cashier": {
-                NewWindowApplication logInApplication = new NewWindowApplication();
-                URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/cashierOptions.fxml");
-                logInApplication.logInUser(resources, mouseEvent, path, "Cashier");
+                newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/cashierOptions.fxml", "Cashier");
                 break;
             }
         }
 
+    }
 
+    private void newWindow(MouseEvent mouseEvent, String s, String cashier) {
+        NewWindowApplication logInApplication = new NewWindowApplication();
+        URL path = getClass().getResource(s);
+        logInApplication.logInUser(resources, mouseEvent, path, cashier);
+    }
 
-
-
-
-
-
-
+    private void messageBox() {
+        Alert alert = new Alert(Alert.AlertType.
+                ERROR);
+        alert.setTitle("Incorrect data");
+        alert.setContentText("Invalid username or password. Please, try again.");
+        alert.showAndWait();
     }
 
 }

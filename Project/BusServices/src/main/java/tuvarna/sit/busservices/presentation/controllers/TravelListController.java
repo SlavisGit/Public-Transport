@@ -21,7 +21,6 @@ import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
 import tuvarna.sit.busservices.business.services.*;
 import tuvarna.sit.busservices.data.entities.*;
-import tuvarna.sit.busservices.data.repository.NotificationRepository;
 
 
 public class TravelListController {
@@ -29,7 +28,7 @@ public class TravelListController {
     TicketService ticketService = TicketService.getInstance();
     StationService stationService = StationService.getInstance();
     UserService userService = UserService.getInstance();
-    NotificationRepository notificationRepository = NotificationRepository.getInstance();
+    NotificationService notificationService = NotificationService.getInstance();
     CashierService cashierService = CashierService.getInstance();
     TravelService travelService = TravelService.getInstance();
     UserType userType = HelloApplication.getUser().getUserType();
@@ -54,9 +53,6 @@ public class TravelListController {
 
     @FXML
     private TableColumn<Travel, String> destinationColumn;
-
-    @FXML
-    private TableColumn<Travel, String> stationColumn;
 
     @FXML
     private TableColumn<Travel, String> travelTypeColumn;
@@ -89,12 +85,8 @@ public class TravelListController {
             display(travelService.getAllTravelForStation());
             back.setOnMouseClicked(this::backStation);
         }
-
-
         MenuItem menuItem = ViewTicketMenuItem();
-
         contextMenu.getItems().add(menuItem);
-
         tableView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -152,7 +144,7 @@ public class TravelListController {
             for (Cashier cashier :all1) {
                 User byIdCashier = userService.getByIdCashier(cashier.getID());
                 Notification notification1 = new Notification("Delete travel!", byIdCashier);
-                notificationRepository.save(notification1);
+                notificationService.save(notification1);
             }
         }
     }
@@ -163,7 +155,7 @@ public class TravelListController {
             for (Station station: all) {
                 User byIdStation = userService.getByIdStation(station.getID());
                 Notification notification = new Notification("Delete travel!", byIdStation);
-                notificationRepository.save(notification);
+                notificationService.save(notification);
             }
         }
     }
@@ -186,22 +178,22 @@ public class TravelListController {
         tableView.setItems(all);
     }
     private void backStation(MouseEvent mouseEvent) {
-        NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/stationOptions.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Station");
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/stationOptions.fxml", "Station");
     }
 
 
     private void backCashier(MouseEvent mouseEvent) {
-        NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/cashierOptions.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Cashier");
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/cashierOptions.fxml", "Cashier");
     }
 
     private void backCompany(MouseEvent mouseEvent) {
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/companyOptions.fxml", "Company");
+    }
+
+    private void newWindow(MouseEvent mouseEvent, String s, String company) {
         NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/companyOptions.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Company");
+        URL path = getClass().getResource(s);
+        logInApplication.logInUser(resources, mouseEvent, path, company);
     }
 
 }
