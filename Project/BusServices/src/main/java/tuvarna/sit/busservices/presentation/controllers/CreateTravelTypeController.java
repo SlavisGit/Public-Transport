@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -29,13 +30,25 @@ public class CreateTravelTypeController {
 
     @FXML
     private TextField travelType;
-
+    private void messageBox(String message) {
+        Alert alert = new Alert(Alert.AlertType.
+                ERROR);
+        alert.setTitle("Incorrect data");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    private void validationFields() {
+        if(travelType.getText() == null || travelType.getText().trim().isEmpty()) {
+            messageBox("Field travelType is empty");
+        }
+    }
     @FXML
     void initialize() {
         create.setOnMouseClicked(this::createType);
     }
 
     private void createType(MouseEvent mouseEvent) {
+        validationFields();
         TravelType travelType = new TravelType(this.travelType.getText());
         travelTypeService.save(travelType);
 

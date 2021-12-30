@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -19,13 +20,13 @@ import tuvarna.sit.busservices.business.services.*;
 import tuvarna.sit.busservices.data.entities.*;
 
 public class BuyTicketsController implements Initializable {
-    ClientService clientService = ClientService.getInstance();
-    ClientWithTicketsService clientWithTicketsService = ClientWithTicketsService.getInstance();
-    TicketService ticketService = TicketService.getInstance();
-    StatusService statusService = StatusService.getInstance();
-    UserService userService = UserService.getInstance();
-    NotificationService notificationService = NotificationService.getInstance();
-    CashierService cashierService = CashierService.getInstance();
+    private static ClientService clientService = ClientService.getInstance();
+    private static ClientWithTicketsService clientWithTicketsService = ClientWithTicketsService.getInstance();
+    private static TicketService ticketService = TicketService.getInstance();
+    private static StatusService statusService = StatusService.getInstance();
+    private static UserService userService = UserService.getInstance();
+    private static NotificationService notificationService = NotificationService.getInstance();
+    private static CashierService cashierService = CashierService.getInstance();
 
     @FXML
     private ComboBox<Destination> destinationComboBox;
@@ -71,8 +72,29 @@ public class BuyTicketsController implements Initializable {
         URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/cashierOptions.fxml");
         logInApplication.logInUser(resources, mouseEvent, path, "Cashier");
     }
+    private void messageBox(String message) {
+        Alert alert = new Alert(Alert.AlertType.
+                ERROR);
+        alert.setTitle("Incorrect data");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    private void validationFields() {
+        if(firstName.getText() == null || firstName.getText().trim().isEmpty()) {
+            messageBox("Field firstName is empty");
+        }
+
+        if(lastName.getText() == null || lastName.getText().trim().isEmpty()) {
+            messageBox("Field lastName is empty");
+        }
+
+        if(placeComboBox.getSelectionModel().isEmpty() || placeComboBox.getSelectionModel() == null) {
+            messageBox("Field place is empty");
+        }
+    }
 
     private void create(MouseEvent mouseEvent) {
+        validationFields();
         Client client = new Client(firstName.getText(), lastName.getText());
         client = getClient(client, clientService);
         if (client.getID() == null) {

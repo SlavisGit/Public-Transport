@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -63,8 +64,33 @@ public class CreateCompanyController implements EventHandler<MouseEvent> {
         logInApplication.logInUser(resources, mouseEvent, path, "Administrator");
     }
 
+    private void messageBox(String message) {
+        Alert alert = new Alert(Alert.AlertType.
+                ERROR);
+        alert.setTitle("Incorrect data");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void validationFields() {
+        if (name.getText() == null || name.getText().trim().isEmpty()) {
+            messageBox("Field name is empty");
+        }
+
+        if (address.getText() == null || address.getText().trim().isEmpty()) {
+            messageBox("Field address is empty");
+        }
+        if (username.getText() == null || username.getText().trim().isEmpty()) {
+            messageBox("Field username is empty");
+        }
+
+        if (password.getText() == null || password.getText().trim().isEmpty()) {
+            messageBox("Field password is empty");
+        }
+    }
 
     public void createCompany(MouseEvent mouseEvent) {
+        validationFields();
         Company company = new Company();
         company.setName(name.getText());
         company.setAddress(address.getText());

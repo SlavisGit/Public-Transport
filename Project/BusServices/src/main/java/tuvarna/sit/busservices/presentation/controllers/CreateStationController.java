@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -62,9 +63,40 @@ public class CreateStationController implements EventHandler<MouseEvent> {
         createStationButton.setOnMouseClicked(this::handle);
         goBackFromStation.setOnMouseClicked(this::back);
     }
+    private void messageBox(String message) {
+        Alert alert = new Alert(Alert.AlertType.
+                ERROR);
+        alert.setTitle("Incorrect data");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    private void validationFields() {
+        if(username.getText() == null || username.getText().trim().isEmpty()) {
+            messageBox("Field username is empty");
+        }
 
+        if(password.getText() == null || password.getText().trim().isEmpty()) {
+            messageBox("Field password is empty");
+        }
+        if(stationName.getText() == null || stationName.getText().trim().isEmpty()) {
+            messageBox("Field station Name is empty");
+        }
+
+        if(stationAddress.getText() == null || stationAddress.getText().trim().isEmpty()) {
+            messageBox("Field station Address is empty");
+        }
+        if(startTime.getText() == null || startTime.getText().trim().isEmpty()) {
+            messageBox("Field start Time is empty");
+        }
+
+        if(endTime.getText() == null || endTime.getText().trim().isEmpty()) {
+            messageBox("Field end Time is empty");
+        }
+
+    }
     @Override
     public void handle(MouseEvent event) {
+        validationFields();
         Station station = new Station();
         station.setName(stationName.getText());
         station.setAddress(stationAddress.getText());

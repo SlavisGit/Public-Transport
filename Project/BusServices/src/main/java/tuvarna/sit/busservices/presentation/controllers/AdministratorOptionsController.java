@@ -53,34 +53,30 @@ public class AdministratorOptionsController implements EventHandler<MouseEvent> 
     }
 
     private void viewRating(MouseEvent mouseEvent) {
-        NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/cashierList.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Cashier Rating");
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/cashierList.fxml", "Cashier Rating");
     }
 
     private void createAdmin(MouseEvent mouseEvent) {
-        NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/createAdmin.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Admin creation");
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/createAdmin.fxml", "Admin creation");
     }
 
     @Override
     public void handle(MouseEvent mouseEvent) {
-        NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/createCompany.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Company creation");
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/createCompany.fxml", "Company creation");
     }
 
     public void logOut(MouseEvent mouseEvent) {
         HelloApplication.setUser(null);
-        NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/hello-view.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Bus services");
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/hello-view.fxml", "Bus services");
     }
 
     public void createStationBut(MouseEvent mouseEvent) {
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/createStation.fxml", "Station creation");
+    }
+
+    private void newWindow(MouseEvent mouseEvent, String s, String s2) {
         NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/createStation.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Station creation");
+        URL path = getClass().getResource(s);
+        logInApplication.logInUser(resources, mouseEvent, path, s2);
     }
 }

@@ -1,6 +1,7 @@
 package tuvarna.sit.busservices.presentation.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -34,8 +35,20 @@ public class CreateTransportController {
     void initialize() {
         create.setOnMouseClicked(this::createType);
     }
-
+    private void messageBox(String message) {
+        Alert alert = new Alert(Alert.AlertType.
+                ERROR);
+        alert.setTitle("Incorrect data");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    private void validationFields() {
+        if(transport.getText() == null || transport.getText().trim().isEmpty()) {
+            messageBox("Field transport is empty");
+        }
+    }
     private void createType(MouseEvent mouseEvent) {
+        validationFields();
         Transport transport = new Transport(this.transport.getText());
         transportService.save(transport);
 

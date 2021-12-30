@@ -54,6 +54,7 @@ public class UserLogInController implements EventHandler<MouseEvent> {
 
 
     public void logIn(MouseEvent mouseEvent){
+        validationFields();
         UserService service = UserService.getInstance();
         User userLogin = service.getUserLogin(password, username, HelloController.getTypeUser());
         if(userLogin == null) {
@@ -83,7 +84,21 @@ public class UserLogInController implements EventHandler<MouseEvent> {
         }
 
     }
-
+    private void validationFields() {
+        if(password.getText() == null || password.getText().trim().isEmpty()) {
+            messageBox("Field Count Tickets is empty");
+        }
+        if(username.getText() == null || username.getText().trim().isEmpty() ) {
+            messageBox("Field Price is empty");
+        }
+    }
+    private void messageBox(String message) {
+        Alert alert = new Alert(Alert.AlertType.
+                ERROR);
+        alert.setTitle("Incorrect data");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
     private void newWindow(MouseEvent mouseEvent, String s, String cashier) {
         NewWindowApplication logInApplication = new NewWindowApplication();
         URL path = getClass().getResource(s);

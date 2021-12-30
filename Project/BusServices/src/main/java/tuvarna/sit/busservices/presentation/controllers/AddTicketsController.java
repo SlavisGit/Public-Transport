@@ -3,6 +3,7 @@ package tuvarna.sit.busservices.presentation.controllers;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -48,8 +49,15 @@ public class AddTicketsController implements Initializable {
         back.setOnMouseClicked(this::back);
         create.setOnMouseClicked(this::create);
     }
-
+    private void messageBox(String message) {
+        Alert alert = new Alert(Alert.AlertType.
+                ERROR);
+        alert.setTitle("Incorrect data");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
     private void create(MouseEvent mouseEvent) {
+        validationFields();
         Status st = statusService.getById(5L);
         for (int i = 0; i < Integer.parseInt(countTickets.getText()); i++) {
             Ticket ticket = new Ticket(travelBox.getValue(), Double.parseDouble(price.getText()), statusService.getById(6L));
@@ -59,6 +67,24 @@ public class AddTicketsController implements Initializable {
         }
         notification();
         back(mouseEvent);
+    }
+
+    private void validationFields() {
+        if(countTickets.getText() == null || countTickets.getText().trim().isEmpty() || countTickets.getText().matches("\"[0-9]*\"")) {
+            messageBox("Field Count Tickets is empty");
+        }
+
+        if(travelBox.getSelectionModel().isEmpty() || travelBox.getSelectionModel() == null) {
+            messageBox("Field Travel is empty");
+        }
+
+        if(price.getText() == null || price.getText().trim().isEmpty() || price.getText().matches("\"[0-9]*\"")) {
+            messageBox("Field Price is empty");
+        }
+
+        if(stationBox.getSelectionModel().isEmpty() || stationBox.getSelectionModel() == null) {
+            messageBox("Field Station is empty");
+        }
     }
 
     private void notification() {

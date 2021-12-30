@@ -1,6 +1,7 @@
 package tuvarna.sit.busservices.presentation.controllers;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -9,10 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import tuvarna.sit.busservices.application.HelloApplication;
@@ -120,8 +118,38 @@ public class CreateTravelController {
             e.printStackTrace();
         }
     }
-
+    private void messageBox(String message) {
+        Alert alert = new Alert(Alert.AlertType.
+                ERROR);
+        alert.setTitle("Incorrect data");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    private void validationFields() {
+        if(countPlaces.getText() == null || countPlaces.getText().trim().isEmpty() || countPlaces.getText().matches("\"[0-9]*\"")) {
+            messageBox("Field countPlaces is empty");
+        }
+        if(limitation.getText() == null || limitation.getText().trim().isEmpty()) {
+            messageBox("Field lastName is empty");
+        }
+        if(travelType.getSelectionModel().isEmpty() || travelType.getSelectionModel() == null) {
+            messageBox("Field travelType is empty");
+        }
+        if(destination.getSelectionModel().isEmpty() || destination.getSelectionModel() == null) {
+            messageBox("Field destination is empty");
+        }
+        if(transport.getSelectionModel().isEmpty() || transport.getSelectionModel() == null) {
+            messageBox("Field transport is empty");
+        }
+        if(dataTo.getValue() == null || dataTo.getValue().isAfter(LocalDate.now())) {
+            messageBox("Field dataTo is empty or invalid date");
+        }
+        if(dataFrom.getValue() == null || dataFrom.getValue().isAfter(LocalDate.now())) {
+            messageBox("Field dataFrom is empty or invalid date");
+        }
+    }
     private void createTravel(MouseEvent mouseEvent) {
+        validationFields();
         Travel travel = new Travel(travelType.getValue(), destination.getValue(), transport.getValue(),
                 dataTo.getValue(), dataFrom.getValue(), Integer.parseInt(countPlaces.getText()), Integer.parseInt(limitation.getText()),
                 HelloApplication.getUser().getCompany());
