@@ -74,7 +74,7 @@ public class AdministratorRepository implements DAORepository<Administrator>{
     }
 
     @Override
-    public Optional<Administrator> getById(Long id) {
+    public Administrator getById(Long id) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         Administrator administrator = null;
@@ -89,7 +89,7 @@ public class AdministratorRepository implements DAORepository<Administrator>{
         finally {
             session.close();
         }
-        return Optional.ofNullable(administrator);
+        return administrator;
     }
 
     @Override

@@ -5,25 +5,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="258.0" prefWidth="190.0" style="-fx-background-color: linear-gradient(to left, #FFA07A,#A3E4D7  );" styleClass="LinearGradient" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tuvarna.sit.busservices.presentation.controllers.AdministratorOptionsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="258.0" prefWidth="323.0" style="-fx-background-color: linear-gradient(to left, #FFA07A,#A3E4D7  );" styleClass="LinearGradient" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tuvarna.sit.busservices.presentation.controllers.AdministratorOptionsController">
    <children>
-      <Button fx:id="createCompany" layoutX="44.0" layoutY="76.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="103.0" text="Create company">
+      <Button fx:id="createCompany" layoutX="31.0" layoutY="58.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="119.0" text="Create company">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="createStation" layoutX="44.0" layoutY="114.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Create station">
+      <Button fx:id="createStation" layoutX="31.0" layoutY="104.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="119.0" text="Create station">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="logOut" layoutX="124.0" layoutY="219.0" mnemonicParsing="false" text="Log out" />
+      <Button fx:id="logOut" layoutX="256.0" layoutY="219.0" mnemonicParsing="false" text="Log out" />
       <Label fx:id="hello" layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="68.0" text="Hello, ">
          <font>
             <Font name="Calibri Bold" size="14.0" />
          </font>
       </Label>
-      <Button fx:id="createAdmin" layoutX="36.0" layoutY="156.0" mnemonicParsing="false" text="Create Administrator">
+      <Button fx:id="createAdmin" layoutX="31.0" layoutY="154.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="119.0" text="Create Administrator">
+         <font>
+            <Font name="Calibri" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="viewCashierRating" layoutX="194.0" layoutY="58.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="119.0" text="View Cashier Rating  ">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>

@@ -5,7 +5,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tuvarna.sit.busservices.presentation.controllers.OrderTicketsController">
    <children>
       <TableView fx:id="tableView" layoutX="5.0" layoutY="28.0" prefHeight="314.0" prefWidth="585.0">
@@ -15,6 +14,8 @@
             <TableColumn fx:id="statusColumn" prefWidth="99.0" text="Status" />
         </columns>
       </TableView>
-      <Button fx:id="confirm" defaultButton="true" layoutX="531.0" layoutY="361.0" mnemonicParsing="false" text="Confirm" />
+      <Button fx:id="confirm" defaultButton="true" layoutX="376.0" layoutY="361.0" mnemonicParsing="false" text="Confirm" />
+      <Button fx:id="refusal" cancelButton="true" layoutX="442.0" layoutY="361.0" mnemonicParsing="false" text="Refusal" />
+      <Button fx:id="back" cancelButton="true" layoutX="549.0" layoutY="361.0" mnemonicParsing="false" text="Back" />
    </children>
 </AnchorPane>

@@ -82,7 +82,7 @@ public class CreateStationController implements EventHandler<MouseEvent> {
         user.setUsername(username.getText());
         user.setPassword(password.getText());
         UserTypeRepository userTypeRepository = UserTypeRepository.getInstance();
-        user.setUserType(userTypeRepository.getById(4L).get());
+        user.setUserType(userTypeRepository.getById(4L));
         user.setStation(station);
 
         userRepository.save(user);

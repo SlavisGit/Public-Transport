@@ -60,7 +60,7 @@ public class CreateAdminController {
 
         UserRepository userRepository = UserRepository.getInstance();
         UserTypeRepository userTypeRepository = UserTypeRepository.getInstance();
-        User user = new User(username.getText(), password.getText(), userTypeRepository.getById(1L).get());
+        User user = new User(username.getText(), password.getText(), userTypeRepository.getById(1L));
         user.setAdmin(administrator);
         userRepository.save(user);
         back(mouseEvent);

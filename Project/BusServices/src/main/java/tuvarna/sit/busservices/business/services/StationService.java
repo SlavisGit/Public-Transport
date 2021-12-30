@@ -4,10 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import tuvarna.sit.busservices.data.entities.Station;
 import tuvarna.sit.busservices.data.repository.StationRepository;
-import tuvarna.sit.busservices.presentation.models.StationListView;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class StationService {
     private final StationRepository stationRepository = StationRepository.getInstance();
@@ -19,10 +18,12 @@ public class StationService {
         public static final StationService INSTANCE = new StationService();
     }
 
-    public ObservableList<StationListView> getAll(){
+    public ObservableList<Station> getAll(){
         List<Station> stations = stationRepository.getAll();
         return FXCollections.observableList(
-                stations.stream().map(m -> new StationListView(m.getName(), m.getAddress(), m.getWorkTimeStart(), m.getWorkTimeEnd()))
-                        .collect(Collectors.toList()));
+                new ArrayList<>(stations));
+    }
+    public Station getById(Long id) {
+        return stationRepository.getById(id);
     }
 }

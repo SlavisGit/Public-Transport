@@ -2,14 +2,11 @@ package tuvarna.sit.busservices.business.services;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import tuvarna.sit.busservices.data.entities.OrderTickets;
 import tuvarna.sit.busservices.data.entities.Status;
 import tuvarna.sit.busservices.data.repository.StatusRepository;
-import tuvarna.sit.busservices.presentation.models.OrderTicketsView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class StatusService {
 
@@ -23,7 +20,7 @@ public class StatusService {
     }
 
    public Status getById(Long id) {
-       return statusRepository.getById(id).get();
+       return statusRepository.getById(id);
    }
     public ObservableList<Status> getAllForOrder() {
         List<Status> users = statusRepository.getAll();

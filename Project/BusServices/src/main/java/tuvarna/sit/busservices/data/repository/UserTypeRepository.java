@@ -77,7 +77,7 @@ public class UserTypeRepository implements DAORepository<UserType>{
     }
 
     @Override
-    public Optional<UserType> getById(Long id) {
+    public UserType getById(Long id) {
 
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
@@ -92,7 +92,7 @@ public class UserTypeRepository implements DAORepository<UserType>{
         } finally {
             session.close();
         }
-        return Optional.ofNullable(userType);
+        return userType;
     }
 
     @Override

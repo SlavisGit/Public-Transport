@@ -9,6 +9,7 @@ import tuvarna.sit.busservices.data.entities.Ticket;
 import tuvarna.sit.busservices.data.entities.Travel;
 import tuvarna.sit.busservices.presentation.models.TravelListView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -79,7 +80,7 @@ public class TicketRepository implements DAORepository<Ticket>{
     }
 
     @Override
-    public Optional<Ticket> getById(Long id) {
+    public Ticket getById(Long id) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         Ticket ticket = null;
@@ -93,7 +94,7 @@ public class TicketRepository implements DAORepository<Ticket>{
         } finally {
             session.close();
         }
-        return Optional.ofNullable(ticket);
+        return ticket;
     }
 
     public List<Ticket> getWhereDestination(Destination destination) {

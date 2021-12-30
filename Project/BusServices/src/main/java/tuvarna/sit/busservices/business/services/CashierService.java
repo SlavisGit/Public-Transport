@@ -6,6 +6,7 @@ import tuvarna.sit.busservices.data.entities.Cashier;
 import tuvarna.sit.busservices.data.repository.CashierRepository;
 import tuvarna.sit.busservices.presentation.models.CashierListView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,10 +20,9 @@ public class CashierService {
         public static final CashierService INSTANCE = new CashierService();
     }
 
-    public ObservableList<CashierListView> getAll(){
+    public ObservableList<Cashier> getAll(){
         List<Cashier> stations = cashierRepository.getAll();
         return FXCollections.observableList(
-                stations.stream().map(m -> new CashierListView(m.getFirstName(), m.getLastName(), m.getUcn(), m.getHonorarium(), m.getStation()))
-                        .collect(Collectors.toList()));
+                new ArrayList<>(stations));
     }
 }

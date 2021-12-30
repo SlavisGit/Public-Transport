@@ -23,6 +23,14 @@ public class Notification implements Serializable {
     @JoinColumn(name = "userId", nullable = false)
     private User user;
 
+    public Notification(String comment, User user) {
+        this.comment = comment;
+        this.user = user;
+    }
+
+    public Notification() {
+    }
+
     @Override
     public String toString() {
         return "Notification{" +

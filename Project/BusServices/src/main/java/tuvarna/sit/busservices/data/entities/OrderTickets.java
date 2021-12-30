@@ -52,6 +52,15 @@ public class OrderTickets implements Serializable {
     public OrderTickets() {
     }
 
+    public OrderTickets(Long id, Station station, Ticket ticket, Company company, Status status) {
+
+        this.ID = id;
+        this.station = station;
+        this.ticket = ticket;
+        this.company = company;
+        this.status = status;
+    }
+
     public OrderTickets(Station station, Ticket ticket, Company company, Status status) {
         this.station = station;
         this.ticket = ticket;

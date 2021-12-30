@@ -1,10 +1,12 @@
 package tuvarna.sit.busservices.presentation.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -77,7 +79,6 @@ public class CreateTravelController {
         fillComboBoxStation();
         fillComboBoxDestination();
         fillComboBoxTransport();
-
         create.setOnMouseClicked(this::createTravel);
         addDestination.setOnMouseClicked(this::addDestination);
         addTransport.setOnMouseClicked(this::addTransport);
@@ -136,7 +137,7 @@ public class CreateTravelController {
     private void createTravel(MouseEvent mouseEvent) {
         Travel travel = new Travel(travelType.getValue(), destination.getValue(), transport.getValue(),
                 dataTo.getValue(), dataFrom.getValue(), Integer.parseInt(countPlaces.getText()), Integer.parseInt(limitation.getText()),
-                HelloApplication.getUser().getCompany(), station.getValue());
+                HelloApplication.getUser().getCompany());
         TravelRepository travelRepository = TravelRepository.getInstance();
         travelRepository.save(travel);
 

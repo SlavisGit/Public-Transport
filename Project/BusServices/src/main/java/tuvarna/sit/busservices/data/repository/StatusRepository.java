@@ -77,7 +77,7 @@ public class StatusRepository implements DAORepository<Status>{
     }
 
     @Override
-    public Optional<Status> getById(Long id) {
+    public Status getById(Long id) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         Status status = null;
@@ -91,7 +91,7 @@ public class StatusRepository implements DAORepository<Status>{
         } finally {
             session.close();
         }
-        return Optional.ofNullable(status);
+        return status;
     }
 
     @Override

@@ -47,12 +47,16 @@ public class Travel implements Serializable {
     @JoinColumn(name = "companyId", nullable = false)
     private Company company;
 
-    @ManyToOne
-    @JoinColumn(name = "stationId", nullable = false)
-    private Station station;
-
-    @OneToMany(mappedBy = "travel")
+    @OneToMany(mappedBy = "travel", fetch = FetchType.EAGER)
     private Set<Ticket> ticketSet;
+
+    public Set<Ticket> getTicketSet() {
+        return ticketSet;
+    }
+
+    public void setTicketSet(Set<Ticket> ticketSet) {
+        this.ticketSet = ticketSet;
+    }
 
     public Long getID() {
         return ID;
@@ -126,17 +130,8 @@ public class Travel implements Serializable {
         this.company = company;
     }
 
-    public Station getStation() {
-        return station;
-    }
-
-    public void setStation(Station station) {
-        this.station = station;
-    }
-
     public Travel(TravelType travelType, Destination destination, Transport transportType,
-                  LocalDate dataTo, LocalDate dataFrom, int countPlaces, int limitation, Company company,
-                  Station station) {
+                  LocalDate dataTo, LocalDate dataFrom, int countPlaces, int limitation, Company company) {
         this.travelType = travelType;
         this.destination = destination;
         this.transportType = transportType;
@@ -145,7 +140,6 @@ public class Travel implements Serializable {
         this.countPlaces = countPlaces;
         this.limitation = limitation;
         this.company = company;
-        this.station = station;
     }
 
     public Travel() {

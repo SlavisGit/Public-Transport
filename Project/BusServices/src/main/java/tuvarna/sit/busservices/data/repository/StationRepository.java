@@ -78,7 +78,7 @@ public class StationRepository implements DAORepository<Station>{
     }
 
     @Override
-    public Optional<Station> getById(Long id) {
+    public Station getById(Long id) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         Station station = null;
@@ -92,7 +92,7 @@ public class StationRepository implements DAORepository<Station>{
         } finally {
             session.close();
         }
-        return Optional.ofNullable(station);
+        return station;
     }
 
     @Override

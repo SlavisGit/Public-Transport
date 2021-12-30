@@ -1,6 +1,7 @@
 package tuvarna.sit.busservices.presentation.controllers;
 
 import java.net.URL;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -11,8 +12,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
 import tuvarna.sit.busservices.business.services.CashierService;
+import tuvarna.sit.busservices.data.entities.Cashier;
 import tuvarna.sit.busservices.presentation.models.CashierListView;
 import tuvarna.sit.busservices.presentation.models.TravelListView;
 
@@ -28,22 +31,22 @@ public class CashierListController {
     private Button back;
 
     @FXML
-    private TableColumn<CashierListView, String> firstName;
+    private TableColumn<Cashier, String> firstName;
 
     @FXML
-    private TableColumn<CashierListView, String> honorarium;
+    private TableColumn<Cashier, String> honorarium;
 
     @FXML
-    private TableColumn<CashierListView, String> lastName;
+    private TableColumn<Cashier, String> lastName;
 
     @FXML
-    private TableColumn<CashierListView, String> station;
+    private TableColumn<Cashier, String> station;
 
     @FXML
-    private TableView<CashierListView> tableView;
+    private TableView<Cashier> tableView;
 
     @FXML
-    private TableColumn<CashierListView, String> ucn;
+    private TableColumn<Cashier, String> ucn;
 
     @FXML
     void initialize() {
@@ -65,7 +68,10 @@ public class CashierListController {
     }
     public void display(){
         CashierService cashierService = CashierService.getInstance();
-        ObservableList<CashierListView> all = cashierService.getAll();
+        ObservableList<Cashier> all = cashierService.getAll();
+        if(HelloApplication.getUser().getAdministrator() != null){
+            all.sort(Comparator.comparing(Cashier::getCountTicket).reversed().thenComparing(Cashier::getHonorarium).reversed());
+        }
         firstName.setCellValueFactory(p -> new ReadOnlyObjectWrapper(p.getValue().getFirstName()));
 
         lastName.setCellValueFactory(b -> new ReadOnlyObjectWrapper(b.getValue().getLastName()));

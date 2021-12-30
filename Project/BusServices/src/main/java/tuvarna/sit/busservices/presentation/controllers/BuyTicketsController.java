@@ -8,30 +8,31 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import tuvarna.sit.busservices.application.HelloApplication;
+import tuvarna.sit.busservices.application.NewWindowApplication;
+import tuvarna.sit.busservices.business.services.UserService;
 import tuvarna.sit.busservices.data.entities.*;
 import tuvarna.sit.busservices.data.repository.*;
 
-public class BuyTicketsController {
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
+public class BuyTicketsController implements Initializable {
 
     @FXML
     private ComboBox<Destination> destinationComboBox;
+
+    @FXML
+    private ResourceBundle resources;
 
     @FXML
     private Button back;
 
     @FXML
     private Button create;
+
     @FXML
     private TextField firstName;
 
@@ -41,8 +42,8 @@ public class BuyTicketsController {
     @FXML
     private ComboBox<Ticket> placeComboBox;
 
-    @FXML
-    void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         assert destinationComboBox != null : "fx:id=\"destinationComboBox\" was not injected: check your FXML file 'buyTickets.fxml'.";
         assert firstName != null : "fx:id=\"firstName\" was not injected: check your FXML file 'buyTickets.fxml'.";
         assert lastName != null : "fx:id=\"lastName\" was not injected: check your FXML file 'buyTickets.fxml'.";
@@ -56,6 +57,13 @@ public class BuyTicketsController {
 
         destinationComboBox.setOnAction(event);
         create.setOnMouseClicked(this::create);
+        back.setOnMouseClicked(this::back);
+    }
+
+    private void back(MouseEvent mouseEvent) {
+        NewWindowApplication logInApplication = new NewWindowApplication();
+        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/cashierOptions.fxml");
+        logInApplication.logInUser(resources, mouseEvent, path, "Cashier");
     }
 
     private void create(MouseEvent mouseEvent) {
@@ -74,12 +82,18 @@ public class BuyTicketsController {
         TicketRepository ticketRepository = TicketRepository.getInstance();
         StatusRepository statusRepository = StatusRepository.getInstance();
 
-        Status st = statusRepository.getById(2L).get();
+        Status st = statusRepository.getById(2L);
         Ticket value = placeComboBox.getValue();
         value.setStatus(st);
         ticketRepository.update(value);
 
         extracted();
+
+        UserService userService = UserService.getInstance();
+        User byIdStation = userService.getByIdCompany(value.getTravel().getCompany().getID());
+        Notification notification = new Notification("Bought ticket!", byIdStation);
+        NotificationRepository notificationRepository = NotificationRepository.getInstance();
+        notificationRepository.save(notification);
     }
 
     private void extracted() {
@@ -87,6 +101,8 @@ public class BuyTicketsController {
         cashier.setCountTicket(cashier.getCountTicket() + 1);
         CashierRepository cashierRepository = CashierRepository.getInstance();
         cashierRepository.update(cashier);
+
+
     }
 
 
@@ -112,6 +128,7 @@ public class BuyTicketsController {
         List<Destination> all = destinationRepository.getAll();
         destinationComboBox.setItems(FXCollections.observableArrayList(all));
     }
+
 
 }
 

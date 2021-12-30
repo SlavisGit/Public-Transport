@@ -30,11 +30,31 @@ public class OrderTicketsService {
         orderTicketsRepository.delete(orderTickets);
     }
 
-    public ObservableList<OrderTicketsView> getAll() {
+    public ObservableList<OrderTickets> getAll() {
         List<OrderTickets> users = orderTicketsRepository.getAll();
         return FXCollections.observableList(
                 users.stream()
-                        .map(m -> new OrderTicketsView(m.getID(),m.getStation(),m.getTicket(), m.getCompany(), m.getStatus()))
+                        .map(m -> new OrderTickets(m.getID(), m.getStation(),m.getTicket(), m.getCompany(), m.getStatus()))
                         .collect(Collectors.toList()));
+    }
+
+    public ObservableList<OrderTickets> getAllFromStation(Long id) {
+        List<OrderTickets> users = orderTicketsRepository.getAllFromStation(id);
+        return FXCollections.observableList(
+                users.stream()
+                        .map(m -> new OrderTickets(m.getID(), m.getStation(),m.getTicket(), m.getCompany(), m.getStatus()))
+                        .collect(Collectors.toList()));
+    }
+
+    public ObservableList<OrderTickets> getAllFromCompany(Long id) {
+        List<OrderTickets> users = orderTicketsRepository.getAll();
+        return FXCollections.observableList(
+                users.stream()
+                        .map(m -> new OrderTickets(m.getID(), m.getStation(),m.getTicket(), m.getCompany(), m.getStatus()))
+                        .collect(Collectors.toList()));
+    }
+
+    public void update(OrderTickets orderTickets) {
+        orderTicketsRepository.update(orderTickets);
     }
 }

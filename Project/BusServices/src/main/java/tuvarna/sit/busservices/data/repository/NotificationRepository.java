@@ -76,7 +76,7 @@ public class NotificationRepository implements DAORepository<Notification> {
     }
 
     @Override
-    public Optional<Notification> getById(Long id) {
+    public Notification getById(Long id) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         Notification notification = null;
@@ -90,7 +90,7 @@ public class NotificationRepository implements DAORepository<Notification> {
         } finally {
             session.close();
         }
-        return Optional.ofNullable(notification);
+        return notification;
     }
 
     @Override
@@ -102,6 +102,25 @@ public class NotificationRepository implements DAORepository<Notification> {
         try {
             String jpql = "SELECT t FROM Notification t";
             notifications.addAll(session.createQuery(jpql, Notification.class).getResultList());
+            transaction.commit();
+        } catch (Exception exception) {
+            log.info("Failed to select all notifications: " + exception.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return notifications;
+    }
+
+    public List<Notification> getByIdUser(Long id) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Notification> notifications = new ArrayList<>();
+
+        try {
+            String jpql = "SELECT t FROM Notification t WHERE t.user.id = :id";
+            notifications.addAll(session.createQuery(jpql, Notification.class).setParameter("id", id).getResultList());
             transaction.commit();
         } catch (Exception exception) {
             log.info("Failed to select all notifications: " + exception.getMessage());

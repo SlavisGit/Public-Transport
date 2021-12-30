@@ -75,7 +75,7 @@ public class OrderTicketsRepository implements DAORepository<OrderTickets> {
     }
 
     @Override
-    public Optional<OrderTickets> getById(Long id) {
+    public OrderTickets getById(Long id) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         OrderTickets orderTickets = null;
@@ -89,7 +89,7 @@ public class OrderTicketsRepository implements DAORepository<OrderTickets> {
         } finally {
             session.close();
         }
-        return Optional.ofNullable(orderTickets);
+        return orderTickets;
     }
 
     @Override
@@ -101,6 +101,44 @@ public class OrderTicketsRepository implements DAORepository<OrderTickets> {
         try {
             String jpql = "SELECT t FROM OrderTickets t";
             orderTickets.addAll(session.createQuery(jpql, OrderTickets.class).getResultList());
+            transaction.commit();
+        } catch (Exception exception) {
+            log.info("Failed to select all orderTickets: " + exception.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return orderTickets;
+    }
+
+    public List<OrderTickets> getAllFromStation(Long id) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<OrderTickets> orderTickets = new ArrayList<>();
+
+        try {
+            String jpql = "SELECT t FROM OrderTickets t where t.station.id = :id";
+            orderTickets.addAll(session.createQuery(jpql, OrderTickets.class).setParameter("id", id).getResultList());
+            transaction.commit();
+        } catch (Exception exception) {
+            log.info("Failed to select all orderTickets: " + exception.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return orderTickets;
+    }
+
+    public List<OrderTickets> getAllFromCompany(Long id) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<OrderTickets> orderTickets = new ArrayList<>();
+
+        try {
+            String jpql = "SELECT t FROM OrderTickets t where t.company.id = :id";
+            orderTickets.addAll(session.createQuery(jpql, OrderTickets.class).setParameter("id", id).getResultList());
             transaction.commit();
         } catch (Exception exception) {
             log.info("Failed to select all orderTickets: " + exception.getMessage());

@@ -42,7 +42,15 @@ public class Station implements Serializable {
     private User user;
 
     @OneToMany(mappedBy = "station")
-    private Set<Travel> travelSet = new HashSet<>();
+    private Set<Ticket> ticketSet = new HashSet<>();
+
+    public Set<Ticket> getTicketSet() {
+        return ticketSet;
+    }
+
+    public void setTicketSet(Set<Ticket> ticketSet) {
+        this.ticketSet = ticketSet;
+    }
 
     @OneToMany(mappedBy = "station")
     private Set<OrderTickets> orderTickets = new HashSet<>();
@@ -63,12 +71,14 @@ public class Station implements Serializable {
         this.ID = ID;
     }
 
-    public Set<Travel> getTravelSet() {
-        return travelSet;
+    public Station(String name, String address, Time workTimeStart, Time workTimeEnd) {
+        this.name = name;
+        this.address = address;
+        this.workTimeStart = workTimeStart;
+        this.workTimeEnd = workTimeEnd;
     }
 
-    public void setTravelSet(Set<Travel> travelSet) {
-        this.travelSet = travelSet;
+    public Station() {
     }
 
     public Set<Cashier> getCashierSet() {

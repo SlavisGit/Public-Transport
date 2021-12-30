@@ -1,5 +1,6 @@
 package tuvarna.sit.busservices.data.repository;
 
+import javafx.scene.chart.PieChart;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -7,6 +8,7 @@ import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.data.access.Connection;
 import tuvarna.sit.busservices.data.entities.Cashier;
 import tuvarna.sit.busservices.data.entities.Company;
+import tuvarna.sit.busservices.data.entities.Station;
 import tuvarna.sit.busservices.data.entities.Travel;
 
 import java.time.LocalDate;
@@ -27,10 +29,53 @@ public class TravelRepository implements DAORepository<Travel>{
         List<Travel> travels = new ArrayList<>();
 
         try {
-            String jpql = "SELECT t FROM Travel as t join t.company company WHERE company.id= :idCompany";
+            String jpql = "SELECT t FROM Travel  t WHERE t.company.id= :idCompany";
             Company company = HelloApplication.getUser().getCompany();
 
             travels.addAll(session.createQuery(jpql, Travel.class).setParameter("idCompany", company.getID()).getResultList());
+            transaction.commit();
+        } catch (Exception exception) {
+            log.info("Failed to select all travels: " + exception.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return travels;
+    }
+    public List<Travel> getAllTravelForCompanyWhereDataEnd() {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Travel> travels = new ArrayList<>();
+        LocalDate date = LocalDate.now();
+        try {
+            String jpql = "SELECT t FROM Travel as t WHERE t.company.id= :idCompany AND t.dataTo <= :date AND t.ticketSet.size = 0";
+            Company company = HelloApplication.getUser().getCompany();
+
+            travels.addAll(session.createQuery(jpql, Travel.class).setParameter("idCompany", company.getID())
+                    .setParameter("date", date).getResultList());
+            transaction.commit();
+        } catch (Exception exception) {
+            log.info("Failed to select all travels: " + exception.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return travels;
+    }
+    public List<Travel> getAllTravelForStationWhereDataEnd() {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Travel> travels = new ArrayList<>();
+        LocalDate date = LocalDate.now();
+        Station station = HelloApplication.getUser().getStation();
+        try {
+            String jpql = "SELECT t FROM Travel t join Ticket tick WHERE t.dataTo <= :date AND tick.station = :station AND t.ticketSet.size = 0";
+            Company company = HelloApplication.getUser().getCompany();
+
+            travels.addAll(session.createQuery(jpql, Travel.class).setParameter("date", date)
+                    .setParameter("station", station).getResultList());
             transaction.commit();
         } catch (Exception exception) {
             log.info("Failed to select all travels: " + exception.getMessage());
@@ -48,7 +93,7 @@ public class TravelRepository implements DAORepository<Travel>{
         List<Travel> travels = new ArrayList<>();
 
         try {
-            String jpql = "SELECT t FROM Travel as t join t.station st WHERE st.id= :idSt";
+            String jpql = "SELECT t FROM Travel t join Ticket st WHERE st.station= :idSt";
             Cashier cashier = HelloApplication.getUser().getCashier();
 
             travels.addAll(session.createQuery(jpql, Travel.class).setParameter("idSt", cashier.getStation().getID()).getResultList());
@@ -67,11 +112,11 @@ public class TravelRepository implements DAORepository<Travel>{
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         List<Travel> travels = new ArrayList<>();
-
+        Station station = HelloApplication.getUser().getStation();
         try {
-            String jpql = "SELECT t FROM Travel t WHERE t.dataTo > :data";
+            String jpql = "SELECT t FROM Travel t join Ticket tick WHERE t.dataTo > :data AND tick.station = :station";
             LocalDate now = LocalDate.now();
-            travels.addAll(session.createQuery(jpql, Travel.class).setParameter("data", LocalDate.now()).getResultList());
+            travels.addAll(session.createQuery(jpql, Travel.class).setParameter("data", LocalDate.now()).setParameter("station", station).getResultList());
             transaction.commit();
         } catch (Exception exception) {
             log.info("Failed to select all travels: " + exception.getMessage());
@@ -141,7 +186,7 @@ public class TravelRepository implements DAORepository<Travel>{
     }
 
     @Override
-    public Optional<Travel> getById(Long id) {
+    public Travel getById(Long id) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         Travel travel = null;
@@ -155,7 +200,7 @@ public class TravelRepository implements DAORepository<Travel>{
         } finally {
             session.close();
         }
-        return Optional.ofNullable(travel);
+        return travel;
     }
 
     @Override

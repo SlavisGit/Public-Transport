@@ -71,7 +71,7 @@ public class ClientWithTicketsRepository implements DAORepository<ClientWithTick
     }
 
     @Override
-    public Optional<ClientWithTickets> getById(Long id) {
+    public ClientWithTickets getById(Long id) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         ClientWithTickets clientWithTickets = null;
@@ -86,7 +86,7 @@ public class ClientWithTicketsRepository implements DAORepository<ClientWithTick
         finally {
             session.close();
         }
-        return Optional.ofNullable(clientWithTickets);
+        return clientWithTickets;
     }
 
     @Override

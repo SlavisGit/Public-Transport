@@ -74,7 +74,7 @@ public class ClientRepository implements DAORepository<Client> {
     }
 
     @Override
-    public Optional<Client> getById(Long id) {
+    public Client getById(Long id) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         Client client = null;
@@ -89,7 +89,7 @@ public class ClientRepository implements DAORepository<Client> {
         finally {
             session.close();
         }
-        return Optional.ofNullable(client);
+        return client;
     }
 
 

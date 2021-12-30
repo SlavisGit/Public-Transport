@@ -31,6 +31,18 @@ public class Ticket implements Serializable {
     @JoinColumn(name = "statusTypeId", nullable = false)
     private Status status;
 
+    @ManyToOne
+    @JoinColumn(name = "stationId", nullable = true)
+    private Station station;
+
+    public Station getStation() {
+        return station;
+    }
+
+    public void setStation(Station station) {
+        this.station = station;
+    }
+
     @OneToMany(mappedBy = "ticket", fetch = FetchType.EAGER)
     private Set<OrderTickets> orderTickets = new HashSet<>();
 
@@ -57,6 +69,15 @@ public class Ticket implements Serializable {
         this.travel = travel;
         this.price = price;
         this.status = status;
+    }
+
+    public Ticket(Travel travel, Cashier cashier, Double price, Status status, Station station) {
+        this.travel = travel;
+        this.cashier = cashier;
+        this.price = price;
+        this.status = status;
+        this.station = station;
+
     }
 
     public Ticket() {

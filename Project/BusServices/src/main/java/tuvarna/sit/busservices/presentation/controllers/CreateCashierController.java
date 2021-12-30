@@ -77,7 +77,7 @@ public class CreateCashierController {
         user.setUsername(username.getText());
         user.setPassword(password.getText());
         UserTypeRepository userTypeRepository = UserTypeRepository.getInstance();
-        user.setUserType(userTypeRepository.getById(2L).get());
+        user.setUserType(userTypeRepository.getById(2L));
         user.setCashier(cashier);
         userRepository.save(user);
 

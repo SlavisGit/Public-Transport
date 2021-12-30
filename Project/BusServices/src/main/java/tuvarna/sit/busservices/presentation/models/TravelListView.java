@@ -13,12 +13,10 @@ public class TravelListView {
     private LocalDate dataFrom;
     private int countPlaces;
     private int limitation;
-    private Station station;
     private Company company;
 
     public TravelListView(Long id, TravelType travelType, Destination destination, Transport transportType,
-                          LocalDate dataTo, LocalDate dataFrom, int countPlaces, int limitation,
-                          Station station, Company company) {
+                          LocalDate dataTo, LocalDate dataFrom, int countPlaces, int limitation, Company company) {
         this.id = id;
         this.travelType = travelType;
         this.destination = destination;
@@ -27,7 +25,6 @@ public class TravelListView {
         this.dataFrom = dataFrom;
         this.countPlaces = countPlaces;
         this.limitation = limitation;
-        this.station = station;
         this.company = company;
     }
 
@@ -95,14 +92,6 @@ public class TravelListView {
         this.limitation = limitation;
     }
 
-    public Station getStation() {
-        return station;
-    }
-
-    public void setStation(Station station) {
-        this.station = station;
-    }
-
     public Company getCompany() {
         return company;
     }
@@ -113,7 +102,7 @@ public class TravelListView {
 
     @Override
     public String toString() {
-        return String.format("%s | %s | %s | %s | %s | %d | %d | %s | %s", travelType.toString(), destination.toString(),
-                transportType.toString(), dataTo.toString(), dataFrom.toString(), countPlaces, limitation, station.toString(), company.toString());
+        return String.format("%s | %s | %s | %s | %s | %d | %d | %s", travelType.toString(), destination.toString(),
+                transportType.toString(), dataTo.toString(), dataFrom.toString(), countPlaces, limitation, company.toString());
     }
 }

@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import tuvarna.sit.busservices.business.services.TicketService;
+import tuvarna.sit.busservices.data.entities.Ticket;
+import tuvarna.sit.busservices.data.entities.Travel;
 import tuvarna.sit.busservices.presentation.models.TicketListView;
 import tuvarna.sit.busservices.presentation.models.TravelListView;
 
@@ -17,25 +19,22 @@ import java.util.ResourceBundle;
 public class TicketViewController implements Initializable {
 
     @FXML
-    private Button back;
+    private TableColumn<Ticket, String> cashierColumn;
 
     @FXML
-    private TableColumn<TicketListView, String> cashierColumn;
+    private TableColumn<Ticket, String> clientColumn;
 
     @FXML
-    private TableColumn<TicketListView, String> clientColumn;
+    private TableColumn<Ticket, String> priceColumn;
 
     @FXML
-    private TableColumn<TicketListView, String> priceColumn;
+    private TableColumn<Ticket, String> statusColumn;
 
     @FXML
-    private TableColumn<TicketListView, String> statusColumn;
+    private TableView<Ticket> table;
 
     @FXML
-    private TableView<TicketListView> table;
-
-    @FXML
-    private TableColumn<TicketListView, String> travelColumn;
+    private TableColumn<Ticket, String> travelColumn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -43,18 +42,18 @@ public class TicketViewController implements Initializable {
         display(ticketService.getAll());
     }
 
-    private void display(ObservableList<TicketListView> all) {
+    private void display(ObservableList<Ticket> all) {
         travelColumn.setCellValueFactory(p -> new ReadOnlyObjectWrapper(p.getValue().getTravel()));
         cashierColumn.setCellValueFactory(p -> new ReadOnlyObjectWrapper(p.getValue().getCashier()));
         priceColumn.setCellValueFactory(p -> new ReadOnlyObjectWrapper(p.getValue().getPrice()));
-        clientColumn.setCellValueFactory(p -> new ReadOnlyObjectWrapper(p.getValue().getClient()));
+        clientColumn.setCellValueFactory(p -> new ReadOnlyObjectWrapper(p.getValue().getClientWithTickets().getClient()));
         statusColumn.setCellValueFactory(p -> new ReadOnlyObjectWrapper(p.getValue().getStatus()));
         table.setItems(all);
     }
 
     TicketService ticketService = TicketService.getInstance();
 
-    public  void findTicket(TravelListView travelListView) {
-        display(ticketService.getFromTravel(travelListView.getId()));
+    public  void findTicket(Travel travel) {
+        display(ticketService.getFromTravel(travel.getID()));
     }
 }

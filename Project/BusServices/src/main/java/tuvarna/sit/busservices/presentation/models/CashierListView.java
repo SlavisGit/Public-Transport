@@ -8,13 +8,23 @@ public class CashierListView {
     private String ucn;
     private Double honorarium;
     private Station station;
+    private int countTicket;
 
-    public CashierListView(String firstName, String lastName, String ucn, Double honorarium, Station station) {
+    public CashierListView(String firstName, String lastName, String ucn, Double honorarium, Station station, int countTicket) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.ucn = ucn;
         this.honorarium = honorarium;
         this.station = station;
+        this.countTicket = countTicket;
+    }
+
+    public int getCountTicket() {
+        return countTicket;
+    }
+
+    public void setCountTicket(int countTicket) {
+        this.countTicket = countTicket;
     }
 
     public String getFirstName() {

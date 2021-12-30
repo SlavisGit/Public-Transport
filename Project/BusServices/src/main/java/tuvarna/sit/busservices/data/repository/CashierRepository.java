@@ -75,7 +75,7 @@ public class CashierRepository implements DAORepository<Cashier>{
     }
 
     @Override
-    public Optional<Cashier> getById(Long id) {
+    public Cashier getById(Long id) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         Cashier cashier = null;
@@ -89,7 +89,7 @@ public class CashierRepository implements DAORepository<Cashier>{
         } finally {
             session.close();
         }
-        return Optional.ofNullable(cashier);
+        return cashier;
     }
 
     @Override

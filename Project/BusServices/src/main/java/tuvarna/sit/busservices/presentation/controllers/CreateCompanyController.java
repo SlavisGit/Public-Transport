@@ -77,7 +77,7 @@ public class CreateCompanyController implements EventHandler<MouseEvent> {
         user.setUsername(username.getText());
         user.setPassword(password.getText());
         UserTypeRepository userTypeRepository = UserTypeRepository.getInstance();
-        user.setUserType(userTypeRepository.getById(3L).get());
+        user.setUserType(userTypeRepository.getById(3L));
         user.setCompany(company);
 
         userRepository.save(user);

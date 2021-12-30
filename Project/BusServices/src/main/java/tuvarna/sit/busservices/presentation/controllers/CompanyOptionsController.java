@@ -23,6 +23,9 @@ public class CompanyOptionsController implements EventHandler<MouseEvent> {
     private URL location;
 
     @FXML
+    private Button checkOrderTickets;
+
+    @FXML
     private Button addTravel;
 
     @FXML
@@ -48,6 +51,13 @@ public class CompanyOptionsController implements EventHandler<MouseEvent> {
         viewTravels.setOnMouseClicked(this::viewTravels);
         viewStation.setOnMouseClicked(this::viewStations);
         addTickets.setOnMouseClicked(this::addTickets);
+        checkOrderTickets.setOnMouseClicked(this::check);
+    }
+
+    private void check(MouseEvent mouseEvent) {
+        NewWindowApplication logInApplication = new NewWindowApplication();
+        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/orderTickets.fxml");
+        logInApplication.logInUser(resources, mouseEvent, path, "Order Tickets");
     }
 
     private void addTickets(MouseEvent mouseEvent) {

@@ -2,10 +2,10 @@ package tuvarna.sit.busservices.presentation.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,16 +17,22 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-import org.controlsfx.control.action.Action;
 import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
-import tuvarna.sit.busservices.business.services.TravelService;
-import tuvarna.sit.busservices.data.entities.UserType;
-import tuvarna.sit.busservices.presentation.models.TravelListView;
+import tuvarna.sit.busservices.business.services.*;
+import tuvarna.sit.busservices.data.entities.*;
+import tuvarna.sit.busservices.data.repository.NotificationRepository;
 
 
 public class TravelListController {
+
+    TicketService ticketService = TicketService.getInstance();
+    StationService stationService = StationService.getInstance();
+    UserService userService = UserService.getInstance();
+    NotificationRepository notificationRepository = NotificationRepository.getInstance();
+    CashierService cashierService = CashierService.getInstance();
+    TravelService travelService = TravelService.getInstance();
+    UserType userType = HelloApplication.getUser().getUserType();
 
     @FXML
     private ResourceBundle resources;
@@ -35,31 +41,31 @@ public class TravelListController {
     private URL location;
 
     @FXML
-    private TableColumn<TravelListView, String> companyColumn;
+    private TableColumn<Travel, String> companyColumn;
 
     @FXML
-    private TableColumn<TravelListView, String> countPlacesColumn;
+    private TableColumn<Travel, String> countPlacesColumn;
 
     @FXML
-    private TableColumn<TravelListView, String> dataFromColumn;
+    private TableColumn<Travel, String> dataFromColumn;
 
     @FXML
-    private TableColumn<TravelListView, String> dataToColumn;
+    private TableColumn<Travel, String> dataToColumn;
 
     @FXML
-    private TableColumn<TravelListView, String> destinationColumn;
+    private TableColumn<Travel, String> destinationColumn;
 
     @FXML
-    private TableColumn<TravelListView, String> stationColumn;
+    private TableColumn<Travel, String> stationColumn;
 
     @FXML
-    private TableColumn<TravelListView, String> travelTypeColumn;
+    private TableColumn<Travel, String> travelTypeColumn;
 
     @FXML
-    private TableColumn<TravelListView, String> transportColumn;
+    private TableColumn<Travel, String> transportColumn;
 
     @FXML
-    private TableView<TravelListView> tableView;
+    private TableView<Travel> tableView;
 
     @FXML
     private Button back;
@@ -68,14 +74,14 @@ public class TravelListController {
     void initialize() {
         assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'travelList.fxml'.";
         assert tableView != null : "fx:id=\"listView\" was not injected: check your FXML file 'travelList.fxml'.";
-        TravelService travelService = TravelService.getInstance();
 
-
-        UserType userType = HelloApplication.getUser().getUserType();
+        ContextMenu contextMenu = new ContextMenu();
 
         if(userType.getUserType().equals("Company")) {
             display(travelService.getAllTravelForCompany());
             back.setOnMouseClicked(this::backCompany);
+            MenuItem menuItem1 = deleteTravelMenuItem(travelService);
+            contextMenu.getItems().add(menuItem1);
         } else if(userType.getUserType().equals("Cashier")) {
             display(travelService.getAllTravelForCashier());
             back.setOnMouseClicked(this::backCashier);
@@ -84,10 +90,25 @@ public class TravelListController {
             back.setOnMouseClicked(this::backStation);
         }
 
-        ContextMenu contextMenu = new ContextMenu();
+
+        MenuItem menuItem = ViewTicketMenuItem();
+
+        contextMenu.getItems().add(menuItem);
+
+        tableView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(event.getButton() == MouseButton.SECONDARY) {
+                    contextMenu.show(tableView, event.getSceneX(), event.getSceneY());
+                }
+            }
+        });
+    }
+
+    private MenuItem ViewTicketMenuItem() {
         MenuItem menuItem = new MenuItem("View Ticket");
         menuItem.setOnAction((ActionEvent event) ->{
-            TravelListView selectedItem = tableView.getSelectionModel().getSelectedItem();
+            Travel selectedItem = tableView.getSelectionModel().getSelectedItem();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tuvarna/sit/busservices/presentation.view/ticketView.fxml"));
                     try {
@@ -102,18 +123,52 @@ public class TravelListController {
                     }
                 }
         );
-        contextMenu.getItems().add(menuItem);
+        return menuItem;
+    }
 
-        tableView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if(event.getButton() == MouseButton.SECONDARY) {
-                    contextMenu.show(tableView, event.getSceneX(), event.getSceneY());
+    private MenuItem deleteTravelMenuItem(TravelService travelService) {
+        MenuItem menuItem1 = new MenuItem("Delete Travel");
+        menuItem1.setOnAction((ActionEvent event) -> {
+            Travel selectedItem = tableView.getSelectionModel().getSelectedItem();
+
+            if(!selectedItem.getTicketSet().isEmpty()) {
+                for(Ticket st : selectedItem.getTicketSet()) {
+                    ticketService.delete(st);
                 }
             }
-        });
+            travelService.delete(selectedItem);
+
+            checkStationForNotify();
+
+            checkCashiersForNotify();
+            tableView.getItems().remove(selectedItem);
+        } );
+        return menuItem1;
     }
-    public void display(ObservableList<TravelListView> all){
+
+    private void checkCashiersForNotify() {
+        ObservableList<Cashier> all1 = cashierService.getAll();
+        if(!all1.isEmpty()) {
+            for (Cashier cashier :all1) {
+                User byIdCashier = userService.getByIdCashier(cashier.getID());
+                Notification notification1 = new Notification("Delete travel!", byIdCashier);
+                notificationRepository.save(notification1);
+            }
+        }
+    }
+
+    private void checkStationForNotify() {
+        List<Station> all = stationService.getAll();
+        if(!all.isEmpty()) {
+            for (Station station: all) {
+                User byIdStation = userService.getByIdStation(station.getID());
+                Notification notification = new Notification("Delete travel!", byIdStation);
+                notificationRepository.save(notification);
+            }
+        }
+    }
+
+    public void display(ObservableList<Travel> all){
         travelTypeColumn.setCellValueFactory(p -> new ReadOnlyObjectWrapper(p.getValue().getTravelType()));
 
         destinationColumn.setCellValueFactory(b -> new ReadOnlyObjectWrapper(b.getValue().getDestination()));
@@ -125,8 +180,6 @@ public class TravelListController {
         dataFromColumn.setCellValueFactory(b -> new ReadOnlyObjectWrapper(b.getValue().getDataFrom()));
 
         countPlacesColumn.setCellValueFactory(b -> new ReadOnlyObjectWrapper(b.getValue().getCountPlaces()));
-
-        stationColumn.setCellValueFactory(b -> new ReadOnlyObjectWrapper(b.getValue().getStation()));
 
         companyColumn.setCellValueFactory(b -> new ReadOnlyObjectWrapper(b.getValue().getCompany()));
 

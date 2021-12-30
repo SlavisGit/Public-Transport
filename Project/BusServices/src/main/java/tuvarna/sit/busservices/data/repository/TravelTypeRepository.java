@@ -77,7 +77,7 @@ public class TravelTypeRepository implements DAORepository<TravelType>{
     }
 
     @Override
-    public Optional<TravelType> getById(Long id) {
+    public TravelType getById(Long id) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         TravelType travelType = null;
@@ -91,7 +91,7 @@ public class TravelTypeRepository implements DAORepository<TravelType>{
         } finally {
             session.close();
         }
-        return Optional.ofNullable(travelType);
+        return travelType;
     }
 
     @Override

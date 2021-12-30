@@ -76,7 +76,7 @@ public class TransportRepository implements DAORepository<Transport>{
     }
 
     @Override
-    public Optional<Transport> getById(Long id) {
+    public Transport getById(Long id) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         Transport transport = null;
@@ -90,7 +90,7 @@ public class TransportRepository implements DAORepository<Transport>{
         } finally {
             session.close();
         }
-        return Optional.ofNullable(transport);
+        return transport;
     }
 
     @Override

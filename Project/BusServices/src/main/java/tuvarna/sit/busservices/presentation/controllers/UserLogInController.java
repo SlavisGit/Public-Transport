@@ -92,7 +92,6 @@ public class UserLogInController implements EventHandler<MouseEvent> {
                 NewWindowApplication logInApplication = new NewWindowApplication();
                 URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/cashierOptions.fxml");
                 logInApplication.logInUser(resources, mouseEvent, path, "Cashier");
-                // TODO:
                 break;
             }
         }

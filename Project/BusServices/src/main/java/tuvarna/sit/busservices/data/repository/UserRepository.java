@@ -75,7 +75,7 @@ public class UserRepository implements DAORepository<User>{
     }
 
     @Override
-    public Optional<User> getById(Long id) {
+    public User getById(Long id) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         User user = null;
@@ -89,7 +89,65 @@ public class UserRepository implements DAORepository<User>{
         } finally {
             session.close();
         }
-        return Optional.ofNullable(user);
+        return user;
+    }
+
+    public User getByIdStation(Long id) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<User> users = new ArrayList<>();
+
+        try {
+            String jpql = "SELECT t FROM User t WHERE t.station.id = :id";
+            users.addAll(session.createQuery(jpql, User.class).setParameter("id", id).getResultList());
+            transaction.commit();
+        } catch (Exception exception) {
+            log.info("Failed to select all users: " + exception.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return users.get(0);
+    }
+
+    public User getByIdCompany(Long id) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<User> users = new ArrayList<>();
+
+        try {
+            String jpql = "SELECT t FROM User t WHERE t.company.id = :id";
+            users.addAll(session.createQuery(jpql, User.class).setParameter("id", id).getResultList());
+            transaction.commit();
+        } catch (Exception exception) {
+            log.info("Failed to select all users: " + exception.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return users.get(0);
+    }
+
+
+    public User getByIdCashier(Long id) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<User> users = new ArrayList<>();
+
+        try {
+            String jpql = "SELECT t FROM User t WHERE t.cashier.id = :id";
+            users.addAll(session.createQuery(jpql, User.class).setParameter("id", id).getResultList());
+            transaction.commit();
+        } catch (Exception exception) {
+            log.info("Failed to select all users: " + exception.getMessage());
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
+
+        return users.get(0);
     }
 
     @Override

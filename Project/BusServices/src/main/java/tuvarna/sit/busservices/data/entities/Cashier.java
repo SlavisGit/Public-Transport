@@ -28,13 +28,13 @@ public class Cashier implements Serializable {
     private Double honorarium;
 
     @Column(name = "countTicket", nullable = true)
-    private Double countTicket;
+    private int countTicket;
 
-    public Double getCountTicket() {
+    public int getCountTicket() {
         return countTicket;
     }
 
-    public void setCountTicket(Double countTicket) {
+    public void setCountTicket(int countTicket) {
         this.countTicket = countTicket;
     }
 
@@ -117,6 +117,15 @@ public class Cashier implements Serializable {
         this.lastName = lastName;
         this.ucn = ucn;
         this.honorarium = honorarium;
+        this.station = station;
+    }
+
+    public Cashier(String firstName, String lastName, String ucn, Double honorarium, int countTicket, Station station) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.ucn = ucn;
+        this.honorarium = honorarium;
+        this.countTicket = countTicket;
         this.station = station;
     }
 

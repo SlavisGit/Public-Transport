@@ -26,7 +26,7 @@ public class HelloApplication extends Application {
         HelloApplication.user = user;
         if(user != null) {
             NotificationAlarm notification = new NotificationAlarm();
-            notification.createNotification("hello");
+            notification.checkNewNotifications(user);
         }
     }
 

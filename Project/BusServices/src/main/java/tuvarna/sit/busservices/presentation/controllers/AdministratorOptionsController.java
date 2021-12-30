@@ -20,6 +20,9 @@ public class AdministratorOptionsController implements EventHandler<MouseEvent> 
     private URL location;
 
     @FXML
+    private Button viewCashierRating;
+
+    @FXML
     private Label hello;
 
     @FXML
@@ -46,6 +49,13 @@ public class AdministratorOptionsController implements EventHandler<MouseEvent> 
         logOut.setOnMouseClicked(this::logOut);
         createStation.setOnMouseClicked(this::createStationBut);
         createAdmin.setOnMouseClicked(this::createAdmin);
+        viewCashierRating.setOnMouseClicked(this::viewRating);
+    }
+
+    private void viewRating(MouseEvent mouseEvent) {
+        NewWindowApplication logInApplication = new NewWindowApplication();
+        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/cashierList.fxml");
+        logInApplication.logInUser(resources, mouseEvent, path, "Cashier Rating");
     }
 
     private void createAdmin(MouseEvent mouseEvent) {

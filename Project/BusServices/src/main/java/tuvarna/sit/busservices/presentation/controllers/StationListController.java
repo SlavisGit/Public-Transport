@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import tuvarna.sit.busservices.application.NewWindowApplication;
 import tuvarna.sit.busservices.business.services.StationService;
+import tuvarna.sit.busservices.data.entities.Station;
 import tuvarna.sit.busservices.presentation.models.StationListView;
 
 
@@ -23,16 +24,16 @@ public class StationListController {
     private ResourceBundle resources;
 
     @FXML
-    private TableColumn<StationListView, String> address = new TableColumn<>();
+    private TableColumn<Station, String> address = new TableColumn<>();
 
     @FXML
-    private TableColumn<StationListView, String> end = new TableColumn<>();
+    private TableColumn<Station, String> end = new TableColumn<>();
 
     @FXML
-    private TableColumn<StationListView, String> name = new TableColumn<>();
+    private TableColumn<Station, String> name = new TableColumn<>();
 
     @FXML
-    private TableColumn<StationListView, String> start = new TableColumn<>();
+    private TableColumn<Station, String> start = new TableColumn<>();
 
     @FXML
     private URL location;
@@ -42,7 +43,7 @@ public class StationListController {
 
 
     @FXML
-    private TableView<StationListView> tableView;
+    private TableView<Station> tableView;
 
     @FXML
     void initialize() {
@@ -59,7 +60,7 @@ public class StationListController {
     }
 
     public void displayProductions(){
-        ObservableList<StationListView> all = stationService.getAll();
+        ObservableList<Station> all = stationService.getAll();
         name.setCellValueFactory(p -> new ReadOnlyObjectWrapper(p.getValue().getName()));
 
         address.setCellValueFactory(b -> new ReadOnlyObjectWrapper(b.getValue().getAddress()));
