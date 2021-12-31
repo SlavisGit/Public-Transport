@@ -29,9 +29,6 @@ public class CreateStationController implements EventHandler<MouseEvent> {
     private ResourceBundle resources;
 
     @FXML
-    private URL location;
-
-    @FXML
     private TextField username;
 
     @FXML
@@ -70,33 +67,42 @@ public class CreateStationController implements EventHandler<MouseEvent> {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    private void validationFields() {
+    private boolean validationFields() {
         if(username.getText() == null || username.getText().trim().isEmpty()) {
             messageBox("Field username is empty");
+            return false;
         }
 
         if(password.getText() == null || password.getText().trim().isEmpty()) {
             messageBox("Field password is empty");
+            return false;
         }
         if(stationName.getText() == null || stationName.getText().trim().isEmpty()) {
             messageBox("Field station Name is empty");
+            return false;
         }
 
         if(stationAddress.getText() == null || stationAddress.getText().trim().isEmpty()) {
             messageBox("Field station Address is empty");
+            return false;
         }
         if(startTime.getText() == null || startTime.getText().trim().isEmpty()) {
             messageBox("Field start Time is empty");
+            return false;
         }
 
         if(endTime.getText() == null || endTime.getText().trim().isEmpty()) {
             messageBox("Field end Time is empty");
+            return false;
         }
-
+        return true;
     }
     @Override
     public void handle(MouseEvent event) {
-        validationFields();
+        if(!validationFields())
+        {
+            return;
+        }
         Station station = new Station();
         station.setName(stationName.getText());
         station.setAddress(stationAddress.getText());

@@ -23,9 +23,6 @@ public class StationOptionsController {
     private Button addCashier;
 
     @FXML
-    private Label hello;
-
-    @FXML
     private Button logOut;
 
     @FXML
@@ -37,7 +34,6 @@ public class StationOptionsController {
     @FXML
     void initialize() {
         assert addCashier != null : "fx:id=\"addCashier\" was not injected: check your FXML file 'stationOptions.fxml'.";
-        assert hello != null : "fx:id=\"hello\" was not injected: check your FXML file 'stationOptions.fxml'.";
         assert orderByTickets != null : "fx:id=\"orderByTickets\" was not injected: check your FXML file 'stationOptions.fxml'.";
 
         addCashier.setOnMouseClicked(this::addCashier);

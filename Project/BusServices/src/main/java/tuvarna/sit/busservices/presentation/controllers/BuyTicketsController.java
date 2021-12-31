@@ -79,22 +79,29 @@ public class BuyTicketsController implements Initializable {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    private void validationFields() {
+    private boolean validationFields() {
         if(firstName.getText() == null || firstName.getText().trim().isEmpty()) {
             messageBox("Field firstName is empty");
+            return false;
         }
 
         if(lastName.getText() == null || lastName.getText().trim().isEmpty()) {
             messageBox("Field lastName is empty");
+            return false;
         }
 
         if(placeComboBox.getSelectionModel().isEmpty() || placeComboBox.getSelectionModel() == null) {
             messageBox("Field place is empty");
+            return false;
         }
+        return true;
     }
 
     private void create(MouseEvent mouseEvent) {
-        validationFields();
+        if(!validationFields())
+        {
+            return;
+        }
         Client client = new Client(firstName.getText(), lastName.getText());
         client = getClient(client, clientService);
         if (client.getID() == null) {

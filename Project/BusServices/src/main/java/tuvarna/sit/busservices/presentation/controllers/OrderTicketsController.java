@@ -129,7 +129,7 @@ public class OrderTicketsController implements Initializable {
             orderTicketsService.update(i);
             ticketService.update(i.getTicket());
         }
-        notification(items, "Confirm tickets!");
+        notification(items, "The tickets were confirmed");
         backStation(mouseEvent);
     }
 

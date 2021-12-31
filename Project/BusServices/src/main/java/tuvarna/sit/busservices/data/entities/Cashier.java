@@ -2,6 +2,7 @@ package tuvarna.sit.busservices.data.entities;
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 
 @Table(name = "CASHIER")
@@ -44,6 +45,17 @@ public class Cashier implements Serializable {
 
     public void setID(Long ID) {
         this.ID = ID;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cashier cashier = (Cashier) o;
+        if(countTicket == cashier.getCountTicket()) {
+            return honorarium < cashier.honorarium;
+        }
+        return countTicket < cashier.countTicket;
     }
 
     @ManyToOne
@@ -134,7 +146,7 @@ public class Cashier implements Serializable {
 
     @Override
     public String toString() {
-        return  firstName + '\'' +
-                 lastName + '\'';
+        return  firstName + ' ' +
+                 lastName;
     }
 }

@@ -4,19 +4,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="308.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tuvarna.sit.busservices.presentation.controllers.CashierOptionsController">
+<AnchorPane prefHeight="176.0" prefWidth="280.0" xmlns="http://javafx.com/javafx/17" style="-fx-background-color: linear-gradient(to left, #FFA07A,#A3E4D7  );" styleClass="LinearGradient" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tuvarna.sit.busservices.presentation.controllers.CashierOptionsController">
    <children>
-      <Button fx:id="viewTravel" layoutX="75.0" layoutY="86.0" mnemonicParsing="false" text="View Travel">
+      <Button fx:id="viewTravel" layoutX="158.0" layoutY="41.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="93.0" text="View Travel">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="buyTicket" layoutX="75.0" layoutY="129.0" mnemonicParsing="false" text="Buy Ticket">
+      <Button fx:id="buyTicket" layoutX="25.0" layoutY="41.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="93.0" text="Buy Ticket">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="logOut" layoutX="154.0" layoutY="269.0" mnemonicParsing="false" text="Log Out">
+      <Button fx:id="logOut" cancelButton="true" layoutX="191.0" layoutY="127.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="60.0" text="Log Out">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>

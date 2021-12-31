@@ -1,6 +1,7 @@
 package tuvarna.sit.busservices.presentation.controllers;
 
 import java.net.URL;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
@@ -20,9 +21,6 @@ public class CashierListController {
 
     @FXML
     private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private Button back;
@@ -60,14 +58,19 @@ public class CashierListController {
 
     private void back(MouseEvent mouseEvent) {
         NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/stationOptions.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Station");
+        if(HelloApplication.getUser().getAdministrator() != null) {
+            URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/administratorOptions.fxml");
+            logInApplication.logInUser(resources, mouseEvent, path, "Admin");
+        } else {
+            URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/stationOptions.fxml");
+            logInApplication.logInUser(resources, mouseEvent, path, "Station");
+        }
     }
     public void display(){
         CashierService cashierService = CashierService.getInstance();
         ObservableList<Cashier> all = cashierService.getAll();
         if(HelloApplication.getUser().getAdministrator() != null){
-            all.sort(Comparator.comparing(Cashier::getCountTicket).reversed().thenComparing(Cashier::getHonorarium).reversed());
+            all.sort(Comparator.comparing(Cashier::getCountTicket).thenComparing(Cashier::getHonorarium).reversed());
         }
         firstName.setCellValueFactory(p -> new ReadOnlyObjectWrapper(p.getValue().getFirstName()));
 

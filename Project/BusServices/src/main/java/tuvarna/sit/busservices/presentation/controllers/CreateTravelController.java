@@ -23,7 +23,6 @@ public class CreateTravelController {
     private static TravelTypeService travelTypeService = TravelTypeService.getInstance();
     private static TransportService transportService = TransportService.getInstance();
     private static DestinationService destinationService = DestinationService.getInstance();
-    private static StationService stationService = StationService.getInstance();
 
     @FXML
     private ResourceBundle resources;
@@ -59,12 +58,6 @@ public class CreateTravelController {
     private ComboBox<Destination> destination;
 
     @FXML
-    private TextField limitation;
-
-    @FXML
-    private ComboBox<Station> station;
-
-    @FXML
     private ComboBox<Transport> transport;
 
     @FXML
@@ -77,7 +70,6 @@ public class CreateTravelController {
     @FXML
     void initialize() {
         fillComboBoxTravelType();
-        fillComboBoxStation();
         fillComboBoxDestination();
         fillComboBoxTransport();
         create.setOnMouseClicked(this::createTravel);
@@ -125,33 +117,40 @@ public class CreateTravelController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    private void validationFields() {
-        if(countPlaces.getText() == null || countPlaces.getText().trim().isEmpty() || countPlaces.getText().matches("\"[0-9]*\"")) {
+    private boolean validationFields() {
+        if(countPlaces.getText() == null || countPlaces.getText().trim().isEmpty() || !countPlaces.getText().matches("\"[0-9]*\"")) {
             messageBox("Field countPlaces is empty");
-        }
-        if(limitation.getText() == null || limitation.getText().trim().isEmpty()) {
-            messageBox("Field lastName is empty");
+            return false;
         }
         if(travelType.getSelectionModel().isEmpty() || travelType.getSelectionModel() == null) {
             messageBox("Field travelType is empty");
+            return false;
         }
         if(destination.getSelectionModel().isEmpty() || destination.getSelectionModel() == null) {
             messageBox("Field destination is empty");
+            return false;
         }
         if(transport.getSelectionModel().isEmpty() || transport.getSelectionModel() == null) {
             messageBox("Field transport is empty");
+            return false;
         }
         if(dataTo.getValue() == null || dataTo.getValue().isAfter(LocalDate.now())) {
             messageBox("Field dataTo is empty or invalid date");
+            return false;
         }
         if(dataFrom.getValue() == null || dataFrom.getValue().isAfter(LocalDate.now())) {
             messageBox("Field dataFrom is empty or invalid date");
+            return false;
         }
+        return true;
     }
     private void createTravel(MouseEvent mouseEvent) {
-        validationFields();
+        if(!validationFields())
+        {
+            return;
+        }
         Travel travel = new Travel(travelType.getValue(), destination.getValue(), transport.getValue(),
-                dataTo.getValue(), dataFrom.getValue(), Integer.parseInt(countPlaces.getText()), Integer.parseInt(limitation.getText()),
+                dataTo.getValue(), dataFrom.getValue(), Integer.parseInt(countPlaces.getText()),
                 HelloApplication.getUser().getCompany());
 
         travelService.save(travel);
@@ -175,9 +174,6 @@ public class CreateTravelController {
         transport.setItems(FXCollections.observableArrayList(all));
     }
 
-    public void fillComboBoxStation() {
-        List<Station> all = stationService.getAll();
-        station.setItems(FXCollections.observableArrayList(all));
-    }
+
 
 }

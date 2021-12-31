@@ -1,34 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="738.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tuvarna.sit.busservices.presentation.controllers.TravelListController">
+<AnchorPane prefHeight="407.0" prefWidth="738.0" xmlns="http://javafx.com/javafx/17" style="-fx-background-color: linear-gradient(to left, #c7a7f1, #e7ea89 ,#e3aaf5);" styleClass="LinearGradient" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tuvarna.sit.busservices.presentation.controllers.TravelListController">
    <children>
-      <Button fx:id="back" layoutX="650.0" layoutY="375.0" mnemonicParsing="false" text="Back">
+      <Button fx:id="back" cancelButton="true" layoutX="675.0" layoutY="373.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Back">
          <font>
-            <Font name="Calibri" size="12.0" />
+            <Font name="Calibri" size="14.0" />
          </font>
       </Button>
-      <Label layoutX="14.0" layoutY="14.0" text="Travel:">
-         <font>
-            <Font name="Calibri Bold" size="14.0" />
-         </font>
-      </Label>
-      <TableView fx:id="tableView" layoutX="7.0" layoutY="43.0" prefHeight="319.0" prefWidth="693.0">
+      <TableView fx:id="tableView" layoutX="7.0" layoutY="14.0" prefHeight="355.0" prefWidth="724.0">
         <columns>
-          <TableColumn fx:id="travelTypeColumn" prefWidth="75.0" text="Travel Type" />
-          <TableColumn fx:id="destinationColumn" prefWidth="75.0" text="Destination" />
-            <TableColumn fx:id="transportColumn" prefWidth="75.0" text="Transport" />
-            <TableColumn fx:id="dataToColumn" prefWidth="68.0" text="Data To" />
-            <TableColumn fx:id="dataFromColumn" prefWidth="72.0" text="Data From" />
-            <TableColumn fx:id="countPlacesColumn" prefWidth="110.0" text="Count Places" />
-            <TableColumn fx:id="stationColumn" prefWidth="92.0" text="Station" />
-            <TableColumn fx:id="companyColumn" prefWidth="125.0" text="Company" />
+          <TableColumn fx:id="travelTypeColumn" prefWidth="88.0" text="Travel Type" />
+          <TableColumn fx:id="destinationColumn" prefWidth="127.0" text="Destination" />
+            <TableColumn fx:id="transportColumn" prefWidth="116.0" text="Transport" />
+            <TableColumn fx:id="dataToColumn" prefWidth="82.0" text="Data To" />
+            <TableColumn fx:id="dataFromColumn" prefWidth="85.0" text="Data From" />
+            <TableColumn fx:id="countPlacesColumn" prefWidth="86.0" text="Count Places" />
+            <TableColumn fx:id="companyColumn" prefWidth="137.0" text="Company" />
         </columns>
       </TableView>
    </children>

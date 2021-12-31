@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="233.0" prefWidth="638.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tuvarna.sit.busservices.presentation.controllers.CreateTravelController">
+<AnchorPane prefHeight="212.0" prefWidth="638.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: linear-gradient(to left, #F5B7B1, #AED6F1, #F5B7B1);" styleClass="LinearGradient" fx:controller="tuvarna.sit.busservices.presentation.controllers.CreateTravelController">
    <children>
       <Label layoutX="14.0" layoutY="46.0" text="Travel type:">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
       </Label>
-      <Button fx:id="create" defaultButton="true" layoutX="435.0" layoutY="187.0" mnemonicParsing="false" text="Create">
+      <Button fx:id="create" defaultButton="true" layoutX="507.0" layoutY="175.0" mnemonicParsing="false" text="Create">
          <font>
             <Font name="Calibri Bold" size="13.0" />
          </font>
@@ -35,16 +35,6 @@
             <Font name="Calibri" size="12.0" />
          </font>
       </TextField>
-      <Label layoutX="359.0" layoutY="84.0" text="Limitation:">
-         <font>
-            <Font name="Calibri" size="12.0" />
-         </font>
-      </Label>
-      <TextField fx:id="limitation" layoutX="445.0" layoutY="80.0" prefHeight="25.0" prefWidth="174.0">
-         <font>
-            <Font name="Calibri" size="12.0" />
-         </font>
-      </TextField>
       <ComboBox fx:id="travelType" layoutX="89.0" layoutY="42.0" prefHeight="25.0" prefWidth="131.0" />
       <ComboBox fx:id="destination" layoutX="91.0" layoutY="75.0" prefHeight="25.0" prefWidth="131.0" />
       <Label layoutX="16.0" layoutY="113.0" text="Transport:">
@@ -53,25 +43,19 @@
          </font>
       </Label>
       <ComboBox fx:id="transport" layoutX="91.0" layoutY="109.0" prefHeight="25.0" prefWidth="131.0" />
-      <Label layoutX="359.0" layoutY="115.0" text="Data To:">
+      <Label layoutX="359.0" layoutY="83.0" text="Data leaving:">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="359.0" layoutY="150.0" text="Data From:">
+      <Label layoutX="359.0" layoutY="118.0" text="Data arriving:">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
       </Label>
-      <DatePicker fx:id="dataTo" layoutX="445.0" layoutY="111.0" />
-      <DatePicker fx:id="dataFrom" layoutX="445.0" layoutY="146.0" />
-      <Label layoutX="16.0" layoutY="146.0" text="Station:">
-         <font>
-            <Font name="Calibri" size="12.0" />
-         </font>
-      </Label>
-      <ComboBox fx:id="station" layoutX="91.0" layoutY="142.0" prefHeight="25.0" prefWidth="131.0" />
-      <Button fx:id="back" layoutX="496.0" layoutY="187.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="51.0" text="Back">
+      <DatePicker fx:id="dataTo" layoutX="445.0" layoutY="79.0" />
+      <DatePicker fx:id="dataFrom" layoutX="445.0" layoutY="114.0" />
+      <Button fx:id="back" layoutX="568.0" layoutY="175.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="51.0" text="Back">
          <font>
             <Font name="Calibri" size="13.0" />
          </font>

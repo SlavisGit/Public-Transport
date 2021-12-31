@@ -25,9 +25,6 @@ public class CreateAdminController {
     private ResourceBundle resources;
 
     @FXML
-    private URL location;
-
-    @FXML
     private Button back;
 
     @FXML
@@ -65,24 +62,32 @@ public class CreateAdminController {
         alert.showAndWait();
     }
 
-    private void validationFields() {
+    private boolean validationFields() {
         if(firstName.getText() == null || firstName.getText().trim().isEmpty()) {
             messageBox("Field firstName is empty");
+            return false;
         }
 
         if(lastName.getText() == null || lastName.getText().trim().isEmpty()) {
             messageBox("Field lastName is empty");
+            return false;
         }
         if(username.getText() == null || username.getText().trim().isEmpty()) {
             messageBox("Field username is empty");
+            return false;
         }
 
         if(password.getText() == null || password.getText().trim().isEmpty()) {
             messageBox("Field password is empty");
+            return false;
         }
+        return true;
     }
     private void create(MouseEvent mouseEvent) {
-        validationFields();
+        if(!validationFields())
+        {
+            return;
+        }
         Administrator administrator = new Administrator(firstName.getText(), lastName.getText());
         administratorService.save(administrator);
         User user = new User(username.getText(), password.getText(), userTypeService.getById(1L));

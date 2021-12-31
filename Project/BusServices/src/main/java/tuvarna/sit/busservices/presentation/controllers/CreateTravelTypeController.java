@@ -37,10 +37,12 @@ public class CreateTravelTypeController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    private void validationFields() {
+    private boolean validationFields() {
         if(travelType.getText() == null || travelType.getText().trim().isEmpty()) {
             messageBox("Field travelType is empty");
+            return false;
         }
+        return true;
     }
     @FXML
     void initialize() {
@@ -48,7 +50,10 @@ public class CreateTravelTypeController {
     }
 
     private void createType(MouseEvent mouseEvent) {
-        validationFields();
+        if(!validationFields())
+        {
+            return;
+        }
         TravelType travelType = new TravelType(this.travelType.getText());
         travelTypeService.save(travelType);
 

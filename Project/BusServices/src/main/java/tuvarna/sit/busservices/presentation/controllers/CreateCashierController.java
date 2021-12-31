@@ -26,9 +26,6 @@ public class CreateCashierController {
     private ResourceBundle resources;
 
     @FXML
-    private URL location;
-
-    @FXML
     private TextField firstName;
 
     @FXML
@@ -77,33 +74,44 @@ public class CreateCashierController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    private void validationFields() {
+    private boolean validationFields() {
         if(firstName.getText() == null || firstName.getText().trim().isEmpty()) {
             messageBox("Field firstName is empty");
+            return false;
         }
 
         if(lastName.getText() == null || lastName.getText().trim().isEmpty()) {
             messageBox("Field lastName is empty");
+            return false;
         }
         if(username.getText() == null || username.getText().trim().isEmpty()) {
             messageBox("Field username is empty");
+            return false;
         }
 
         if(password.getText() == null || password.getText().trim().isEmpty()) {
             messageBox("Field password is empty");
+            return false;
         }
 
-        if(ucn.getText() == null || ucn.getText().trim().isEmpty()|| ucn.getText().matches("\"[0-9]{10}\"")) {
+        if(ucn.getText() == null || ucn.getText().trim().isEmpty()|| !ucn.getText().matches("[0-9]{10}")) {
             messageBox("Field ucn is empty");
-        }
+            return false;
+            // TODO: 30.12.2021 г.
+        } 
 
-        if(honorarium.getText() == null || honorarium.getText().trim().isEmpty()|| honorarium.getText().matches("\"[0-9]*[\\\\.]?[0-9]*\"")) {
+        if(honorarium.getText() == null || honorarium.getText().trim().isEmpty()|| !honorarium.getText().matches("[0-9]+[\\\\.]?[0-9]+")) {
             messageBox("Field honorarium is empty");
+            return false;
         }
+        return true;
 
     }
     private void createCashier(MouseEvent mouseEvent) {
-        validationFields();
+        if(!validationFields())
+        {
+            return;
+        }
         Cashier cashier = new Cashier(firstName.getText(), lastName.getText(), ucn.getText(),
                 Double.parseDouble(honorarium.getText()), HelloApplication.getUser().getStation());
 

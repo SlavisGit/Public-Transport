@@ -19,16 +19,13 @@ import tuvarna.sit.busservices.data.entities.Company;
 import tuvarna.sit.busservices.data.entities.User;
 
 public class CreateCompanyController implements EventHandler<MouseEvent> {
-    CompanyService companyService = CompanyService.getInstance();
-    UserService userService = UserService.getInstance();
-    UserTypeService userTypeService = UserTypeService.getInstance();
+    private static CompanyService companyService = CompanyService.getInstance();
+    private static UserService userService = UserService.getInstance();
+    private static UserTypeService userTypeService = UserTypeService.getInstance();
 
 
     @FXML
     private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private PasswordField password;
@@ -72,25 +69,33 @@ public class CreateCompanyController implements EventHandler<MouseEvent> {
         alert.showAndWait();
     }
 
-    private void validationFields() {
+    private boolean validationFields() {
         if (name.getText() == null || name.getText().trim().isEmpty()) {
             messageBox("Field name is empty");
+            return false;
         }
 
         if (address.getText() == null || address.getText().trim().isEmpty()) {
             messageBox("Field address is empty");
+            return false;
         }
         if (username.getText() == null || username.getText().trim().isEmpty()) {
             messageBox("Field username is empty");
+            return false;
         }
 
         if (password.getText() == null || password.getText().trim().isEmpty()) {
             messageBox("Field password is empty");
+            return false;
         }
+        return true;
     }
 
     public void createCompany(MouseEvent mouseEvent) {
-        validationFields();
+        if(!validationFields())
+        {
+            return;
+        }
         Company company = new Company();
         company.setName(name.getText());
         company.setAddress(address.getText());

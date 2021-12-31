@@ -22,9 +22,6 @@ public class CreateDestinationController {
     private ResourceBundle resources;
 
     @FXML
-    private URL location;
-
-    @FXML
     private Button create;
 
     @FXML
@@ -41,13 +38,18 @@ public class CreateDestinationController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    private void validationFields() {
+    private boolean validationFields() {
         if(destination.getText() == null || destination.getText().trim().isEmpty()) {
             messageBox("Field firstName is empty");
+            return false;
         }
+        return true;
     }
     private void createType(MouseEvent mouseEvent) {
-        validationFields();
+        if(!validationFields())
+        {
+            return;
+        }
         Destination destination1 = new Destination(this.destination.getText());
         destinationService.save(destination1);
 

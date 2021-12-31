@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="217.0" prefWidth="525.0" xmlns="http://javafx.com/javafx/185"
+<AnchorPane prefHeight="217.0" prefWidth="525.0" xmlns="http://javafx.com/javafx/185" style="-fx-background-color: linear-gradient(to left, #F5B7B1, #AED6F1, #F5B7B1);" styleClass="LinearGradient"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="tuvarna.sit.busservices.presentation.controllers.CreateCashierController">
    <children>
       <Label layoutX="30.0" layoutY="71.0" text="First name:">

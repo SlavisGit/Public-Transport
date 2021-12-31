@@ -13,9 +13,6 @@ public class CashierOptionsController {
     private ResourceBundle resources;
 
     @FXML
-    private URL location;
-
-    @FXML
     private Button buyTicket;
 
     @FXML

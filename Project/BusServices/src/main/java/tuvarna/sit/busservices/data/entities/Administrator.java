@@ -91,10 +91,7 @@ public class Administrator implements Serializable{
 
     @Override
     public String toString() {
-        return "Administrator{" +
-                "ID=" + ID +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+        return  firstName + ' ' +
+                 lastName ;
     }
 }

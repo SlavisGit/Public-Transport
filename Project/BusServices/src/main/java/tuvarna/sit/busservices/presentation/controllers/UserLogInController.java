@@ -54,7 +54,10 @@ public class UserLogInController implements EventHandler<MouseEvent> {
 
 
     public void logIn(MouseEvent mouseEvent){
-        validationFields();
+        if(!validationFields())
+        {
+            return;
+        }
         UserService service = UserService.getInstance();
         User userLogin = service.getUserLogin(password, username, HelloController.getTypeUser());
         if(userLogin == null) {
@@ -84,13 +87,16 @@ public class UserLogInController implements EventHandler<MouseEvent> {
         }
 
     }
-    private void validationFields() {
+    private boolean validationFields() {
         if(password.getText() == null || password.getText().trim().isEmpty()) {
-            messageBox("Field Count Tickets is empty");
+            messageBox("Field password Tickets is empty");
+            return false;
         }
         if(username.getText() == null || username.getText().trim().isEmpty() ) {
-            messageBox("Field Price is empty");
+            messageBox("Field username is empty");
+            return false;
         }
+        return true;
     }
     private void messageBox(String message) {
         Alert alert = new Alert(Alert.AlertType.

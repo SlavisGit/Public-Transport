@@ -125,7 +125,7 @@ public class Ticket implements Serializable {
 
     @Override
     public String toString() {
-        return "ID=" + ID +
-                ", price=" + price ;
+        return "Place: " + ID +
+                " price=" + price ;
     }
 }

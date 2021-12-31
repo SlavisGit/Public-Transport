@@ -23,9 +23,6 @@ public class AdministratorOptionsController implements EventHandler<MouseEvent> 
     private Button viewCashierRating;
 
     @FXML
-    private Label hello;
-
-    @FXML
     private Button createCompany;
 
     @FXML
@@ -39,10 +36,8 @@ public class AdministratorOptionsController implements EventHandler<MouseEvent> 
 
     @FXML
     void initialize() {
-        hello.setText(hello.getText() + HelloApplication.getUser().getUsername());
         assert createCompany != null : "fx:id=\"createCompany\" was not injected: check your FXML file 'administratorOptions.fxml'.";
         assert createStation != null : "fx:id=\"createStation\" was not injected: check your FXML file 'administratorOptions.fxml'.";
-        assert hello != null : "fx:id=\"hello\" was not injected: check your FXML file 'administratorOptions.fxml'.";
         assert logOut != null : "fx:id=\"logOut\" was not injected: check your FXML file 'administratorOptions.fxml'.";
 
         createCompany.setOnMouseClicked(this::handle);

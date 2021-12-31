@@ -16,6 +16,7 @@ import tuvarna.sit.busservices.data.entities.*;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 public class AddTicketsController implements Initializable {
     TicketService ticketService = TicketService.getInstance();
@@ -57,7 +58,9 @@ public class AddTicketsController implements Initializable {
         alert.showAndWait();
     }
     private void create(MouseEvent mouseEvent) {
-        validationFields();
+        if(!validationFields()) {
+            return;
+        }
         Status st = statusService.getById(5L);
         for (int i = 0; i < Integer.parseInt(countTickets.getText()); i++) {
             Ticket ticket = new Ticket(travelBox.getValue(), Double.parseDouble(price.getText()), statusService.getById(6L));
@@ -69,22 +72,30 @@ public class AddTicketsController implements Initializable {
         back(mouseEvent);
     }
 
-    private void validationFields() {
-        if(countTickets.getText() == null || countTickets.getText().trim().isEmpty() || countTickets.getText().matches("\"[0-9]*\"")) {
+    private boolean validationFields() {
+        String regex = "\\d+";
+        Pattern pattern = Pattern.compile(regex);
+
+        if(countTickets.getText() == null || countTickets.getText().trim().isEmpty() || !pattern.matcher(countTickets.getText()).find()) {
             messageBox("Field Count Tickets is empty");
+            return false;
         }
 
         if(travelBox.getSelectionModel().isEmpty() || travelBox.getSelectionModel() == null) {
             messageBox("Field Travel is empty");
+            return false;
         }
 
-        if(price.getText() == null || price.getText().trim().isEmpty() || price.getText().matches("\"[0-9]*\"")) {
+        if(price.getText() == null || price.getText().trim().isEmpty() || !price.getText().matches("\\d+(\\.\\d+)?")) {
             messageBox("Field Price is empty");
+            return false;
         }
 
         if(stationBox.getSelectionModel().isEmpty() || stationBox.getSelectionModel() == null) {
             messageBox("Field Station is empty");
+            return false;
         }
+        return true;
     }
 
     private void notification() {

@@ -40,9 +40,6 @@ public class Travel implements Serializable {
     @Column(name = "countPlaces", nullable = false)
     private int countPlaces;
 
-    @Column(name = "limitation", nullable = false)
-    private int limitation;
-
     @ManyToOne
     @JoinColumn(name = "companyId", nullable = false)
     private Company company;
@@ -114,14 +111,6 @@ public class Travel implements Serializable {
         this.countPlaces = countPlaces;
     }
 
-    public int getLimitation() {
-        return limitation;
-    }
-
-    public void setLimitation(int limitation) {
-        this.limitation = limitation;
-    }
-
     public Company getCompany() {
         return company;
     }
@@ -131,14 +120,13 @@ public class Travel implements Serializable {
     }
 
     public Travel(TravelType travelType, Destination destination, Transport transportType,
-                  LocalDate dataTo, LocalDate dataFrom, int countPlaces, int limitation, Company company) {
+                  LocalDate dataTo, LocalDate dataFrom, int countPlaces, Company company) {
         this.travelType = travelType;
         this.destination = destination;
         this.transportType = transportType;
         this.dataTo = dataTo;
         this.dataFrom = dataFrom;
         this.countPlaces = countPlaces;
-        this.limitation = limitation;
         this.company = company;
     }
 
@@ -147,7 +135,6 @@ public class Travel implements Serializable {
 
     @Override
     public String toString() {
-        return
-                " Travel from: " + destination ;
+        return " Travel to: " + destination ;
     }
 }

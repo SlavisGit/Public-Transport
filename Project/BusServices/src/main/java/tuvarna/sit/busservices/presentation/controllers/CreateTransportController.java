@@ -23,9 +23,6 @@ public class CreateTransportController {
     private ResourceBundle resources;
 
     @FXML
-    private URL location;
-
-    @FXML
     private Button create;
 
     @FXML
@@ -42,13 +39,18 @@ public class CreateTransportController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    private void validationFields() {
+    private boolean validationFields() {
         if(transport.getText() == null || transport.getText().trim().isEmpty()) {
             messageBox("Field transport is empty");
+            return false;
         }
+        return true;
     }
     private void createType(MouseEvent mouseEvent) {
-        validationFields();
+        if(!validationFields())
+        {
+            return;
+        }
         Transport transport = new Transport(this.transport.getText());
         transportService.save(transport);
 

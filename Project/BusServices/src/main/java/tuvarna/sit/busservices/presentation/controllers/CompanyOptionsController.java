@@ -19,8 +19,6 @@ public class CompanyOptionsController implements EventHandler<MouseEvent> {
     @FXML
     private Button viewStation;
 
-    @FXML
-    private URL location;
 
     @FXML
     private Button checkOrderTickets;
@@ -28,8 +26,6 @@ public class CompanyOptionsController implements EventHandler<MouseEvent> {
     @FXML
     private Button addTravel;
 
-    @FXML
-    private Label labelHello;
 
     @FXML
     private Button viewTravels;
@@ -42,9 +38,7 @@ public class CompanyOptionsController implements EventHandler<MouseEvent> {
 
     @FXML
     void initialize() {
-        labelHello.setText(labelHello.getText() + HelloApplication.getUser().getUsername());
         assert addTravel != null : "fx:id=\"addTravel\" was not injected: check your FXML file 'companyOptions.fxml'.";
-        assert labelHello != null : "fx:id=\"labelHello\" was not injected: check your FXML file 'companyOptions.fxml'.";
         assert viewTravels != null : "fx:id=\"viewTravels\" was not injected: check your FXML file 'companyOptions.fxml'.";
         addTravel.setOnMouseClicked(this::insertTravel);
         logOutCompany.setOnMouseClicked(this::handle);
@@ -55,40 +49,34 @@ public class CompanyOptionsController implements EventHandler<MouseEvent> {
     }
 
     private void check(MouseEvent mouseEvent) {
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/orderTickets.fxml", "Order Tickets");
+    }
+
+    private void newWindow(MouseEvent mouseEvent, String s, String s2) {
         NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/orderTickets.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Order Tickets");
+        URL path = getClass().getResource(s);
+        logInApplication.logInUser(resources, mouseEvent, path, s2);
     }
 
     private void addTickets(MouseEvent mouseEvent) {
-        NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/addTickets.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Tickets");
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/addTickets.fxml", "Tickets");
     }
 
     private void viewStations(MouseEvent mouseEvent) {
-        NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/stationList.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Stations");
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/stationList.fxml", "Stations");
     }
 
     private void viewTravels(MouseEvent mouseEvent) {
-        NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/travelList.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Travel");
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/travelList.fxml", "Travel");
     }
 
     private void insertTravel(MouseEvent mouseEvent) {
-        NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/createTravel.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Insert Travel");
+        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/createTravel.fxml", "Insert Travel");
     }
 
     @Override
     public void handle(MouseEvent event) {
-        NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/hello-view.fxml");
-        logInApplication.logInUser(resources, event, path, "Travel Service");
+        newWindow(event, "/tuvarna/sit/busservices/presentation.view/hello-view.fxml", "Travel Service");
     }
 }
 
