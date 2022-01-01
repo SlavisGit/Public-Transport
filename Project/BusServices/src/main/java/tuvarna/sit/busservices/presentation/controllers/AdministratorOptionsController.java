@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
+import tuvarna.sit.common.Constants;
 
 public class AdministratorOptionsController implements EventHandler<MouseEvent> {
 
@@ -48,25 +49,25 @@ public class AdministratorOptionsController implements EventHandler<MouseEvent> 
     }
 
     private void viewRating(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/cashierList.fxml", "Cashier Rating");
+        newWindow(mouseEvent, Constants.View.WINDOW_CASHIER_LIST, Constants.Titles.CASHIER_RATING);
     }
 
     private void createAdmin(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/createAdmin.fxml", "Admin creation");
+        newWindow(mouseEvent, Constants.View.WINDOW_CREATE_ADMIN, Constants.Titles.ADMIN_CREATION);
     }
 
     @Override
     public void handle(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/createCompany.fxml", "Company creation");
+        newWindow(mouseEvent, Constants.View.WINDOW_CREATE_COMPANY, Constants.Titles.COMPANY_CREATION);
     }
 
-    public void logOut(MouseEvent mouseEvent) {
+    private void logOut(MouseEvent mouseEvent) {
         HelloApplication.setUser(null);
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/hello-view.fxml", "Bus services");
+        newWindow(mouseEvent, Constants.View.WINDOW_HELLO_VIEW, Constants.Titles.BUS_SERVICE);
     }
 
-    public void createStationBut(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/createStation.fxml", "Station creation");
+    private void createStationBut(MouseEvent mouseEvent) {
+        newWindow(mouseEvent, Constants.View.WINDOW_CREATE_STATION, Constants.Titles.STATION_CREATION);
     }
 
     private void newWindow(MouseEvent mouseEvent, String s, String s2) {

@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import tuvarna.sit.busservices.application.NewWindowApplication;
+import tuvarna.sit.common.Constants;
 
 public class StationOptionsController {
 
@@ -44,23 +45,23 @@ public class StationOptionsController {
     }
 
     private void order(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/orderTickets.fxml", "Order Tickets");
+        newWindow(mouseEvent, Constants.View.WINDOW_ORDER_TICKETS, Constants.Titles.ORDER_TICKETS);
     }
 
     private void viewCashier(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/cashierList.fxml", "Cashier");
+        newWindow(mouseEvent,  Constants.View.WINDOW_CASHIER_LIST, Constants.Titles.CASHIER);
     }
 
     private void viewTravel(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/travelList.fxml", "Travel");
+        newWindow(mouseEvent,  Constants.View.WINDOW_TRAVEL_LIST, Constants.Titles.TRAVEL);
     }
 
     private void logOut(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/hello-view.fxml", "Travel Service");
+        newWindow(mouseEvent,  Constants.View.WINDOW_HELLO_VIEW, Constants.Titles.BUS_SERVICE);
     }
 
     private void addCashier(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/createCashier.fxml", "Cashier creation");
+        newWindow(mouseEvent, Constants.View.WINDOW_CREATE_CASHIER, Constants.Titles.CASHIER_CREATION);
     }
 
     private void newWindow(MouseEvent mouseEvent, String s, String s2) {

@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.event.EventHandler;
 import tuvarna.sit.busservices.application.NewWindowApplication;
 import tuvarna.sit.busservices.business.services.UserTypeService;
+import tuvarna.sit.common.Constants;
 
 public class HelloController implements EventHandler<MouseEvent> {
 
@@ -55,28 +56,28 @@ public class HelloController implements EventHandler<MouseEvent> {
     }
 
     private void cashierLogIn(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "Cashier", "Cashier login");
+        newWindow(mouseEvent, Constants.Titles.CASHIER, Constants.Titles.CASHIER_LOGIN);
     }
 
     private void newWindow(MouseEvent mouseEvent, String cashier, String s) {
         typeUser = cashier;
         NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/userLogIn-view.fxml");
+        URL path = getClass().getResource(Constants.View.WINDOW_LOGIN);
         logInApplication.logInUser(resources, mouseEvent, path, s);
     }
 
     private void stationLogIn(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "Station", "Station login");
+        newWindow(mouseEvent, Constants.Titles.STATION, Constants.Titles.STATION_LOGIN);
     }
 
     private void companyLogIn(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "Company", "Company login");
+        newWindow(mouseEvent, Constants.Titles.COMPANY, Constants.Titles.COMPANY_LOGIN);
     }
 
 
     @Override
     public void handle(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "Admin", "Admin login");
+        newWindow(mouseEvent, Constants.Titles.ADMIN, Constants.Titles.ADMIN_LOGIN);
     }
 
 }

@@ -19,6 +19,7 @@ import tuvarna.sit.busservices.business.services.UserService;
 import tuvarna.sit.busservices.business.services.UserTypeService;
 import tuvarna.sit.busservices.data.entities.Station;
 import tuvarna.sit.busservices.data.entities.User;
+import tuvarna.sit.common.Constants;
 
 public class CreateStationController implements EventHandler<MouseEvent> {
 
@@ -63,36 +64,36 @@ public class CreateStationController implements EventHandler<MouseEvent> {
     private void messageBox(String message) {
         Alert alert = new Alert(Alert.AlertType.
                 ERROR);
-        alert.setTitle("Incorrect data");
+        alert.setTitle(Constants.MessageError.INCORRECT_DATA);
         alert.setContentText(message);
         alert.showAndWait();
     }
     private boolean validationFields() {
         if(username.getText() == null || username.getText().trim().isEmpty()) {
-            messageBox("Field username is empty");
+            messageBox(Constants.MessageError.USERNAME_EMPTY);
             return false;
         }
 
         if(password.getText() == null || password.getText().trim().isEmpty()) {
-            messageBox("Field password is empty");
+            messageBox(Constants.MessageError.PASSWORD_EMPTY);
             return false;
         }
         if(stationName.getText() == null || stationName.getText().trim().isEmpty()) {
-            messageBox("Field station Name is empty");
+            messageBox(Constants.MessageError.STATION_EMPTY);
             return false;
         }
 
         if(stationAddress.getText() == null || stationAddress.getText().trim().isEmpty()) {
-            messageBox("Field station Address is empty");
+            messageBox(Constants.MessageError.ADDRESS_EMPTY);
             return false;
         }
         if(startTime.getText() == null || startTime.getText().trim().isEmpty()) {
-            messageBox("Field start Time is empty");
+            messageBox(Constants.MessageError.START_TIME_EMPTY);
             return false;
         }
 
         if(endTime.getText() == null || endTime.getText().trim().isEmpty()) {
-            messageBox("Field end Time is empty");
+            messageBox(Constants.MessageError.END_TIME_EMPTY);
             return false;
         }
         return true;
@@ -126,8 +127,8 @@ public class CreateStationController implements EventHandler<MouseEvent> {
 
     public void back(MouseEvent mouseEvent) {
         NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/administratorOptions.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Administrator");
+        URL path = getClass().getResource(Constants.View.WINDOW_ADMIN_OPTION);
+        logInApplication.logInUser(resources, mouseEvent, path, Constants.Titles.ADMIN);
     }
 }
 

@@ -12,6 +12,7 @@ import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
 import tuvarna.sit.busservices.business.services.UserService;
 import tuvarna.sit.busservices.data.entities.User;
+import tuvarna.sit.common.Constants;
 
 public class UserLogInController implements EventHandler<MouseEvent> {
 
@@ -49,17 +50,17 @@ public class UserLogInController implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent mouseEvent){
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/hello-view.fxml", "Bus services");
+        newWindow(mouseEvent, Constants.View.WINDOW_HELLO_VIEW, Constants.Titles.BUS_SERVICE);
     }
 
 
-    public void logIn(MouseEvent mouseEvent){
+    private void logIn(MouseEvent mouseEvent){
         if(!validationFields())
         {
             return;
         }
         UserService service = UserService.getInstance();
-        User userLogin = service.getUserLogin(password, username, HelloController.getTypeUser());
+        User userLogin = service.getUserLogin(password.getText(), username.getText(), HelloController.getTypeUser());
         if(userLogin == null) {
             messageBox();
             return;
@@ -69,19 +70,19 @@ public class UserLogInController implements EventHandler<MouseEvent> {
 
         switch(userLogin.getUserType().getUserType()){
             case "Admin": {
-                newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/administratorOptions.fxml", "Administrator");
+                newWindow(mouseEvent, Constants.View.WINDOW_ADMIN_OPTION, Constants.Titles.ADMIN);
                 break;
             }
             case "Company": {
-                newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/companyOptions.fxml", "Company");
+                newWindow(mouseEvent, Constants.View.WINDOW_COMPANY_OPTION, Constants.Titles.COMPANY);
                 break;
             }
             case "Station": {
-                newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/stationOptions.fxml", "Station");
+                newWindow(mouseEvent, Constants.View.WINDOW_STATION_OPTION, Constants.Titles.STATION);
                 break;
             }
             case "Cashier": {
-                newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/cashierOptions.fxml", "Cashier");
+                newWindow(mouseEvent, Constants.View.WINDOW_CASHIER_OPTION, Constants.Titles.CASHIER);
                 break;
             }
         }
@@ -89,11 +90,11 @@ public class UserLogInController implements EventHandler<MouseEvent> {
     }
     private boolean validationFields() {
         if(password.getText() == null || password.getText().trim().isEmpty()) {
-            messageBox("Field password Tickets is empty");
+            messageBox(Constants.MessageError.PASSWORD_EMPTY);
             return false;
         }
         if(username.getText() == null || username.getText().trim().isEmpty() ) {
-            messageBox("Field username is empty");
+            messageBox(Constants.MessageError.USERNAME_EMPTY);
             return false;
         }
         return true;
@@ -101,7 +102,7 @@ public class UserLogInController implements EventHandler<MouseEvent> {
     private void messageBox(String message) {
         Alert alert = new Alert(Alert.AlertType.
                 ERROR);
-        alert.setTitle("Incorrect data");
+        alert.setTitle(Constants.MessageError.INCORRECT_DATA);
         alert.setContentText(message);
         alert.showAndWait();
     }
@@ -114,8 +115,8 @@ public class UserLogInController implements EventHandler<MouseEvent> {
     private void messageBox() {
         Alert alert = new Alert(Alert.AlertType.
                 ERROR);
-        alert.setTitle("Incorrect data");
-        alert.setContentText("Invalid username or password. Please, try again.");
+        alert.setTitle(Constants.MessageError.INCORRECT_DATA);
+        alert.setContentText(Constants.MessageError.INVALID);
         alert.showAndWait();
     }
 

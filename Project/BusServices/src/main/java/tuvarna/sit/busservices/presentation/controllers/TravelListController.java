@@ -21,6 +21,7 @@ import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
 import tuvarna.sit.busservices.business.services.*;
 import tuvarna.sit.busservices.data.entities.*;
+import tuvarna.sit.common.Constants;
 
 
 public class TravelListController {
@@ -73,15 +74,15 @@ public class TravelListController {
 
         ContextMenu contextMenu = new ContextMenu();
 
-        if(userType.getUserType().equals("Company")) {
+        if(userType.getUserType().equals(Constants.Titles.COMPANY)) {
             display(travelService.getAllTravelForCompany());
             back.setOnMouseClicked(this::backCompany);
             MenuItem menuItem1 = deleteTravelMenuItem(travelService);
             contextMenu.getItems().add(menuItem1);
-        } else if(userType.getUserType().equals("Cashier")) {
+        } else if(userType.getUserType().equals(Constants.Titles.CASHIER)) {
             display(travelService.getAllTravelForCashier());
             back.setOnMouseClicked(this::backCashier);
-        } else if(userType.getUserType().equals("Station")) {
+        } else if(userType.getUserType().equals(Constants.Titles.STATION)) {
             display(travelService.getAllTravelForStation());
             back.setOnMouseClicked(this::backStation);
         }
@@ -98,11 +99,11 @@ public class TravelListController {
     }
 
     private MenuItem ViewTicketMenuItem() {
-        MenuItem menuItem = new MenuItem("View Ticket");
+        MenuItem menuItem = new MenuItem(Constants.Titles.TICKET_VIEW);
         menuItem.setOnAction((ActionEvent event) ->{
             Travel selectedItem = tableView.getSelectionModel().getSelectedItem();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tuvarna/sit/busservices/presentation.view/ticketView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.View.WINDOW_TICKET_LIST));
                     try {
                         Parent root = (Parent) loader.load();
                         TicketViewController ticketViewController = loader.getController();
@@ -119,7 +120,7 @@ public class TravelListController {
     }
 
     private MenuItem deleteTravelMenuItem(TravelService travelService) {
-        MenuItem menuItem1 = new MenuItem("Delete Travel");
+        MenuItem menuItem1 = new MenuItem(Constants.Notification.DELETE_TRAVEL);
         menuItem1.setOnAction((ActionEvent event) -> {
             Travel selectedItem = tableView.getSelectionModel().getSelectedItem();
 
@@ -143,7 +144,7 @@ public class TravelListController {
         if(!all1.isEmpty()) {
             for (Cashier cashier :all1) {
                 User byIdCashier = userService.getByIdCashier(cashier.getID());
-                Notification notification1 = new Notification("Delete travel!", byIdCashier);
+                Notification notification1 = new Notification(Constants.Notification.DELETE_TRAVEL, byIdCashier);
                 notificationService.save(notification1);
             }
         }
@@ -154,13 +155,13 @@ public class TravelListController {
         if(!all.isEmpty()) {
             for (Station station: all) {
                 User byIdStation = userService.getByIdStation(station.getID());
-                Notification notification = new Notification("Delete travel!", byIdStation);
+                Notification notification = new Notification(Constants.Notification.DELETE_TRAVEL, byIdStation);
                 notificationService.save(notification);
             }
         }
     }
 
-    public void display(ObservableList<Travel> all){
+    private void display(ObservableList<Travel> all){
         travelTypeColumn.setCellValueFactory(p -> new ReadOnlyObjectWrapper(p.getValue().getTravelType()));
 
         destinationColumn.setCellValueFactory(b -> new ReadOnlyObjectWrapper(b.getValue().getDestination()));
@@ -178,16 +179,16 @@ public class TravelListController {
         tableView.setItems(all);
     }
     private void backStation(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/stationOptions.fxml", "Station");
+        newWindow(mouseEvent, Constants.View.WINDOW_STATION_OPTION, Constants.Titles.STATION);
     }
 
 
     private void backCashier(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/cashierOptions.fxml", "Cashier");
+        newWindow(mouseEvent, Constants.View.WINDOW_CASHIER_OPTION, Constants.Titles.CASHIER);
     }
 
     private void backCompany(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/companyOptions.fxml", "Company");
+        newWindow(mouseEvent, Constants.View.WINDOW_COMPANY_OPTION, Constants.Titles.COMPANY);
     }
 
     private void newWindow(MouseEvent mouseEvent, String s, String company) {

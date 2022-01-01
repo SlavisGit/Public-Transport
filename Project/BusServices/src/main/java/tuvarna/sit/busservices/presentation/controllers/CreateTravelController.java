@@ -17,6 +17,7 @@ import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
 import tuvarna.sit.busservices.business.services.*;
 import tuvarna.sit.busservices.data.entities.*;
+import tuvarna.sit.common.Constants;
 
 public class CreateTravelController {
     private static TravelService travelService = TravelService.getInstance();
@@ -81,20 +82,20 @@ public class CreateTravelController {
 
     private void back(MouseEvent mouseEvent) {
         NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/companyOptions.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Company");
+        URL path = getClass().getResource(Constants.View.WINDOW_COMPANY_OPTION);
+        logInApplication.logInUser(resources, mouseEvent, path, Constants.Titles.COMPANY);
     }
 
     private void addTravelType(MouseEvent mouseEvent) {
-        openNewDaughterWindow("/tuvarna/sit/busservices/presentation.view/createTravelType.fxml", "Travel Type");
+        openNewDaughterWindow(Constants.View.WINDOW_CREATE_TRAVEL_TYPE, Constants.Titles.TRAVEL_TYPE);
     }
 
     private void addTransport(MouseEvent mouseEvent) {
-        openNewDaughterWindow("/tuvarna/sit/busservices/presentation.view/createTransport.fxml", "Transport");
+        openNewDaughterWindow(Constants.View.WINDOW_CREATE_TRANSPORT, Constants.Titles.TRANSPORT);
     }
 
     private void addDestination(MouseEvent mouseEvent) {
-        openNewDaughterWindow("/tuvarna/sit/busservices/presentation.view/createDestination.fxml", "Travel Type");
+        openNewDaughterWindow(Constants.View.WINDOW_CREATE_DESTINATION, Constants.Titles.DESTINATION);
     }
 
     private void openNewDaughterWindow(String s, String s2) {
@@ -113,33 +114,33 @@ public class CreateTravelController {
     private void messageBox(String message) {
         Alert alert = new Alert(Alert.AlertType.
                 ERROR);
-        alert.setTitle("Incorrect data");
+        alert.setTitle(Constants.MessageError.INCORRECT_DATA);
         alert.setContentText(message);
         alert.showAndWait();
     }
     private boolean validationFields() {
-        if(countPlaces.getText() == null || countPlaces.getText().trim().isEmpty() || !countPlaces.getText().matches("\"[0-9]*\"")) {
-            messageBox("Field countPlaces is empty");
+        if(countPlaces.getText() == null || countPlaces.getText().trim().isEmpty() || !countPlaces.getText().matches(Constants.Regex.FOR_INT_DIGIT)) {
+            messageBox(Constants.MessageError.COUNT_PLACE_EMPTY);
             return false;
         }
         if(travelType.getSelectionModel().isEmpty() || travelType.getSelectionModel() == null) {
-            messageBox("Field travelType is empty");
+            messageBox(Constants.MessageError.TRAVEL_TYPE_EMPTY);
             return false;
         }
         if(destination.getSelectionModel().isEmpty() || destination.getSelectionModel() == null) {
-            messageBox("Field destination is empty");
+            messageBox(Constants.MessageError.DESTINATION_EMPTY);
             return false;
         }
         if(transport.getSelectionModel().isEmpty() || transport.getSelectionModel() == null) {
-            messageBox("Field transport is empty");
+            messageBox(Constants.MessageError.TRANSPORT_EMPTY);
             return false;
         }
         if(dataTo.getValue() == null || dataTo.getValue().isAfter(LocalDate.now())) {
-            messageBox("Field dataTo is empty or invalid date");
+            messageBox(Constants.MessageError.DATA_TO_EMPTY);
             return false;
         }
         if(dataFrom.getValue() == null || dataFrom.getValue().isAfter(LocalDate.now())) {
-            messageBox("Field dataFrom is empty or invalid date");
+            messageBox(Constants.MessageError.DATA_FROM_EMPTY);
             return false;
         }
         return true;
@@ -158,18 +159,18 @@ public class CreateTravelController {
         back(mouseEvent);
     }
 
-    public void fillComboBoxTravelType() {
+    private void fillComboBoxTravelType() {
         travelType.getItems().clear();
         List<TravelType> all = travelTypeService.getAll();
         travelType.setItems(FXCollections.observableArrayList(all));
     }
 
-    public void fillComboBoxDestination() {
+    private void fillComboBoxDestination() {
         List<Destination> all = destinationService.getAll();
         destination.setItems(FXCollections.observableArrayList(all));
     }
 
-    public void fillComboBoxTransport() {
+    private void fillComboBoxTransport() {
         List<Transport> all = transportService.getAll();
         transport.setItems(FXCollections.observableArrayList(all));
     }

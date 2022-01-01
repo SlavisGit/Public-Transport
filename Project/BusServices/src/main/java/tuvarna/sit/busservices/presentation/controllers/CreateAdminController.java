@@ -15,6 +15,7 @@ import tuvarna.sit.busservices.business.services.UserService;
 import tuvarna.sit.busservices.business.services.UserTypeService;
 import tuvarna.sit.busservices.data.entities.Administrator;
 import tuvarna.sit.busservices.data.entities.User;
+import tuvarna.sit.common.Constants;
 
 public class CreateAdminController {
     AdministratorService administratorService = AdministratorService.getInstance();
@@ -57,28 +58,28 @@ public class CreateAdminController {
     private void messageBox(String message) {
         Alert alert = new Alert(Alert.AlertType.
                 ERROR);
-        alert.setTitle("Incorrect data");
+        alert.setTitle(Constants.MessageError.INCORRECT_DATA);
         alert.setContentText(message);
         alert.showAndWait();
     }
 
     private boolean validationFields() {
         if(firstName.getText() == null || firstName.getText().trim().isEmpty()) {
-            messageBox("Field firstName is empty");
+            messageBox(Constants.MessageError.FIRSTNAME_EMPTY);
             return false;
         }
 
         if(lastName.getText() == null || lastName.getText().trim().isEmpty()) {
-            messageBox("Field lastName is empty");
+            messageBox(Constants.MessageError.LASTNAME_EMPTY);
             return false;
         }
         if(username.getText() == null || username.getText().trim().isEmpty()) {
-            messageBox("Field username is empty");
+            messageBox(Constants.MessageError.USERNAME_EMPTY);
             return false;
         }
 
         if(password.getText() == null || password.getText().trim().isEmpty()) {
-            messageBox("Field password is empty");
+            messageBox(Constants.MessageError.PASSWORD_EMPTY);
             return false;
         }
         return true;
@@ -96,10 +97,10 @@ public class CreateAdminController {
         back(mouseEvent);
     }
 
-    public void back(MouseEvent mouseEvent) {
+    private void back(MouseEvent mouseEvent) {
         NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/administratorOptions.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Administrator");
+        URL path = getClass().getResource(Constants.View.WINDOW_ADMIN_OPTION);
+        logInApplication.logInUser(resources, mouseEvent, path, Constants.Titles.ADMIN);
     }
 }
 

@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
+import tuvarna.sit.common.Constants;
 
 public class CompanyOptionsController implements EventHandler<MouseEvent> {
 
@@ -49,7 +50,7 @@ public class CompanyOptionsController implements EventHandler<MouseEvent> {
     }
 
     private void check(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/orderTickets.fxml", "Order Tickets");
+        newWindow(mouseEvent, Constants.View.WINDOW_ORDER_TICKETS, Constants.Titles.ORDER_TICKETS);
     }
 
     private void newWindow(MouseEvent mouseEvent, String s, String s2) {
@@ -59,24 +60,24 @@ public class CompanyOptionsController implements EventHandler<MouseEvent> {
     }
 
     private void addTickets(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/addTickets.fxml", "Tickets");
+        newWindow(mouseEvent, Constants.View.WINDOW_ADD_TICKET, Constants.Titles.TICKET);
     }
 
     private void viewStations(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/stationList.fxml", "Stations");
+        newWindow(mouseEvent, Constants.View.WINDOW_STATION_LIST, Constants.Titles.STATION);
     }
 
     private void viewTravels(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/travelList.fxml", "Travel");
+        newWindow(mouseEvent, Constants.View.WINDOW_TRAVEL_LIST, Constants.Titles.TRAVEL);
     }
 
     private void insertTravel(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/createTravel.fxml", "Insert Travel");
+        newWindow(mouseEvent, Constants.View.WINDOW_CREATE_TRAVEL, Constants.Titles.TRAVEL);
     }
 
     @Override
     public void handle(MouseEvent event) {
-        newWindow(event, "/tuvarna/sit/busservices/presentation.view/hello-view.fxml", "Travel Service");
+        newWindow(event, Constants.View.WINDOW_HELLO_VIEW, Constants.Titles.BUS_SERVICE);
     }
 }
 

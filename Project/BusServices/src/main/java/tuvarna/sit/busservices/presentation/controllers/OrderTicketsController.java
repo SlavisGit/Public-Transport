@@ -10,6 +10,7 @@ import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
 import tuvarna.sit.busservices.business.services.*;
 import tuvarna.sit.busservices.data.entities.*;
+import tuvarna.sit.common.Constants;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -66,11 +67,11 @@ public class OrderTicketsController implements Initializable {
     }
 
     private void backCompany(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/companyOptions.fxml", "Company");
+        newWindow(mouseEvent, Constants.View.WINDOW_COMPANY_OPTION, Constants.Titles.COMPANY);
     }
 
     private void backStation(MouseEvent mouseEvent) {
-        newWindow(mouseEvent, "/tuvarna/sit/busservices/presentation.view/stationOptions.fxml", "Station");
+        newWindow(mouseEvent, Constants.View.WINDOW_STATION_OPTION, Constants.Titles.STATION);
     }
 
     private void newWindow(MouseEvent mouseEvent, String s, String station) {
@@ -82,9 +83,9 @@ public class OrderTicketsController implements Initializable {
     private void delete(MouseEvent mouseEvent) {
         ObservableList<OrderTickets> items = tableView.getItems();
         for (OrderTickets i : items) {
-            if(i.getStatus().getStatus().equals("disagree")){
+            if(i.getStatus().getStatus().equals(Constants.Status.DISAGREE)){
                 ticketService.delete(i.getTicket());
-            } else if(i.getStatus().getStatus().equals("not seen")){
+            } else if(i.getStatus().getStatus().equals(Constants.Status.NOT_SEEN)){
                 continue;
             }
             orderTicketsService.delete(i);
@@ -111,7 +112,7 @@ public class OrderTicketsController implements Initializable {
             i.setStatus(byId);
             orderTicketsService.update(i);
         }
-        notification(items, "Refusal tickets!");
+        notification(items, Constants.Notification.REFUSAL_TICKETS);
         backStation(mouseEvent);
     }
 
@@ -129,7 +130,7 @@ public class OrderTicketsController implements Initializable {
             orderTicketsService.update(i);
             ticketService.update(i.getTicket());
         }
-        notification(items, "The tickets were confirmed");
+        notification(items, Constants.Notification.CONFIRM_TICKETS);
         backStation(mouseEvent);
     }
 
@@ -139,7 +140,7 @@ public class OrderTicketsController implements Initializable {
         notificationService.save(notification);
     }
 
-    public void display(ObservableList<OrderTickets> all) {
+    private void display(ObservableList<OrderTickets> all) {
         if(!all.isEmpty()) {
             companyColumn.setCellValueFactory(p -> new ReadOnlyObjectWrapper(p.getValue().getCompany()));
             ticketColumn.setCellValueFactory(p -> new ReadOnlyObjectWrapper(p.getValue().getTicket()));

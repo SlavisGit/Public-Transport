@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.business.services.TravelTypeService;
 import tuvarna.sit.busservices.data.entities.TravelType;
+import tuvarna.sit.common.Constants;
 
 public class CreateTravelTypeController {
     private static Logger logger = Logger.getLogger(HelloApplication.class);
@@ -33,13 +34,13 @@ public class CreateTravelTypeController {
     private void messageBox(String message) {
         Alert alert = new Alert(Alert.AlertType.
                 ERROR);
-        alert.setTitle("Incorrect data");
+        alert.setTitle(Constants.MessageError.INCORRECT_DATA);
         alert.setContentText(message);
         alert.showAndWait();
     }
     private boolean validationFields() {
         if(travelType.getText() == null || travelType.getText().trim().isEmpty()) {
-            messageBox("Field travelType is empty");
+            messageBox(Constants.MessageError.TRAVEL_TYPE_EMPTY);
             return false;
         }
         return true;

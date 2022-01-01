@@ -18,6 +18,7 @@ import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
 import tuvarna.sit.busservices.business.services.*;
 import tuvarna.sit.busservices.data.entities.*;
+import tuvarna.sit.common.Constants;
 
 public class BuyTicketsController implements Initializable {
     private static ClientService clientService = ClientService.getInstance();
@@ -69,8 +70,8 @@ public class BuyTicketsController implements Initializable {
 
     private void back(MouseEvent mouseEvent) {
         NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/cashierOptions.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Cashier");
+        URL path = getClass().getResource(Constants.View.WINDOW_CASHIER_OPTION);
+        logInApplication.logInUser(resources, mouseEvent, path, Constants.Titles.CASHIER);
     }
     private void messageBox(String message) {
         Alert alert = new Alert(Alert.AlertType.
@@ -81,17 +82,17 @@ public class BuyTicketsController implements Initializable {
     }
     private boolean validationFields() {
         if(firstName.getText() == null || firstName.getText().trim().isEmpty()) {
-            messageBox("Field firstName is empty");
+            messageBox(Constants.MessageError.FIRSTNAME_EMPTY);
             return false;
         }
 
         if(lastName.getText() == null || lastName.getText().trim().isEmpty()) {
-            messageBox("Field lastName is empty");
+            messageBox(Constants.MessageError.LASTNAME_EMPTY);
             return false;
         }
 
         if(placeComboBox.getSelectionModel().isEmpty() || placeComboBox.getSelectionModel() == null) {
-            messageBox("Field place is empty");
+            messageBox(Constants.MessageError.PLACE_EMPTY);
             return false;
         }
         return true;
@@ -121,7 +122,7 @@ public class BuyTicketsController implements Initializable {
 
     private void notification(Ticket value) {
         User byIdStation = userService.getByIdCompany(value.getTravel().getCompany().getID());
-        Notification notification = new Notification("Bought ticket!", byIdStation);
+        Notification notification = new Notification(Constants.Notification.BOUGHT_TICKET, byIdStation);
         notificationService.save(notification);
     }
 
@@ -149,7 +150,7 @@ public class BuyTicketsController implements Initializable {
         placeComboBox.setItems(FXCollections.observableArrayList(all));
     }
 
-    public void fillComboBoxDestination() {
+    private void fillComboBoxDestination() {
         DestinationService destinationService = DestinationService.getInstance();
         List<Destination> all = destinationService.getAll();
         destinationComboBox.setItems(FXCollections.observableArrayList(all));

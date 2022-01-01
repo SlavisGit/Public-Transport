@@ -53,13 +53,4 @@ public class AdministratorService implements Service<Administrator>{
 
     }
 
-    public void addCompany(Company company) {
-        CompanyRepository companyRepository = CompanyRepository.getInstance();
-        companyRepository.save(company);
-    }
-
-    public void addStation(Station station) {
-        StationRepository stationRepository = StationRepository.getInstance();
-        stationRepository.save(station);
-    }
 }

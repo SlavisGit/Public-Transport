@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import tuvarna.sit.busservices.application.NewWindowApplication;
 import tuvarna.sit.busservices.business.services.StationService;
 import tuvarna.sit.busservices.data.entities.Station;
+import tuvarna.sit.common.Constants;
 
 
 public class StationListController {
@@ -54,11 +55,11 @@ public class StationListController {
 
     private void back(MouseEvent mouseEvent) {
         NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/companyOptions.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Company");
+        URL path = getClass().getResource(Constants.View.WINDOW_COMPANY_OPTION);
+        logInApplication.logInUser(resources, mouseEvent, path, Constants.Titles.COMPANY);
     }
 
-    public void displayProductions(){
+    private void displayProductions(){
         ObservableList<Station> all = stationService.getAll();
         name.setCellValueFactory(p -> new ReadOnlyObjectWrapper(p.getValue().getName()));
 

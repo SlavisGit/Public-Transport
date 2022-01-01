@@ -17,6 +17,7 @@ import tuvarna.sit.busservices.business.services.UserService;
 import tuvarna.sit.busservices.business.services.UserTypeService;
 import tuvarna.sit.busservices.data.entities.Company;
 import tuvarna.sit.busservices.data.entities.User;
+import tuvarna.sit.common.Constants;
 
 public class CreateCompanyController implements EventHandler<MouseEvent> {
     private static CompanyService companyService = CompanyService.getInstance();
@@ -57,35 +58,35 @@ public class CreateCompanyController implements EventHandler<MouseEvent> {
     @Override
     public void handle(MouseEvent mouseEvent) {
         NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/administratorOptions.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Administrator");
+        URL path = getClass().getResource(Constants.View.WINDOW_ADMIN_OPTION);
+        logInApplication.logInUser(resources, mouseEvent, path, Constants.Titles.ADMIN);
     }
 
     private void messageBox(String message) {
         Alert alert = new Alert(Alert.AlertType.
                 ERROR);
-        alert.setTitle("Incorrect data");
+        alert.setTitle(Constants.MessageError.INCORRECT_DATA);
         alert.setContentText(message);
         alert.showAndWait();
     }
 
     private boolean validationFields() {
         if (name.getText() == null || name.getText().trim().isEmpty()) {
-            messageBox("Field name is empty");
+            messageBox(Constants.MessageError.NAME_EMPTY);
             return false;
         }
 
         if (address.getText() == null || address.getText().trim().isEmpty()) {
-            messageBox("Field address is empty");
+            messageBox(Constants.MessageError.ADDRESS_EMPTY);
             return false;
         }
         if (username.getText() == null || username.getText().trim().isEmpty()) {
-            messageBox("Field username is empty");
+            messageBox(Constants.MessageError.USERNAME_EMPTY);
             return false;
         }
 
         if (password.getText() == null || password.getText().trim().isEmpty()) {
-            messageBox("Field password is empty");
+            messageBox(Constants.MessageError.PASSWORD_EMPTY);
             return false;
         }
         return true;

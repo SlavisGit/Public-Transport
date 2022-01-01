@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.business.services.DestinationService;
 import tuvarna.sit.busservices.data.entities.Destination;
+import tuvarna.sit.common.Constants;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -34,13 +35,13 @@ public class CreateDestinationController {
     private void messageBox(String message) {
         Alert alert = new Alert(Alert.AlertType.
                 ERROR);
-        alert.setTitle("Incorrect data");
+        alert.setTitle(Constants.MessageError.INCORRECT_DATA);
         alert.setContentText(message);
         alert.showAndWait();
     }
     private boolean validationFields() {
         if(destination.getText() == null || destination.getText().trim().isEmpty()) {
-            messageBox("Field firstName is empty");
+            messageBox(Constants.MessageError.DESTINATION_EMPTY);
             return false;
         }
         return true;

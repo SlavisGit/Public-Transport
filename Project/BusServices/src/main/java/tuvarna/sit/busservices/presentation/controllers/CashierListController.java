@@ -16,6 +16,7 @@ import tuvarna.sit.busservices.application.HelloApplication;
 import tuvarna.sit.busservices.application.NewWindowApplication;
 import tuvarna.sit.busservices.business.services.CashierService;
 import tuvarna.sit.busservices.data.entities.Cashier;
+import tuvarna.sit.common.Constants;
 
 public class CashierListController {
 
@@ -59,14 +60,14 @@ public class CashierListController {
     private void back(MouseEvent mouseEvent) {
         NewWindowApplication logInApplication = new NewWindowApplication();
         if(HelloApplication.getUser().getAdministrator() != null) {
-            URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/administratorOptions.fxml");
-            logInApplication.logInUser(resources, mouseEvent, path, "Admin");
+            URL path = getClass().getResource(Constants.View.WINDOW_ADMIN_OPTION);
+            logInApplication.logInUser(resources, mouseEvent, path, Constants.Titles.ADMIN);
         } else {
-            URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/stationOptions.fxml");
-            logInApplication.logInUser(resources, mouseEvent, path, "Station");
+            URL path = getClass().getResource(Constants.View.WINDOW_STATION_OPTION);
+            logInApplication.logInUser(resources, mouseEvent, path, Constants.Titles.STATION);
         }
     }
-    public void display(){
+    private void display(){
         CashierService cashierService = CashierService.getInstance();
         ObservableList<Cashier> all = cashierService.getAll();
         if(HelloApplication.getUser().getAdministrator() != null){

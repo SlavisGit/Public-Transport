@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import tuvarna.sit.busservices.application.NewWindowApplication;
+import tuvarna.sit.common.Constants;
 
 public class CashierOptionsController {
 
@@ -31,19 +32,19 @@ public class CashierOptionsController {
 
     private void buyTicket(MouseEvent mouseEvent) {
         NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/buyTickets.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Travel Service");
+        URL path = getClass().getResource(Constants.View.WINDOW_BUY_TICKET);
+        logInApplication.logInUser(resources, mouseEvent, path, Constants.Titles.SOLD);
     }
 
     private void logOut(MouseEvent mouseEvent) {
         NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/hello-view.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Travel Service");
+        URL path = getClass().getResource(Constants.View.WINDOW_HELLO_VIEW);
+        logInApplication.logInUser(resources, mouseEvent, path, Constants.Titles.BUS_SERVICE);
     }
 
     private void viewTravels(MouseEvent mouseEvent) {
         NewWindowApplication logInApplication = new NewWindowApplication();
-        URL path = getClass().getResource("/tuvarna/sit/busservices/presentation.view/travelList.fxml");
-        logInApplication.logInUser(resources, mouseEvent, path, "Travel");
+        URL path = getClass().getResource(Constants.View.WINDOW_TRAVEL_LIST);
+        logInApplication.logInUser(resources, mouseEvent, path, Constants.Titles.TRAVEL);
     }
 }

@@ -46,10 +46,9 @@ public class UserService implements Service<User>{
     private static class UserServiceHolder {
         public static final UserService INSTANCE = new UserService();
     }
-    public User getUserLogin(PasswordField password, TextField username, String type) {
-        String password1 = password.getText();
-        String userName = username.getText();
-        return user.getByUsernameAndPassword(userName, password1, type);
+
+    public User getUserLogin(String password, String username, String type) {
+        return user.getByUsernameAndPassword(username, password, type);
     }
     public User getByIdStation(Long id) {
         return user.getByIdStation(id);
