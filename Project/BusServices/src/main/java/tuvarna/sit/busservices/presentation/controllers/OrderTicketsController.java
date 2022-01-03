@@ -58,6 +58,8 @@ public class OrderTicketsController implements Initializable {
             refusal.setOnMouseClicked(this::refusal);
             back.setOnMouseClicked(this::backStation);
         } else {
+            // TODO: 02.01.2022 г.  ДА СИ НАМЕСТИШ БУТОНА <3 
+            refusal.setVisible(false);
             ObservableList<OrderTickets> all = orderTicketsService.getAllFromCompany(HelloApplication.getUser().getCompany().getID());
             display(all);
             confirm.setOnMouseClicked(this::confirm);
