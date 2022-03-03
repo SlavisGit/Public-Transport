@@ -135,11 +135,11 @@ public class CreateTravelController {
             messageBox(Constants.MessageError.TRANSPORT_EMPTY);
             return false;
         }
-        if(dataTo.getValue() == null || dataTo.getValue().isAfter(LocalDate.now())) {
+        if(dataTo.getValue() == null || dataTo.getValue().isBefore(LocalDate.now())) {
             messageBox(Constants.MessageError.DATA_TO_EMPTY);
             return false;
         }
-        if(dataFrom.getValue() == null || dataFrom.getValue().isAfter(LocalDate.now())) {
+        if(dataFrom.getValue() == null || dataFrom.getValue().isBefore(LocalDate.now())) {
             messageBox(Constants.MessageError.DATA_FROM_EMPTY);
             return false;
         }
